@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <!--UI设计师提供颜色-->
+
+    <color name="table_bg">#f1f5f8</color>
+    <color name="theme_color">#dfe4e8</color>
+    <color name="item_bg">#f8fafb</color>
+    <color name="text_black">#475558</color>
+    <color name="text_ash">#b1b9bb</color>
+    <color name="text_dark_gray">#6f7a7d</color>
+    <color name="text_green">#32cf32</color>
+    <color name="text_red">#ff5e3e</color>
+    <color name="text_blue">#3fa1ff</color>
+    <color name="text_gray">#c1dcff</color>
+    <color name="text_sky_blue">#3fcacf</color>
+    <color name="text_light_green">#bfedbf</color>
+    <color name="color_start">#5dd841</color>
+    <color name="color_middle">#e1ee68</color>
+    <color name="color_end">#fcc74a</color>
+    <color name="view">#f1f5f8</color>
+    <color name="transparent">#00000000</color>
+    <color name="white">#ffffff</color>
+
+
+</resources>
