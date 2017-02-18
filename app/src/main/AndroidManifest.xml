@@ -34,15 +34,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name="com.avos.avoscloud.feedback.ThreadActivity" >
-        </activity>
+        <activity android:name=".activity.ForgetPawwordActivity"></activity>
+        <activity android:name=".activity.RegisterActivity"></activity>
+        <activity android:name="com.avos.avoscloud.feedback.ThreadActivity"></activity>
 
         <!--sdk初始化-->
-        <meta-data android:value="bd478fc6e7a1fd4c0dfef8b5dc0fb7af" android:name="BUG_HD_SDK_GENERAL_KEY" />
-        <meta-data android:value="587308b9677baa1b9c00095f" android:name="UMENG_APPKEY"/>
-        <meta-data android:value="Umeng" android:name="UMENG_CHANNEL"/>
+        <meta-data
+            android:name="BUG_HD_SDK_GENERAL_KEY"
+            android:value="bd478fc6e7a1fd4c0dfef8b5dc0fb7af" />
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="587308b9677baa1b9c00095f" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Umeng" />
         <meta-data
             android:name="com.taobao.android.hotfix.APPSECRET"
             android:value="your-app-secret" />
