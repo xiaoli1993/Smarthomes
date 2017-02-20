@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+
+    <dbname value="DeviceDate"></dbname>
+
+    <version value="1"></version>
+
+    <list>
+        <mapping class="com.nuowei.smarthome.modle.DataDevice"></mapping>
+        <mapping class="com.nuowei.smarthome.modle.SubDevice"></mapping>
+        <mapping class="com.nuowei.smarthome.modle.WifiDevice"></mapping>
+    </list>
+
+</litepal>

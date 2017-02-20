@@ -8,16 +8,25 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.heiman.smarthomesdk.http.HttpManage;
+import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.view.circularanim.CircularAnim;
 import com.nuowei.smarthome.view.imageview.CircleImageView;
 import com.nuowei.smarthome.view.textview.AvenirTextView;
+import com.orhanobut.hawk.Hawk;
+
+import org.apache.http.Header;
+
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,7 +49,7 @@ public class LoginActivity extends Activity {
     @BindView(R.id.et_password)
     EditText etPassword;
     @BindView(R.id.tv_sign_in)
-    AvenirTextView tvSignIn;
+    Button tvSignIn;
     @BindView(R.id.tv_forget_password)
     AvenirTextView tvForgetPassword;
     @BindView(R.id.tv_tip)
@@ -56,8 +65,44 @@ public class LoginActivity extends Activity {
     @OnClick(R.id.tv_sign_in)
     void onSignin(View view) {
         //TODO implement
+        if (TextUtils.isEmpty(etName.getText())) {
+            // 设置晃动
+//            etName.setShakeAnimation();
+            // 设置提示
+//            showToast(getResources().getString( R.string.Account_can_not_be_empty));
+            return;
+        }
+
+        if (TextUtils.isEmpty(etPassword.getText())) {
+//            etPassword.setShakeAnimation();
+//            showToast(getResources().getString( R.string.Password_can_not_be_empty));
+            return;
+        }
+
         // 收缩按钮
-//        CircularAnim.hide(view).go();
+        CircularAnim.hide(tvSignIn).go();
+
+        final String ClientName = etName.getText().toString().trim();// .toUpperCase();
+        final String Password = etPassword.getText().toString().trim();
+
+        HttpManage.getInstance().doLogin(MyApplication.getApp(), ClientName, Password, new HttpManage.ResultCallback<Map<String, String>>() {
+            @Override
+            public void onError(Header[] headers, HttpManage.Error error) {
+                MyApplication.getLogger().e("Code:" + error.getCode());
+            }
+
+            @Override
+            public void onSuccess(int i, Map<String, String> stringStringMap) {
+                String authKey = stringStringMap.get("authorize");
+                String accessToken = stringStringMap.get("access_token");
+                int appid = Integer.parseInt(stringStringMap.get("user_id"));
+                String refresh_token = stringStringMap.get("refresh_token");
+                MyApplication.getLogger().i("Auth", "accessToken:" + accessToken + "appid:" + appid + "authKey:" + authKey);
+                HttpManage.init(accessToken, appid, refresh_token);
+                Hawk.put("MY_ACCOUNT", ClientName);
+                Hawk.put("MY_PASSWORD", Password);
+            }
+        });
     }
 
     @OnClick(R.id.tv_forget_password)
@@ -95,5 +140,16 @@ public class LoginActivity extends Activity {
         etName.setTypeface(fonc);
         etPassword.setTypeface(fonc);
         titleName.setText(R.string.Login);
+        tvSignIn.setTypeface(fonc);
+        boolean contains = Hawk.contains("MY_ACCOUNT");
+        boolean ispass = Hawk.contains("MY_PASSWORD");
+        MyApplication.getLogger().i("MY_ACCOUNT:"+contains+"MY_PASSWORD:"+ispass);
+        if (contains) {
+            String MY_ACCOUNT = Hawk.get("MY_ACCOUNT");
+            String MY_PASSWORD = Hawk.get("MY_PASSWORD");
+            MyApplication.getLogger().i("MY_ACCOUNT:"+MY_ACCOUNT+"MY_PASSWORD:"+MY_PASSWORD);
+            etName.setText(MY_ACCOUNT);
+            etPassword.setText(MY_PASSWORD);
+        }
     }
 }

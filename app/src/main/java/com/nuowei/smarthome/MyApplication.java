@@ -140,9 +140,9 @@ public class MyApplication extends LitePalApplication {
         AVOSCloud.setDebugLogEnabled(true);
 
         //数据库加密保存
-        Hawk.init(this);
+        Hawk.init(this).build();
         //数据库初始化
-//        db = Connector.getDatabase();
+        db = Connector.getDatabase();
     }
 
     public static Logger getLogger() {

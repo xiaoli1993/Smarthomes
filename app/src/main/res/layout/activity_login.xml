@@ -72,7 +72,7 @@
             </LinearLayout>
 
 
-            <com.nuowei.smarthome.view.textview.AvenirTextView
+            <Button
                 android:id="@+id/tv_sign_in"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
@@ -84,6 +84,7 @@
                 android:background="@drawable/green_stroke_selector"
                 android:gravity="center"
                 android:text="Sign  in"
+                android:textAllCaps="false"
                 android:textColor="@android:color/white" />
 
 
