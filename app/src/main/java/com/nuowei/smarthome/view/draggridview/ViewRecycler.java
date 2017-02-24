@@ -11,35 +11,34 @@ public class ViewRecycler {
 
     BaseAdapter mAdapter;
 
-    public void setAdapter(BaseAdapter adapter){
+    public void setAdapter(BaseAdapter adapter) {
         mAdapter = adapter;
     }
 
 
-    ArrayMap<Integer,BaseAdapter.ViewHolder> viewArrayMap = new ArrayMap<>();
+    ArrayMap<Integer, BaseAdapter.ViewHolder> viewArrayMap = new ArrayMap<>();
 
-    ArrayMap<Integer,BaseAdapter.ViewHolder> scrapViewMap = new ArrayMap<>();
+    ArrayMap<Integer, BaseAdapter.ViewHolder> scrapViewMap = new ArrayMap<>();
 
 
-
-    public void put(int index, BaseAdapter.ViewHolder viewHolder){
-        viewArrayMap.put(index,viewHolder);
+    public void put(int index, BaseAdapter.ViewHolder viewHolder) {
+        viewArrayMap.put(index, viewHolder);
     }
 
-    public BaseAdapter.ViewHolder get(int index, ViewGroup parent){
+    public BaseAdapter.ViewHolder get(int index, ViewGroup parent) {
 
         BaseAdapter.ViewHolder viewHolder = viewArrayMap.get(index);
-        if (viewHolder == null){
+        if (viewHolder == null) {
 
-            if(scrapViewMap.size()!=0){
+            if (scrapViewMap.size() != 0) {
                 viewHolder = getViewHolderFromScrapView(index);
-            }else {
-                viewHolder = mAdapter.onCreateView(parent);
-                viewArrayMap.put(index,viewHolder);
+            } else {
+                viewHolder = mAdapter.onCreateView(index, parent);
+                viewArrayMap.put(index, viewHolder);
             }
             parent.addView(viewHolder.itemView);
-            mAdapter.onBindView(index,viewHolder);
-        }else {
+            mAdapter.onBindView(index, viewHolder);
+        } else {
 //            viewArrayMap.removeAt(index);
         }
 
@@ -48,12 +47,12 @@ public class ViewRecycler {
     }
 
 
-    BaseAdapter.ViewHolder getViewHolderFromScrapView(int index){
+    BaseAdapter.ViewHolder getViewHolderFromScrapView(int index) {
         BaseAdapter.ViewHolder viewHolder = scrapViewMap.get(index);
-        if(viewHolder != null){
+        if (viewHolder != null) {
             scrapViewMap.remove(index);
-        }else {
-            for (Integer i : scrapViewMap.keySet()){
+        } else {
+            for (Integer i : scrapViewMap.keySet()) {
                 viewHolder = scrapViewMap.get(i);
                 scrapViewMap.remove(i);
                 break;
@@ -63,17 +62,17 @@ public class ViewRecycler {
         return viewHolder;
     }
 
-    public void exchange(int index0,int index1){
-        mAdapter.onExchange(index0,index1,false);
+    public void exchange(int index0, int index1) {
+        mAdapter.onExchange(index0, index1, false);
     }
 
-    public void onExchangeEnd(int index0,int index1){
-        mAdapter.onExchange(index0,index1,true);
+    public void onExchangeEnd(int index0, int index1) {
+        mAdapter.onExchange(index0, index1, true);
     }
 
-    public void recyclerView(int index, BaseAdapter.ViewHolder scrapView,ViewGroup viewGroup){
+    public void recyclerView(int index, BaseAdapter.ViewHolder scrapView, ViewGroup viewGroup) {
         viewGroup.removeView(scrapView.itemView);
         viewArrayMap.remove(index);
-        scrapViewMap.put(index,scrapView);
+        scrapViewMap.put(index, scrapView);
     }
 }

@@ -9,6 +9,7 @@
         <mapping class="com.nuowei.smarthome.modle.DataDevice"></mapping>
         <mapping class="com.nuowei.smarthome.modle.SubDevice"></mapping>
         <mapping class="com.nuowei.smarthome.modle.WifiDevice"></mapping>
+        <mapping class="com.nuowei.smarthome.modle.MainDatas"></mapping>
     </list>
 
 </litepal>

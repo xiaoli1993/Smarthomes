@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -39,7 +40,7 @@ import butterknife.OnClick;
  * @Time :  2017/2/17 14:33
  * @Description :
  */
-public class LoginActivity extends Activity {
+public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.profile_image)
     CircleImageView profileImage;
     @BindView(R.id.ll)
@@ -80,8 +81,12 @@ public class LoginActivity extends Activity {
         }
 
         // 收缩按钮
-        CircularAnim.hide(tvSignIn).go();
+//        CircularAnim.hide(tvSignIn).go();
 
+        onLogin();
+    }
+
+    private void onLogin() {
         final String ClientName = etName.getText().toString().trim();// .toUpperCase();
         final String Password = etPassword.getText().toString().trim();
 
@@ -101,6 +106,8 @@ public class LoginActivity extends Activity {
                 HttpManage.init(accessToken, appid, refresh_token);
                 Hawk.put("MY_ACCOUNT", ClientName);
                 Hawk.put("MY_PASSWORD", Password);
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                finish();
             }
         });
     }
@@ -143,11 +150,9 @@ public class LoginActivity extends Activity {
         tvSignIn.setTypeface(fonc);
         boolean contains = Hawk.contains("MY_ACCOUNT");
         boolean ispass = Hawk.contains("MY_PASSWORD");
-        MyApplication.getLogger().i("MY_ACCOUNT:"+contains+"MY_PASSWORD:"+ispass);
         if (contains) {
             String MY_ACCOUNT = Hawk.get("MY_ACCOUNT");
             String MY_PASSWORD = Hawk.get("MY_PASSWORD");
-            MyApplication.getLogger().i("MY_ACCOUNT:"+MY_ACCOUNT+"MY_PASSWORD:"+MY_PASSWORD);
             etName.setText(MY_ACCOUNT);
             etPassword.setText(MY_PASSWORD);
         }

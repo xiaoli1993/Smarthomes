@@ -17,4 +17,14 @@
     <string name="Register">Register</string>
     <string name="ForgetPassword">ForgetPassword</string>
 
+    <string name="Security">Security</string>
+    <string name="Air">Air</string>
+    <string name="Water">Water</string>
+    <string name="Electricity">Electricity</string>
+    <string name="Lights">Lights</string>
+    <string name="Floor_heating">Floor heating</string>
+    <string name="Service">Service</string>
+    <string name="Equipment">Equipment</string>
+    <string name="Setting">Setting</string>
+
 </resources>

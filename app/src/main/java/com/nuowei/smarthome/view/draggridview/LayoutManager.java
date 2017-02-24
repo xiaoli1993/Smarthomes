@@ -42,62 +42,60 @@ public class LayoutManager {
 
     Handler mHandler;
 
-    public LayoutManager(Handler handler){
-        mHandler  = handler;
+    public LayoutManager(Handler handler) {
+        mHandler = handler;
     }
 
-    public int getColumn(){
+    public int getColumn() {
         return mColumn;
     }
 
-    public void setGridViewInfo(int column,int count){
+    public void setGridViewInfo(int column, int count) {
         mColumn = column;
         mTotalCount = count;
-        mTotalRow = count%column==0?count/column:count/column+1;
+        mTotalRow = count % column == 0 ? count / column : count / column + 1;
     }
 
-    public void setScreenInfo(int width,int height){
+    public void setScreenInfo(int width, int height) {
         mScreenHeight = height;
         mScreenWidth = width;
 
 
     }
 
-    public void setItemInfo(int width,int height){
+    public void setItemInfo(int width, int height) {
         mItemHeight = height;
         mItemWidth = width;
 
-        mDragScrollAreaHeight = mItemHeight/2;
-        onScroll(0,0,null,null);
+        mDragScrollAreaHeight = mItemHeight / 2;
+        onScroll(0, 0, null, null);
     }
 
-    public void onScroll(float dx, float dy, ViewRecycler recycler, ViewGroup parent){
+    public void onScroll(float dx, float dy, ViewRecycler recycler, ViewGroup parent) {
 
         float pendScrollTop = mScreenTop + dy;
 
-        if(pendScrollTop>0){
-            dy=dy/(float) Math.sqrt(pendScrollTop/8+1f);
-        }
-        else
-        if( mScreenHeight - pendScrollTop> mTotalRow * mItemHeight ) {
-            dy=dy/(float) Math.sqrt((mScreenHeight - pendScrollTop - mTotalRow * mItemHeight)/8+1f);
+        if (pendScrollTop > 0) {
+            dy = dy / (float) Math.sqrt(pendScrollTop / 8 + 1f);
+        } else if (mScreenHeight - pendScrollTop > mTotalRow * mItemHeight) {
+            dy = dy / (float) Math.sqrt((mScreenHeight - pendScrollTop - mTotalRow * mItemHeight) / 8 + 1f);
         }
 
 
         mFirstVisibleIndex = 0;
-        mLastVisibleIndex = mTotalCount-1;
+        mLastVisibleIndex = mTotalCount - 1;
 
         mScreenTop = mScreenTop + dy;
 
 
-        if(recycler != null){
-            for (int i=start();i<=end();i++){
-                BaseAdapter.ViewHolder viewHolder = recycler.get(i,parent);
+        if (recycler != null) {
+            for (int i = start(); i <= end(); i++) {
+                BaseAdapter.ViewHolder viewHolder = recycler.get(i, parent);
                 DragGridView.LayoutParams layoutParams = (DragGridView.LayoutParams) viewHolder.itemView.getLayoutParams();
                 layoutParams.top += dy;
                 layoutParams.bottom += dy;
 
-                if(layoutParams.bottom < 0 || layoutParams.top > mScreenHeight){
+                if (layoutParams.bottom < 0 || layoutParams.top > mScreenHeight) {
 //                    Log.d("recyclerView",""+i);
 //                    recycler.recyclerView(i,viewHolder,parent);
                 }
@@ -126,22 +124,20 @@ public class LayoutManager {
 
     }
 
-    public void scrolled(final View view){
+    public void scrolled(final View view) {
 
-        float end=0;
-        if(mScreenTop>0){
+        float end = 0;
+        if (mScreenTop > 0) {
 
-        }
-        else
-        if( mScreenHeight - mScreenTop > mTotalRow * mItemHeight ) {
+        } else if (mScreenHeight - mScreenTop > mTotalRow * mItemHeight) {
 
-            if(mScreenHeight > mTotalRow * mItemHeight){
+            if (mScreenHeight > mTotalRow * mItemHeight) {
 
-            }else {
+            } else {
                 end = mScreenHeight - mTotalRow * mItemHeight;
             }
 
-        }else {
+        } else {
             return;
         }
 
@@ -162,13 +158,13 @@ public class LayoutManager {
     int mDragViewStartPosition = 0;
 
 
-    public void startDragging(ViewRecycler recycler,float x,float y){
-        for (int i=start();i<=end();i++){
-            BaseAdapter.ViewHolder viewHolder = recycler.get(i,null);
+    public void startDragging(ViewRecycler recycler, float x, float y) {
+        for (int i = start(); i <= end(); i++) {
+            BaseAdapter.ViewHolder viewHolder = recycler.get(i, null);
             DragGridView.LayoutParams layoutParams = (DragGridView.LayoutParams) viewHolder.itemView.getLayoutParams();
 
-            if(x>layoutParams.left && x<layoutParams.right &&
-                    y>layoutParams.top && y<layoutParams.bottom){
+            if (x > layoutParams.left && x < layoutParams.right &&
+                    y > layoutParams.top && y < layoutParams.bottom) {
                 mDragViewStartPosition = mLastDragPassPosition = i;
                 break;
             }
@@ -177,45 +173,42 @@ public class LayoutManager {
     }
 
 
-
-
     private int mIsAnimationTranslate = 0;
 
-    public void onDragging(ViewRecycler recycler, float x, float y){
-        if(mIsAnimationTranslate != 0)return;
+    public void onDragging(ViewRecycler recycler, float x, float y) {
+        if (mIsAnimationTranslate != 0) return;
 
-        for (int i=start();i<=end();i++){
-            BaseAdapter.ViewHolder viewHolder = recycler.get(i,null);
+        for (int i = start(); i <= end(); i++) {
+            BaseAdapter.ViewHolder viewHolder = recycler.get(i, null);
             DragGridView.LayoutParams layoutParams = (DragGridView.LayoutParams) viewHolder.itemView.getLayoutParams();
-            if(x> layoutParams.left && x< layoutParams.right &&
-                    y> layoutParams.top && y<layoutParams.bottom &&
-                    mLastDragPassPosition != i){
+            if (x > layoutParams.left && x < layoutParams.right &&
+                    y > layoutParams.top && y < layoutParams.bottom &&
+                    mLastDragPassPosition != i) {
 
                 int deta = mLastDragPassPosition < i ? -1 : 1;
 
                 DragGridView.LayoutParams tempLayout = layoutParams;
 
-                ArrayMap<Integer,BaseAdapter.ViewHolder> rePositionMap = new ArrayMap<>();
+                ArrayMap<Integer, BaseAdapter.ViewHolder> rePositionMap = new ArrayMap<>();
 
-                for (int k=i ; mLastDragPassPosition != k ; k+=deta ){
+                for (int k = i; mLastDragPassPosition != k; k += deta) {
 
-                    BaseAdapter.ViewHolder vh = recycler.get(k,null);
-                    DragGridView.LayoutParams lp = (DragGridView.LayoutParams) recycler.get(k+deta,null).itemView.getLayoutParams();
-                    exchangePosition(vh.itemView,lp);
-                    rePositionMap.put(k+deta,vh);
+                    BaseAdapter.ViewHolder vh = recycler.get(k, null);
+                    DragGridView.LayoutParams lp = (DragGridView.LayoutParams) recycler.get(k + deta, null).itemView.getLayoutParams();
+                    exchangePosition(vh.itemView, lp);
+                    rePositionMap.put(k + deta, vh);
 
-                    recycler.exchange(k,k+deta);
+                    recycler.exchange(k, k + deta);
                 }
 
-                recycler.onExchangeEnd(i,mLastDragPassPosition);
-                BaseAdapter.ViewHolder viewHolderLast = recycler.get(mLastDragPassPosition,null);
-                rePositionMap.put(i,viewHolderLast);
-                exchangePosition(viewHolderLast.itemView,tempLayout);
+                recycler.onExchangeEnd(i, mLastDragPassPosition);
+                BaseAdapter.ViewHolder viewHolderLast = recycler.get(mLastDragPassPosition, null);
+                rePositionMap.put(i, viewHolderLast);
+                exchangePosition(viewHolderLast.itemView, tempLayout);
 
 
-
-                for (Integer key : rePositionMap.keySet()){
-                    recycler.put(key,rePositionMap.get(key));
+                for (Integer key : rePositionMap.keySet()) {
+                    recycler.put(key, rePositionMap.get(key));
                 }
 
 
@@ -226,27 +219,27 @@ public class LayoutManager {
 
         }
 
-        if(mTotalRow*mItemHeight>mScreenHeight-mScreenTop){
-            if (y>0&&y<mDragScrollAreaHeight){
+        if (mTotalRow * mItemHeight > mScreenHeight - mScreenTop) {
+            if (y > 0 && y < mDragScrollAreaHeight) {
                 mScrollDirct = SCROLL_DOWN;
 
-                if(mScrollTimer == null){
+                if (mScrollTimer == null) {
                     mScrollTimer = new Timer();
-                    mScrollTimer.schedule(new Task(),0,20);
-                }else {
+                    mScrollTimer.schedule(new Task(), 0, 20);
+                } else {
 
                 }
 
 
-            }else if(y<mScreenHeight&&y>mScreenHeight-mDragScrollAreaHeight){
+            } else if (y < mScreenHeight && y > mScreenHeight - mDragScrollAreaHeight) {
                 mScrollDirct = SCROLL_UP;
 
-                if(mScrollTimer == null){
+                if (mScrollTimer == null) {
                     mScrollTimer = new Timer();
-                    mScrollTimer.schedule(new Task(),0,16);
+                    mScrollTimer.schedule(new Task(), 0, 16);
                 }
-            }else {
-                if(mScrollTimer != null)
+            } else {
+                if (mScrollTimer != null)
                     mScrollTimer.cancel();
             }
 
@@ -256,8 +249,8 @@ public class LayoutManager {
 
     }
 
-    public void onDragEnd(){
-        if(mScrollTimer!=null){
+    public void onDragEnd() {
+        if (mScrollTimer != null) {
             mScrollTimer.cancel();
             mScrollTimer = null;
         }
@@ -265,8 +258,8 @@ public class LayoutManager {
 
     Timer mScrollTimer = null;
 
-    static int  SCROLL_UP = 0;
-    static int  SCROLL_DOWN = 1;
+    static int SCROLL_UP = 0;
+    static int SCROLL_DOWN = 1;
 
     int mScrollDirct = -1;
 
@@ -276,36 +269,37 @@ public class LayoutManager {
         @Override
         public void run() {
 
-                if(SCROLL_DOWN == mScrollDirct){
-                    if(mScreenTop + SCROLL_SLOP >= 0){
-                        onScroll(0,mScreenTop,null,null);
-                        mScrollTimer.cancel();
-                    }else {
-                        onScroll(0,SCROLL_SLOP,null,null);
-                    }
-                }else {
-                    if(mScreenHeight-mScreenTop+SCROLL_SLOP>=mTotalRow*mItemHeight){
-                        onScroll(0,(mScreenHeight-mScreenTop)-mTotalRow*mItemHeight,null,null);
-                        mScrollTimer.cancel();
-                    }else {
-                        onScroll(0,-SCROLL_SLOP,null,null);
-                    }
+            if (SCROLL_DOWN == mScrollDirct) {
+                if (mScreenTop + SCROLL_SLOP >= 0) {
+                    onScroll(0, mScreenTop, null, null);
+                    mScrollTimer.cancel();
+                } else {
+                    onScroll(0, SCROLL_SLOP, null, null);
                 }
+            } else {
+                if (mScreenHeight - mScreenTop + SCROLL_SLOP >= mTotalRow * mItemHeight) {
+                    onScroll(0, (mScreenHeight - mScreenTop) - mTotalRow * mItemHeight, null, null);
+                    mScrollTimer.cancel();
+                } else {
+                    onScroll(0, -SCROLL_SLOP, null, null);
+                }
+            }
 
-                mHandler.sendEmptyMessageAtTime(0,0);
+            mHandler.sendEmptyMessageAtTime(0, 0);
         }
 
 
-    };
+    }
+
+    ;
 
 
-
-    public boolean isPlayingAnimation(){
+    public boolean isPlayingAnimation() {
         return mIsAnimationTranslate != 0;
     }
 
 
-    void exchangePosition(final View animationView, final DragGridView.LayoutParams layoutParams){
+    void exchangePosition(final View animationView, final DragGridView.LayoutParams layoutParams) {
 
         DragGridView.LayoutParams lp = (DragGridView.LayoutParams) animationView.getLayoutParams();
         final int detaX = layoutParams.left - lp.left;
@@ -326,17 +320,17 @@ public class LayoutManager {
     ViewPropertyAnimatorListener mAnimatorListener = new ViewPropertyAnimatorListener() {
         @Override
         public void onAnimationStart(View view) {
-            synchronized (this){
-                mIsAnimationTranslate ++;
+            synchronized (this) {
+                mIsAnimationTranslate++;
             }
         }
 
         @Override
         public void onAnimationEnd(View view) {
-            synchronized (this){
-                mIsAnimationTranslate --;
+            synchronized (this) {
+                mIsAnimationTranslate--;
             }
-            mHandler.sendEmptyMessageAtTime(0,0);
+            mHandler.sendEmptyMessageAtTime(0, 0);
         }
 
         @Override
@@ -345,16 +339,16 @@ public class LayoutManager {
         }
     };
 
-    public float getTopByIndex(int index){
-        int rowIndex = index/mColumn;
+    public float getTopByIndex(int index) {
+        int rowIndex = index / mColumn;
         return mScreenTop + rowIndex * mItemHeight;
     }
 
-    public int start(){
+    public int start() {
         return mFirstVisibleIndex;
     }
 
-    public int end(){
+    public int end() {
         return mLastVisibleIndex;
     }
 }

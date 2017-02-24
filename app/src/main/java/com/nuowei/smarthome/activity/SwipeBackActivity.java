@@ -12,6 +12,8 @@ import com.nuowei.smarthome.util.CloseActivityClass;
 import com.nuowei.smarthome.util.SharePreferenceUtil;
 import com.nuowei.smarthome.view.swipeback.SwipeBackLayout;
 
+import butterknife.ButterKnife;
+
 
 public class SwipeBackActivity extends FragmentActivity {
 
@@ -25,6 +27,7 @@ public class SwipeBackActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		ButterKnife.bind(this);
 		CloseActivityClass.activityList.add(this);
 		getWindow().setBackgroundDrawable(new ColorDrawable(0));
 		getWindow().getDecorView().setBackgroundDrawable(null);

@@ -42,16 +42,22 @@ public abstract class BaseAdapter {
     }
 
     public abstract int getCount();
-    public abstract Object getItem();
-    public abstract long getItemId();
-    public abstract void onBindView(int position,ViewHolder viewHolder);
-    public abstract ViewHolder onCreateView(ViewGroup parent);
-    public abstract void onExchange(int index0,int index1,boolean isEnd);
 
-    public static class ViewHolder{
+    public abstract Object getItem(int position);
+
+    public abstract long getItemId(int position);
+
+    public abstract void onBindView(int position, ViewHolder viewHolder);
+
+    public abstract ViewHolder onCreateView(int position,ViewGroup parent);
+
+    public abstract void onExchange(int index0, int index1, boolean isEnd);
+
+    public static class ViewHolder {
 
         View itemView;
-        public ViewHolder(View view){
+
+        public ViewHolder(View view) {
             itemView = view;
 
         }

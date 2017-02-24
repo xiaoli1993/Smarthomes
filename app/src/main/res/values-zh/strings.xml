@@ -16,4 +16,15 @@
     <string name="Login">Login</string>
     <string name="Register">Register</string>
     <string name="ForgetPassword">ForgetPassword</string>
+
+    <string name="Security">安防</string>
+    <string name="Air">空气</string>
+    <string name="Water">水</string>
+    <string name="Electricity">电</string>
+    <string name="Lights">灯控</string>
+    <string name="Floor_heating">地暖</string>
+    <string name="Service">服务</string>
+    <string name="Equipment">设备</string>
+    <string name="Setting">设置</string>
+
 </resources>

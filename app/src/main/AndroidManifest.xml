@@ -27,15 +27,19 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.LoginActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".activity.ForgetPawwordActivity"></activity>
+        <activity android:name=".activity.SplashActivity"></activity>
+        <activity android:name=".activity.LoginActivity"></activity>
         <activity android:name=".activity.RegisterActivity"></activity>
+
         <activity android:name="com.avos.avoscloud.feedback.ThreadActivity"></activity>
 
         <!--sdk初始化-->
