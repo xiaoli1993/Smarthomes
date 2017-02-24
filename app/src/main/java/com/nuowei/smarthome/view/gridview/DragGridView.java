@@ -229,7 +229,7 @@ public class DragGridView extends GridView {
 
     /**
      * 是否点击在GridView的item上面
-     * @param itemView
+     * @param dragView
      * @param x
      * @param y
      * @return
