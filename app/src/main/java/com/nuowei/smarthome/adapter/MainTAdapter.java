@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.modle.MainDatas;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
