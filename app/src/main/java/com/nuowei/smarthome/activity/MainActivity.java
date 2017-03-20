@@ -1,7 +1,4 @@
 package com.nuowei.smarthome.activity;
-/**
- * Copyright ©深圳市海曼科技有限公司
- */
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

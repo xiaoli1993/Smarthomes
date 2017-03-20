@@ -48,7 +48,6 @@ public class MainTActivity extends AppCompatActivity {
         setContentView(R.layout.activity_t_main);
         ButterKnife.bind(this);
         initData();
-
         initEven();
     }
 
@@ -91,55 +90,59 @@ public class MainTActivity extends AppCompatActivity {
 
     private void initData() {
         String JsonMain = Hawk.get("Main");
-        MyApplication.getLogger().json(SharePreferenceUtil.listToJson(dataSourceList));
+
         try {
-            final JSONArray list = new JSONArray(JsonMain);
-            final int iSize = list.length();
-            if (iSize == 0) {
-                if (dataSourceList == null && dataSourceList.isEmpty()) {
-                    HashMap<String, MainDatas> itemHashMap = new HashMap<String, MainDatas>();
-                    itemHashMap.put("Main", new MainDatas(getResources().getString(R.string.Security), 0, 0));
-                    dataSourceList.add(itemHashMap);
-                    HashMap<String, MainDatas> itemHashMap1 = new HashMap<String, MainDatas>();
-                    itemHashMap1.put("Main", new MainDatas(getResources().getString(R.string.Air), 1, 1));
-                    dataSourceList.add(itemHashMap1);
-                    HashMap<String, MainDatas> itemHashMap2 = new HashMap<String, MainDatas>();
-                    itemHashMap2.put("Main", new MainDatas(getResources().getString(R.string.Water), 2, 2));
-                    dataSourceList.add(itemHashMap2);
-                    HashMap<String, MainDatas> itemHashMap3 = new HashMap<String, MainDatas>();
-                    itemHashMap3.put("Main", new MainDatas(getResources().getString(R.string.Electricity), 3, 4));
-                    dataSourceList.add(itemHashMap3);
-                    HashMap<String, MainDatas> itemHashMap4 = new HashMap<String, MainDatas>();
-                    itemHashMap4.put("Main", new MainDatas(getResources().getString(R.string.Lights), 4, 4));
-                    dataSourceList.add(itemHashMap4);
-                    HashMap<String, MainDatas> itemHashMap5 = new HashMap<String, MainDatas>();
-                    itemHashMap5.put("Main", new MainDatas(getResources().getString(R.string.Floor_heating), 5, 5));
-                    dataSourceList.add(itemHashMap5);
-                    HashMap<String, MainDatas> itemHashMap6 = new HashMap<String, MainDatas>();
-                    itemHashMap6.put("Main", new MainDatas(getResources().getString(R.string.Service), 6, 6));
-                    dataSourceList.add(itemHashMap6);
-                    HashMap<String, MainDatas> itemHashMap7 = new HashMap<String, MainDatas>();
-                    itemHashMap7.put("Main", new MainDatas(getResources().getString(R.string.Equipment), 7, 7));
-                    dataSourceList.add(itemHashMap7);
-                    HashMap<String, MainDatas> itemHashMap8 = new HashMap<String, MainDatas>();
-                    itemHashMap8.put("Main", new MainDatas(getResources().getString(R.string.Setting), 8, 8));
-                    dataSourceList.add(itemHashMap8);
-                    Hawk.put("Main", SharePreferenceUtil.listToJson(dataSourceList));
-                }
-            } else {
-                for (int i = 0; i < iSize; i++) {
-                    HashMap<String, MainDatas> itemHashMap = new HashMap<String, MainDatas>();
-                    JSONObject jsonObj = list.getJSONObject(i);
-                    JSONObject main = jsonObj.getJSONObject("Main");
-                    Gson gson = new Gson();
-                    MainDatas mainDatas = gson.fromJson(main.toString(), MainDatas.class);
-                    itemHashMap.put("Main", mainDatas);
-                    dataSourceList.add(itemHashMap);
+            if (JsonMain.length() != 0 || JsonMain != null) {
+                try {
+                    final JSONArray list = new JSONArray(JsonMain);
+                    final int iSize = list.length();
+                    for (int i = 0; i < iSize; i++) {
+                        HashMap<String, MainDatas> itemHashMap = new HashMap<String, MainDatas>();
+                        JSONObject jsonObj = list.getJSONObject(i);
+                        JSONObject main = jsonObj.getJSONObject("Main");
+                        Gson gson = new Gson();
+                        MainDatas mainDatas = gson.fromJson(main.toString(), MainDatas.class);
+                        itemHashMap.put("Main", mainDatas);
+                        dataSourceList.add(itemHashMap);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
+        }catch (Exception e){
+            HashMap<String, MainDatas> itemHashMap = new HashMap<String, MainDatas>();
+            itemHashMap.put("Main", new MainDatas(getResources().getString(R.string.Security), 0, 0));
+            dataSourceList.add(itemHashMap);
+            HashMap<String, MainDatas> itemHashMap1 = new HashMap<String, MainDatas>();
+            itemHashMap1.put("Main", new MainDatas(getResources().getString(R.string.Air), 1, 1));
+            dataSourceList.add(itemHashMap1);
+            HashMap<String, MainDatas> itemHashMap2 = new HashMap<String, MainDatas>();
+            itemHashMap2.put("Main", new MainDatas(getResources().getString(R.string.Water), 2, 2));
+            dataSourceList.add(itemHashMap2);
+            HashMap<String, MainDatas> itemHashMap3 = new HashMap<String, MainDatas>();
+            itemHashMap3.put("Main", new MainDatas(getResources().getString(R.string.Electricity), 3, 4));
+            dataSourceList.add(itemHashMap3);
+            HashMap<String, MainDatas> itemHashMap4 = new HashMap<String, MainDatas>();
+            itemHashMap4.put("Main", new MainDatas(getResources().getString(R.string.Lights), 4, 4));
+            dataSourceList.add(itemHashMap4);
+            HashMap<String, MainDatas> itemHashMap5 = new HashMap<String, MainDatas>();
+            itemHashMap5.put("Main", new MainDatas(getResources().getString(R.string.Floor_heating), 5, 5));
+            dataSourceList.add(itemHashMap5);
+            HashMap<String, MainDatas> itemHashMap6 = new HashMap<String, MainDatas>();
+            itemHashMap6.put("Main", new MainDatas(getResources().getString(R.string.Service), 6, 6));
+            dataSourceList.add(itemHashMap6);
+            HashMap<String, MainDatas> itemHashMap7 = new HashMap<String, MainDatas>();
+            itemHashMap7.put("Main", new MainDatas(getResources().getString(R.string.Equipment), 7, 7));
+            dataSourceList.add(itemHashMap7);
+            HashMap<String, MainDatas> itemHashMap8 = new HashMap<String, MainDatas>();
+            itemHashMap8.put("Main", new MainDatas(getResources().getString(R.string.Setting), 8, 8));
+            dataSourceList.add(itemHashMap8);
+            Hawk.put("Main", SharePreferenceUtil.listToJson(dataSourceList));
         }
+
+
+        MyApplication.getLogger().json(SharePreferenceUtil.listToJson(dataSourceList));
+
     }
 
 }

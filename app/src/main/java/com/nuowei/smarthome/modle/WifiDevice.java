@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import io.xlink.wifi.sdk.XDevice;
 
 /**
  * 作者：肖力

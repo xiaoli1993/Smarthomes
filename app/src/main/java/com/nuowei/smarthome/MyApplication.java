@@ -2,7 +2,6 @@ package com.nuowei.smarthome;/**
  * Created by xiaoli on 2017/1/9.
  */
 
-import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.os.Looper;
@@ -20,6 +19,8 @@ import com.taobao.hotfix.HotFixManager;
 import com.taobao.hotfix.PatchLoadStatusListener;
 import com.taobao.hotfix.util.PatchStatusCode;
 import com.umeng.analytics.MobclickAgent;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.log.LoggerInterceptor;
 
 import org.litepal.LitePal;
 import org.litepal.LitePalApplication;
@@ -27,8 +28,10 @@ import org.litepal.tablemanager.Connector;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import im.fir.sdk.FIR;
+import okhttp3.OkHttpClient;
 
 /**
  * @Author :    肖力
@@ -53,6 +56,23 @@ public class MyApplication extends LitePalApplication {
      * 初始化sdk
      */
     private void initSDK() {
+
+        //OKHTTP初始化
+        try {
+            OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                    //.addInterceptor(new LoggerInterceptor("TAG"))
+                    .connectTimeout(10000L, TimeUnit.MILLISECONDS)
+                    .readTimeout(10000L, TimeUnit.MILLISECONDS)
+                    .addInterceptor(new LoggerInterceptor("TAG"))
+                    //其他配置
+                    .build();
+            OkHttpUtils.initClient(okHttpClient);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
         //log打印
         List<String> logLevels = new ArrayList<>();
         logLevels.add(LogLevel.ERROR);
