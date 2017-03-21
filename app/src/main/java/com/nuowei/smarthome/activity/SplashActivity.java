@@ -8,9 +8,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
-import com.heiman.smarthomesdk.http.HttpManage;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
+import com.nuowei.smarthome.smarthomesdk.http.HttpManage;
 import com.orhanobut.hawk.Hawk;
 
 import org.apache.http.Header;

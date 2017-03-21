@@ -17,9 +17,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.heiman.smarthomesdk.http.HttpManage;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
+import com.nuowei.smarthome.smarthomesdk.http.HttpManage;
 import com.nuowei.smarthome.view.circularanim.CircularAnim;
 import com.nuowei.smarthome.view.imageview.CircleImageView;
 import com.nuowei.smarthome.view.textview.AvenirTextView;

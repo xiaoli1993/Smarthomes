@@ -35,7 +35,7 @@ public class NetworkUtils {
 		HttpParams params = new BasicHttpParams();
 		HttpConnectionParams.setConnectionTimeout(params, getInstance().mConnectTimeout);
 		HttpConnectionParams.setSoTimeout(params, getInstance().mSocketTimeout);
-		HttpClient httpClient = new DefaultHttpClient(params);
+		HttpClient httpClient = MyHttpClient.getNewHttpClient(params);
 	    return httpClient;
 	}
 

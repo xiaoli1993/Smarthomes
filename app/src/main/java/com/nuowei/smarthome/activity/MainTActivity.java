@@ -59,6 +59,7 @@ public class MainTActivity extends AppCompatActivity {
 
         dragGridView.setAdapter(mainAdapter);
 
+
         dragGridView.setOnChangeListener(new DragGridView.OnChanageListener() {
 
             @Override

@@ -11,10 +11,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
-import com.heiman.smarthomesdk.http.HttpManage;
-import com.heiman.smarthomesdk.utils.Utils;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
+import com.nuowei.smarthome.smarthomesdk.http.HttpManage;
+import com.nuowei.smarthome.smarthomesdk.utils.Utils;
 import com.nuowei.smarthome.view.textview.AvenirTextView;
 
 import org.apache.http.Header;
