@@ -1,6 +1,7 @@
 package com.nuowei.smarthome.smarthomesdk.Json;
 
 import com.google.gson.Gson;
+import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.smarthomesdk.Constants;
 import com.nuowei.smarthome.smarthomesdk.bean.TimerBean;
 import com.nuowei.smarthome.smarthomesdk.http.HttpManage;
@@ -18,7 +19,7 @@ import org.json.JSONObject;
  * @Description :   插座JOSON
  */
 public class SmartPlug {
-    private static String TEIDS = HttpManage.getInstance().getUserid() + "";
+    private static String TEIDS = MyApplication.getMyApplication().getAppid() + "";
 
     public static int mgetSN() {
         return (int) ((Math.random() * 9 + 1) * 100000);

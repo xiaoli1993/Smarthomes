@@ -5,6 +5,7 @@ package com.nuowei.smarthome.smarthomesdk.Json;/**
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.smarthomesdk.Constants;
 import com.nuowei.smarthome.smarthomesdk.bean.SceneBean;
 import com.nuowei.smarthome.smarthomesdk.http.HttpManage;
@@ -23,7 +24,7 @@ import org.json.JSONObject;
  * @Description :   网关通讯JOSON
  */
 public class ZigbeeGW {
-    private static String TEIDS = HttpManage.getInstance().getUserid() + "";
+    private static String TEIDS = MyApplication.getMyApplication().getAppid() + "";
 
     public static int ZIGBEEONE = 1;
     public static int ZIGBEETWO = 2;

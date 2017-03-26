@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
+
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.util.CloseActivityClass;
@@ -32,7 +33,7 @@ public class SwipeBackActivity extends FragmentActivity {
 		getWindow().setBackgroundDrawable(new ColorDrawable(0));
 		getWindow().getDecorView().setBackgroundDrawable(null);
 		mSwipeBackLayout = new SwipeBackLayout(this);
-		mSharedUtil = MyApplication.getApp().getSpUtil();
+		mSharedUtil = MyApplication.getMyApplication().getSpUtil();
 		if (mSharedUtil.isSHARED_KEY_CROSS()) {
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);// landscape是横向
 		} else {

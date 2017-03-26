@@ -246,8 +246,7 @@ public class HttpConstant {
      * 无效的Access-Token
      */
     public static final int ACCESS_TOKEN_INVALID = 4031003;
-    /**
-     * 需要企业的调用权限
+    /**4001001
      */
     public static final int NEED_CORP_API= 4031004;
     /**

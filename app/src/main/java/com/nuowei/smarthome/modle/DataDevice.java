@@ -13,73 +13,187 @@ import java.util.Date;
  */
 public class DataDevice extends DataSupport {
     private long id;
-    private Date date;
-    private WifiDevice wifiDevice;
+    private Date date;//添加时间
+    private XlinkDevice xlinkDevice;
     private SubDevice subDevice;
-    private String Deviceid;
-    private String Zigbeemac;
-    private String Temperatureor;
-    private String Humidity;
-    private String Body_loc_key;
-    private String name;
-    private String year;
-    private String month;
-    private String day;
-    private String HH;
-    private String mm;
-    private String ss;
-    private String MessageID;
-    private String create_date;
-    private String Username;
-    private String is_push;
-    private String is_read;
+    private String userid;// 用户ID
+    private String userName;// 用户昵称
+    private String deviceId;// 设备ID
+    private String deviceMac;// 设备mac
+    private String subMac;// 子设备mac
+    private String subID;//  子设备ID
+    private String subType;// 子设备类型
+    private String actionName;// 动作名称
+    private String year;//年
+    private String month;//月
+    private String day;//日
+    private String HH;//时
+    private String mm;//分
+    private String ss;//秒
+    private String bodyLocKey;//数据内容
+    private String temp;//温度
+    private String humidity;//湿度
+    private String electricity;//电量
+    private String TOVC;
+    private String PM25;
+    private String CHCO;
+    private String AQI;
+    private String PM10;
+    private String GAS;
 
-    public String getDeviceid() {
-        return Deviceid;
+
+
+    private String messageID;//消息ID
+    private int messageType;//消息类型
+    private int notifyType;//通知类型
+    private String createDate;//创建时间
+    private boolean isRead;//是否已读
+    private boolean isPush;//是否推送
+    private String alertName;//触发告警规则名称
+    private String alertValue;//触发告警的数据端点值
+
+    public String getElectricity() {
+        return electricity;
     }
 
-    public void setDeviceid(String deviceid) {
-        Deviceid = deviceid;
+    public void setElectricity(String electricity) {
+        this.electricity = electricity;
     }
 
-    public String getZigbeemac() {
-        return Zigbeemac;
+    public String getSubType() {
+        return subType;
     }
 
-    public void setZigbeemac(String zigbeemac) {
-        Zigbeemac = zigbeemac;
+    public void setSubType(String subType) {
+        this.subType = subType;
     }
 
-    public String getTemperatureor() {
-        return Temperatureor;
+    public int getMessageType() {
+        return messageType;
     }
 
-    public void setTemperatureor(String temperatureor) {
-        Temperatureor = temperatureor;
+    public void setMessageType(int messageType) {
+        this.messageType = messageType;
     }
 
-    public String getHumidity() {
-        return Humidity;
+    public int getNotifyType() {
+        return notifyType;
     }
 
-    public void setHumidity(String humidity) {
-        Humidity = humidity;
+    public void setNotifyType(int notifyType) {
+        this.notifyType = notifyType;
     }
 
-    public String getBody_loc_key() {
-        return Body_loc_key;
+    public String getCreateDate() {
+        return createDate;
     }
 
-    public void setBody_loc_key(String body_loc_key) {
-        Body_loc_key = body_loc_key;
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
     }
 
-    public String getName() {
-        return name;
+    public boolean isRead() {
+        return isRead;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRead(boolean read) {
+        isRead = read;
+    }
+
+    public boolean isPush() {
+        return isPush;
+    }
+
+    public void setPush(boolean push) {
+        isPush = push;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public XlinkDevice getXlinkDevice() {
+        return xlinkDevice;
+    }
+
+    public void setXlinkDevice(XlinkDevice xlinkDevice) {
+        this.xlinkDevice = xlinkDevice;
+    }
+
+    public SubDevice getSubDevice() {
+        return subDevice;
+    }
+
+    public void setSubDevice(SubDevice subDevice) {
+        this.subDevice = subDevice;
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
+
+    public String getDeviceMac() {
+        return deviceMac;
+    }
+
+    public void setDeviceMac(String deviceMac) {
+        this.deviceMac = deviceMac;
+    }
+
+    public String getSubMac() {
+        return subMac;
+    }
+
+    public void setSubMac(String subMac) {
+        this.subMac = subMac;
+    }
+
+    public String getSubID() {
+        return subID;
+    }
+
+    public void setSubID(String subID) {
+        this.subID = subID;
+    }
+
+    public String getActionName() {
+        return actionName;
+    }
+
+    public void setActionName(String actionName) {
+        this.actionName = actionName;
     }
 
     public String getYear() {
@@ -130,75 +244,100 @@ public class DataDevice extends DataSupport {
         this.ss = ss;
     }
 
+    public String getBodyLocKey() {
+        return bodyLocKey;
+    }
+
+    public void setBodyLocKey(String bodyLocKey) {
+        this.bodyLocKey = bodyLocKey;
+    }
+
+    public String getTemp() {
+        return temp;
+    }
+
+    public void setTemp(String temp) {
+        this.temp = temp;
+    }
+
+    public String getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(String humidity) {
+        this.humidity = humidity;
+    }
+
+    public String getTOVC() {
+        return TOVC;
+    }
+
+    public void setTOVC(String TOVC) {
+        this.TOVC = TOVC;
+    }
+
+    public String getPM25() {
+        return PM25;
+    }
+
+    public void setPM25(String PM25) {
+        this.PM25 = PM25;
+    }
+
+    public String getCHCO() {
+        return CHCO;
+    }
+
+    public void setCHCO(String CHCO) {
+        this.CHCO = CHCO;
+    }
+
+    public String getAQI() {
+        return AQI;
+    }
+
+    public void setAQI(String AQI) {
+        this.AQI = AQI;
+    }
+
+    public String getPM10() {
+        return PM10;
+    }
+
+    public void setPM10(String PM10) {
+        this.PM10 = PM10;
+    }
+
+    public String getGAS() {
+        return GAS;
+    }
+
+    public void setGAS(String GAS) {
+        this.GAS = GAS;
+    }
+
     public String getMessageID() {
-        return MessageID;
+        return messageID;
     }
 
     public void setMessageID(String messageID) {
-        MessageID = messageID;
+        this.messageID = messageID;
     }
 
-    public String getCreate_date() {
-        return create_date;
+    
+    public String getAlertName() {
+        return alertName;
     }
 
-    public void setCreate_date(String create_date) {
-        this.create_date = create_date;
+    public void setAlertName(String alertName) {
+        this.alertName = alertName;
     }
 
-    public String getUsername() {
-        return Username;
+    public String getAlertValue() {
+        return alertValue;
     }
 
-    public void setUsername(String username) {
-        Username = username;
-    }
-
-    public String getIs_push() {
-        return is_push;
-    }
-
-    public void setIs_push(String is_push) {
-        this.is_push = is_push;
-    }
-
-    public String getIs_read() {
-        return is_read;
-    }
-
-    public void setIs_read(String is_read) {
-        this.is_read = is_read;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public WifiDevice getWifiDevice() {
-        return wifiDevice;
-    }
-
-    public void setWifiDevice(WifiDevice wifiDevice) {
-        this.wifiDevice = wifiDevice;
-    }
-
-    public SubDevice getSubDevice() {
-        return subDevice;
-    }
-
-    public void setSubDevice(SubDevice subDevice) {
-        this.subDevice = subDevice;
+    public void setAlertValue(String alertValue) {
+        this.alertValue = alertValue;
     }
 }

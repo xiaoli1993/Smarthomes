@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nuowei.smarthome.Constants;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.smarthomesdk.http.HttpManage;
@@ -90,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
         final String ClientName = etName.getText().toString().trim();// .toUpperCase();
         final String Password = etPassword.getText().toString().trim();
 
-        HttpManage.getInstance().doLogin(MyApplication.getApp(), ClientName, Password, new HttpManage.ResultCallback<Map<String, String>>() {
+        HttpManage.getInstance().doLogin(MyApplication.getMyApplication(), ClientName, Password, new HttpManage.ResultCallback<Map<String, String>>() {
             @Override
             public void onError(Header[] headers, HttpManage.Error error) {
                 MyApplication.getLogger().e("Code:" + error.getCode());
@@ -102,11 +103,18 @@ public class LoginActivity extends AppCompatActivity {
                 String accessToken = stringStringMap.get("access_token");
                 int appid = Integer.parseInt(stringStringMap.get("user_id"));
                 String refresh_token = stringStringMap.get("refresh_token");
+
+                MyApplication.getMyApplication().setAccessToken(accessToken);
+                MyApplication.getMyApplication().setAppid(appid);
+                MyApplication.getMyApplication().setAuthKey(authKey);
+                MyApplication.getMyApplication().setRefresh_token(refresh_token);
+
                 MyApplication.getLogger().i("Auth", "accessToken:" + accessToken + "appid:" + appid + "authKey:" + authKey);
-                HttpManage.init(accessToken, appid, refresh_token);
+                Hawk.put(Constants.SAVE_appId,appid);
+                Hawk.put(Constants.SAVE_authKey,authKey);
                 Hawk.put("MY_ACCOUNT", ClientName);
                 Hawk.put("MY_PASSWORD", Password);
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                startActivity(new Intent(LoginActivity.this, MainTActivity.class));
                 finish();
             }
         });
@@ -152,9 +160,12 @@ public class LoginActivity extends AppCompatActivity {
         boolean ispass = Hawk.contains("MY_PASSWORD");
         if (contains) {
             String MY_ACCOUNT = Hawk.get("MY_ACCOUNT");
-            String MY_PASSWORD = Hawk.get("MY_PASSWORD");
+            if (ispass) {
+                String MY_PASSWORD = Hawk.get("MY_PASSWORD");
+                etPassword.setText(MY_PASSWORD);
+            }
             etName.setText(MY_ACCOUNT);
-            etPassword.setText(MY_PASSWORD);
+
         }
     }
 }

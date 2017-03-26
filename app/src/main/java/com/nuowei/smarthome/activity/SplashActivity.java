@@ -6,8 +6,10 @@ package com.nuowei.smarthome.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 
+import com.nuowei.smarthome.Constants;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.smarthomesdk.http.HttpManage;
@@ -59,7 +61,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void onLogin(String ClientName, String Password) {
-        HttpManage.getInstance().doLogin(MyApplication.getApp(), ClientName, Password, new HttpManage.ResultCallback<Map<String, String>>() {
+        HttpManage.getInstance().doLogin(MyApplication.getMyApplication(), ClientName, Password, new HttpManage.ResultCallback<Map<String, String>>() {
             @Override
             public void onError(Header[] headers, HttpManage.Error error) {
                 MyApplication.getLogger().e("Code:" + error.getCode());
@@ -71,11 +73,46 @@ public class SplashActivity extends AppCompatActivity {
                 String accessToken = stringStringMap.get("access_token");
                 int appid = Integer.parseInt(stringStringMap.get("user_id"));
                 String refresh_token = stringStringMap.get("refresh_token");
+
+                MyApplication.getMyApplication().setAccessToken(accessToken);
+                MyApplication.getMyApplication().setAppid(appid);
+                MyApplication.getMyApplication().setAuthKey(authKey);
+                MyApplication.getMyApplication().setRefresh_token(refresh_token);
+
                 MyApplication.getLogger().i("Auth", "accessToken:" + accessToken + "appid:" + appid + "authKey:" + authKey);
-                HttpManage.init(accessToken, appid, refresh_token);
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                finish();
+                Hawk.put(Constants.SAVE_appId,appid);
+                Hawk.put(Constants.SAVE_authKey,authKey);
+                Message message = new Message();
+                message.what = 1;
+                myHandler.sendMessage(message);
+
             }
         });
+
+
     }
+
+    Handler myHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    HttpManage.getInstance().getUserInfo(MyApplication.getMyApplication(), new HttpManage.ResultCallback<String>() {
+                        @Override
+                        public void onError(Header[] headers, HttpManage.Error error) {
+                            MyApplication.getLogger().e(error.getMsg() + "\t" + error.getCode());
+                        }
+
+                        @Override
+                        public void onSuccess(int code, String response) {
+                            MyApplication.getLogger().json(response);
+                        }
+                    });
+                    startActivity(new Intent(SplashActivity.this, MainTActivity.class));
+                    finish();
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
+
 }

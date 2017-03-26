@@ -26,5 +26,9 @@
     <string name="Service">服务</string>
     <string name="Equipment">设备</string>
     <string name="Setting">设置</string>
+    <string name="Device">设备</string>
 
+    <string name="Share_Device">分享设备</string>
+    <string name="Feedback">意见反馈</string>
+    <string name="About">关于</string>
 </resources>

@@ -3,6 +3,7 @@ package com.nuowei.smarthome.smarthomesdk.Json;/**
  */
 
 
+import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.smarthomesdk.Constants;
 import com.nuowei.smarthome.smarthomesdk.http.HttpManage;
 
@@ -24,7 +25,7 @@ import java.util.Map;
  */
 public class AirDetector {
 
-    private static String TEIDS = HttpManage.getInstance().getUserid() + "";
+    private static String TEIDS = MyApplication.getMyApplication().getAppid() + "";
 
 
     public static class AIR_OID {

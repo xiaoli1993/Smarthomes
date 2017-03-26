@@ -3,6 +3,7 @@ package com.nuowei.smarthome.smarthomesdk.Json;/**
  */
 
 
+import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.smarthomesdk.Constants;
 import com.nuowei.smarthome.smarthomesdk.http.HttpManage;
 
@@ -20,7 +21,7 @@ import org.json.JSONObject;
  * @Description :   红外JOSON
  */
 public class Remote {
-    private static String TEIDS = HttpManage.getInstance().getUserid() + "";
+    private static String TEIDS = MyApplication.getMyApplication().getAppid() + "";
 
     /**
      * 获取OID

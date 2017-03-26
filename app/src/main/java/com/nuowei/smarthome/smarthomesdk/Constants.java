@@ -28,7 +28,8 @@ public class Constants {
     public static String AIR_PRODUCTID = "160edcafc3a80200160edcafc3a80201";
     //  红外遥控器
     public static String REMOTE_PRODUCTID = "160edcb03fc9ba00160edcb03fc9ba01";
-
+    //  气体
+    public static String GAS_PRODUCTID = "160edcb0eb22e600160edcb0eb22e601";
     //Json CID指令集
     public static class JOSN_CID {
         public static final int COMMAND_SEND = 30011;                               //CID   控制指令
@@ -58,6 +59,7 @@ public class Constants {
         public static final int DEVICE_WIFI_PLUGIN = 1041;                       //WIFI   智能插座
         public static final int DEVICE_WIFI_METRTING_PLUGIN = 1042;              //WIFI   计量插座
         public static final int DEVICE_WIFI_AIR = 1043;                          //WIFI   空气质量检测
+        public static final int DEVICE_WIFI_GAS = 1044;                          //WIFI   气感
         public static final int DEVICE_WIFI_IPC = 2049;                          //WIFI   摄像头
         // 虚拟设备类型
         public static final int VDEVICE_STB = 1;                                 //有线电视机顶盒(IPTV机顶盒,卫星电视)

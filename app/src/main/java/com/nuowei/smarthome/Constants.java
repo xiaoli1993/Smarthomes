@@ -37,7 +37,7 @@ public class Constants {
     public static String WEIXIN_APP_ID = "wx701599ddc5c05fed";
 
     // ------------启动监听
-    public static final String PACKAGE_NAME = MyApplication.getApp().getPackageName();
+    public static final String PACKAGE_NAME = MyApplication.getMyApplication().getPackageName();
     public static final String BROADCAST_ON_START = PACKAGE_NAME + ".onStart"; //
     public static final String BROADCAST_ON_LOGIN = PACKAGE_NAME + ".xlinkonLogin";
 
@@ -170,6 +170,7 @@ public class Constants {
         public static final int DEVICE_WIFI_Plugin = 1041;                       //WIFI   智能插座
         public static final int DEVICE_WIFI_Metering_Plugin = 1042;              //WIFI   计量插座
         public static final int DEVICE_WIFI_AIR = 1043;                          //WIFI   空气质量检测
+        public static final int DEVICE_WIFI_GAS = 1044;                          //WIFI   气感
         public static final int DEVICE_WIFI_IPC = 2049;                          //WIFI   摄像头
         // 虚拟设备类型
         public static final int VDEVICE_STB = 1;                                 //有线电视机顶盒(IPTV机顶盒,卫星电视)
