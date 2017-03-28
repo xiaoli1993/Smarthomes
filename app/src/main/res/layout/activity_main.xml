@@ -19,8 +19,7 @@
         android:layout_width="260dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="#fff"
-        >
+        android:background="#fff">
 
         <include
             layout="@layout/main_profile"

@@ -73,7 +73,6 @@ public class SubDeviceManage {
         List<SubDevice> Xldevice = null;
         try{
              Xldevice = DataSupport.where("deviceMac = ? and zigbeeMac = ?", dev.getWifiDevice().getDeviceMac(),dev.getZigbeeMac()+"").find(SubDevice.class);
-
         }catch (Exception e){
             dev.save();
             MyApplication.getLogger().d("进入这里错误");

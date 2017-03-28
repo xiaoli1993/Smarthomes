@@ -4,24 +4,24 @@
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
 
-    android:gravity="bottom"
     android:layout_marginBottom="15dp"
+    android:gravity="bottom"
     android:orientation="horizontal">
 
     <TextView
         android:layout_width="0dp"
-
+        android:id="@+id/tv_list"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="ssdasdasd" />
+        android:text="List" />
 
     <TextView
         android:layout_width="0dp"
-
+        android:id="@+id/tv_Grid"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="asdasdas" />
+        android:text="Grid" />
 
 </LinearLayout>

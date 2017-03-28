@@ -3,15 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:id="@+id/left_rl"
     android:paddingTop="70dp">
 
     <LinearLayout
         android:id="@+id/ll1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-       >
-        <!--头像，昵称信息-->
+        android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -19,30 +18,30 @@
             android:orientation="vertical">
 
             <com.nuowei.smarthome.view.imageview.CircularImageView
-                android:id="@+id/iv_bottom"
+                android:id="@+id/iv_Avatar"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:scaleType="fitXY"
                 android:src="@drawable/log_icon" />
+
             <TextView
+                android:id="@+id/tv_nikeName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="wwwww"
+                android:layout_gravity="center"
                 android:layout_marginTop="20dip"
-                android:layout_gravity="center"/>
+                android:text="wwwww" />
 
         </LinearLayout>
 
 
     </LinearLayout>
 
-    <!--底部功能条-->
     <include
-        android:background="#f8f8f8"
         android:id="@+id/bottom_view"
-        layout="@layout/left_view_bottom_layout" />
-    <!--中间列表-->
+        layout="@layout/left_view_bottom_layout"
+        android:background="#f8f8f8" />
     <ListView
         android:id="@+id/left_listview"
         android:layout_width="match_parent"

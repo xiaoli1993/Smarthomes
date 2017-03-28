@@ -5,14 +5,13 @@ package com.nuowei.smarthome.smarthomesdk.utils;/**
 import android.graphics.Bitmap;
 
 
-import com.nuowei.smarthome.smarthomesdk.Constants;
+import com.nuowei.smarthome.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

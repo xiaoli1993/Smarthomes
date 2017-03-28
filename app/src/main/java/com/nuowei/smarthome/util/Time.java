@@ -5,6 +5,7 @@ import android.util.Log;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * @author 作者 E-mail: 554674787@qq.com
@@ -192,4 +193,31 @@ public class Time {
                 .format(new Date(timestamp));
         return date;
     }
+
+    public static Date LongToDate(long timer) {
+        String timers = null;
+        try {
+            timers = longToString(timer, "yyyy-MM-dd HH:mm:ss");
+        } catch (ParseException e) {
+
+        }
+        Date dateTmp = null;
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+            try {
+                dateTmp = dateFormat.parse(timers);
+            } catch (ParseException e) {
+                dateTmp = Time.stringToDate(timers, "yyyy-MM-dd HH:mm:ss");
+            }
+        } catch (Exception e) {
+            try {
+                dateTmp = Time.stringToDate(timers, "yyyy-MM-dd HH:mm:ss");
+            } catch (ParseException e1) {
+                e1.printStackTrace();
+            }
+        }
+        return dateTmp;
+    }
+
 }

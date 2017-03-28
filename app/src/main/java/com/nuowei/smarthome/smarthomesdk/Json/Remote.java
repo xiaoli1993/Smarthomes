@@ -3,9 +3,8 @@ package com.nuowei.smarthome.smarthomesdk.Json;/**
  */
 
 
+import com.nuowei.smarthome.Constants;
 import com.nuowei.smarthome.MyApplication;
-import com.nuowei.smarthome.smarthomesdk.Constants;
-import com.nuowei.smarthome.smarthomesdk.http.HttpManage;
 
 import org.json.JSONArray;
 import org.json.JSONException;

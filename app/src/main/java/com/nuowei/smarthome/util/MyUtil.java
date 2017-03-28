@@ -5,14 +5,14 @@ package com.nuowei.smarthome.util;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 
-import com.nuowei.smarthome.MyApplication;
+import com.nuowei.smarthome.Constants;
 import com.nuowei.smarthome.manage.DeviceManage;
 import com.nuowei.smarthome.modle.XlinkDevice;
-import com.nuowei.smarthome.smarthomesdk.Constants;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -89,9 +89,7 @@ public class MyUtil {
 //            }
 //        }
         for (XlinkDevice device : listDev) {
-            MyApplication.getLogger().json(device.getxDevice());
             deviceid.put(device.getDeviceId());
-
         }
         return deviceid;
     }
@@ -150,7 +148,7 @@ public class MyUtil {
                     version = 2;
                 }
                 deviceName = jsonObj.getString("name");
-                if (deviceName.equals("") || deviceName == null) {
+                if (MyUtil.isEmptyString(deviceName)) {
                     if (product_id.equals(Constants.ZIGBEE_PRODUCTID)) {
                         deviceName = "ZGW_" + mac;
                     } else if (product_id.equals(Constants.PLUGIN_PRODUCTID)) {
@@ -202,8 +200,9 @@ public class MyUtil {
             deviceJson.put("mucSoftVersion", firmware_version);
             deviceJson.put("productID", product_id);
             deviceJson.put("accesskey", access_key);
+            deviceJson.put("deviceName", deviceName);
             obj.put("device", deviceJson);
-            XDevice xdevice = XlinkAgent.JsonToDevice(obj);
+//            XDevice xdevice = XlinkAgent.JsonToDevice(obj);
             device.setxDevice(obj.toString());
             device.setDeviceType(devicetype);
             device.setDeviceName(deviceName);
@@ -218,6 +217,7 @@ public class MyUtil {
             return null;
         }
     }
+
     /**
      * 获取报警信息
      *
@@ -253,14 +253,39 @@ public class MyUtil {
         }
         return type;
     }
+
     /**
      * 判断字符串是否为空
+     *
      * @param str 字符串
      * @return 是否为空
      */
-    public static boolean isEmptyString(String str)
-    {
+    public static boolean isEmptyString(String str) {
         return str == null || str.trim().length() == 0;
+    }
+
+    /**
+     * 判断List是否为空
+     *
+     * @param list 字符串
+     * @return 是否为空
+     */
+    public static boolean isEmptyList(List list) {
+        return list == null && list.isEmpty();
+    }
+
+
+    public static IntentFilter regFilter() {
+        IntentFilter myIntentFilter = new IntentFilter();
+        myIntentFilter.addAction(Constants.BROADCAST_RECVPIPE);
+        myIntentFilter.addAction(Constants.BROADCAST_DEVICE_CHANGED);
+        myIntentFilter.addAction(Constants.BROADCAST_DEVICE_SYNC);
+        myIntentFilter.addAction(Constants.BROADCAST_RECVPIPE_SYNC);
+        myIntentFilter.addAction(Constants.BROADCAST_CONNENCT_SUCCESS);
+        myIntentFilter.addAction(Constants.BROADCAST_CONNENCT_FAIL);
+        myIntentFilter.addAction(Constants.BROADCAST_SEND_OVERTIME);
+        myIntentFilter.addAction(Constants.BROADCAST_SEND_SUCCESS);
+        return myIntentFilter;
     }
 
 }

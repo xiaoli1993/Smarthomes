@@ -114,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
                 Hawk.put(Constants.SAVE_authKey,authKey);
                 Hawk.put("MY_ACCOUNT", ClientName);
                 Hawk.put("MY_PASSWORD", Password);
-                startActivity(new Intent(LoginActivity.this, MainTActivity.class));
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();
             }
         });

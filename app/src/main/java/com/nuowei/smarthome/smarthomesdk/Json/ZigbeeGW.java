@@ -5,8 +5,8 @@ package com.nuowei.smarthome.smarthomesdk.Json;/**
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.nuowei.smarthome.Constants;
 import com.nuowei.smarthome.MyApplication;
-import com.nuowei.smarthome.smarthomesdk.Constants;
 import com.nuowei.smarthome.smarthomesdk.bean.SceneBean;
 import com.nuowei.smarthome.smarthomesdk.http.HttpManage;
 

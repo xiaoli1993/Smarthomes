@@ -21,8 +21,9 @@ public class Messages {
      * count : 20065
      * list : [{"id":"58d31df690124f202bfbd119","to":[],"content":"{\"message\":{\"electricity\":\"0.000\",\"time\":\"2017-3-23 23:59:59\"},\"plugMac\":\"ACCF23A18CDC\"}","alert_value":"{\"message\":{\"electricity\":\"0.000\",\"time\":\"2017-3-23 23:59:59\"},\"plugMac\":\"ACCF23A18CDC\"}","create_date":"2017-03-23T08:59:34.358Z","alert_name":"electricity_notice","notify_type":1,"from":1144505255,"type":1,"is_read":false,"is_push":false}]
      */
-
+    @Expose
     private int count;
+    @Expose
     private List<ListBean> list;
 
     public int getCount() {
@@ -55,16 +56,25 @@ public class Messages {
          * is_read : false
          * is_push : false
          */
-
+        @Expose
         private String id;
+        @Expose
         private String content;
+        @Expose
         private String alert_value;
+        @Expose
         private String create_date;
+        @Expose
         private String alert_name;
+        @Expose
         private int notify_type;
+        @Expose
         private int from;
+        @Expose
         private int type;
+        @Expose
         private boolean is_read;
+        @Expose
         private boolean is_push;
         @Expose
         private List<?> to;

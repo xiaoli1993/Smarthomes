@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/Users/xiaoli/android/316/Smarthome-master/p2PCore/src/main/shaders"/></dataSet><dataSet config="debug"><source path="/Users/xiaoli/android/316/Smarthome-master/p2PCore/src/debug/shaders"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="E:\kkkkkkkk\Smarthomes\p2PCore\src\main\shaders"/></dataSet><dataSet config="debug"><source path="E:\kkkkkkkk\Smarthomes\p2PCore\src\debug\shaders"/></dataSet></merger>

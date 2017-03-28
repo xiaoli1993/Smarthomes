@@ -2,6 +2,8 @@ package com.nuowei.smarthome.modle;/**
  * Created by hp on 2016/8/18.
  */
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import io.xlink.wifi.sdk.XDevice;
+import io.xlink.wifi.sdk.XlinkAgent;
 
 
 /**
@@ -155,8 +158,14 @@ public class XlinkDevice extends DataSupport {
         this.productId = productId;
     }
 
-    public String getxDevice() {
-        return xDevice;
+    public XDevice getxDevice() {
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject(xDevice);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return XlinkAgent.JsonToDevice(obj);
     }
 
     public void setxDevice(String xDevice) {

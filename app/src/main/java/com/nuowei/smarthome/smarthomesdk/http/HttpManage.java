@@ -13,6 +13,8 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.smarthomesdk.utils.Utils;
+import com.nuowei.smarthome.util.MyUtil;
+
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.ByteArrayEntity;
@@ -808,11 +810,13 @@ public class HttpManage {
      * @param limit       个数
      * @param device      设备集合
      * @param create_date 创建时间
+     * @param queryCreate 时间请求
      * @param callback
      * @throws JSONException
      */
     public void GetMessagesID(Context context, String offset,
                               String limit, JSONArray device,
+                              String queryCreate,
                               String create_date,
                               final ResultCallback callback) throws JSONException {
         String url = getUserInfoUrl.replace("{user_id}", MyApplication.getMyApplication().getAppid() + "");
@@ -828,15 +832,17 @@ public class HttpManage {
             JSONObject query = new JSONObject();
             JSONObject from = new JSONObject();
             JSONObject id = new JSONObject();
-            query.put("create_date", id);
-            id.put("$gte", create_date);
+            if (!MyUtil.isEmptyString(create_date)) {
+                query.put("create_date", id);
+                id.put(queryCreate, create_date);
+            }
             query.put("from", from);
             from.put("$in", device);
             params.put("query", query);
         }
 
         Map<String, String> headers = new HashMap<String, String>();
-        MyApplication.getLogger().d(url + "/messages"+"\n"+params.getStringData());
+        MyApplication.getLogger().d(url + "/messages" + "\n" + params.getStringData());
         headers.put("Access-Token", MyApplication.getMyApplication().getAccessToken());
         post2(context, url + "/messages", params.getJsonEntity(), callback, headers);
     }

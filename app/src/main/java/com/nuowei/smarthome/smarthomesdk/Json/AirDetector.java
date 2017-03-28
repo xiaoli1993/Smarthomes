@@ -3,16 +3,13 @@ package com.nuowei.smarthome.smarthomesdk.Json;/**
  */
 
 
+import com.nuowei.smarthome.Constants;
 import com.nuowei.smarthome.MyApplication;
-import com.nuowei.smarthome.smarthomesdk.Constants;
-import com.nuowei.smarthome.smarthomesdk.http.HttpManage;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Copyright ©深圳市海曼科技有限公司

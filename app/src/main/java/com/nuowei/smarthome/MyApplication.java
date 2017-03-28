@@ -223,7 +223,7 @@ public class MyApplication extends LitePalApplication implements XlinkNetListene
                 .setDebug(true)
                 .setWriteToFile(false)
                 .setLogDir(getString(R.string.app_name))
-                .setLogPrefix(getString(R.string.app_name)+ File.separator+"sd")
+                .setLogPrefix(getString(R.string.app_name) + File.separator + "sd")
                 .setLogSegment(LogSegment.TWELVE_HOURS)
                 .setLogLevelsForFile(logLevels)
                 .setZoneOffset(TimeUtils.ZoneOffset.P0800)
@@ -348,7 +348,7 @@ public class MyApplication extends LitePalApplication implements XlinkNetListene
         if (device != null) {
 //            // 发送广播，那个activity需要该数据可以监听广播，并获取数据，然后进行响应的处理
 //            // TimerManage.getInstance().parseByte(device,data);
-            getData(Constants.BROADCAST_RECVPIPE_SYNC, device, data);
+            getData(Constants.BROADCAST_DEVICE_SYNC, device, data);
         }
     }
 
@@ -393,7 +393,6 @@ public class MyApplication extends LitePalApplication implements XlinkNetListene
     @Override
     public void onDeviceStateChanged(XDevice xdevice, int state) {
         // TODO Auto-generated method stub
-
         getLogger().e("onDeviceStateChanged:" + xdevice.getMacAddress() + " state:" + state);
         XlinkDevice device = DeviceManage.getInstance().getDevice(xdevice.getMacAddress());
         if (device != null) {
@@ -404,7 +403,13 @@ public class MyApplication extends LitePalApplication implements XlinkNetListene
             intent.putExtra(Constants.STATUS, state);
             MyApplication.getMyApplication().sendBroadcast(intent);
         }
-
+//        if (state == XlinkCode.DEVICE_CHANGED_CONNECTING) {
+//            Log("正在重连设备...");
+//        } else if (state == XlinkCode.DEVICE_CHANGED_CONNECT_SUCCEED) {
+//            XlinkUtils.shortTips("连接设备成功");
+//        } else if (state == XlinkCode.DEVICE_CHANGED_OFFLINE) {
+//            Log("连接设备失败");
+//        }
     }
 
     /**
@@ -542,6 +547,7 @@ public class MyApplication extends LitePalApplication implements XlinkNetListene
     public void setAppid(int appid) {
         this.appid = appid;
     }
+
     public String getAccessToken() {
         return accessToken;
     }

@@ -30,7 +30,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -42,6 +42,7 @@
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.MainTActivity" />
+        <activity android:name=".activity.MainActivity" />
         <activity android:name="com.avos.avoscloud.feedback.ThreadActivity" />
 
         <!-- sdk初始化 -->
@@ -70,6 +71,13 @@
         <activity android:name=".activity.ServiceActivity" />
         <activity android:name=".activity.EquipmentActivity" />
         <activity android:name=".activity.SettingActivity"></activity>
+
+        <!-- XLINK 内网服务 -->
+        <service android:name="io.xlink.wifi.sdk.XlinkUdpService" />
+        <!-- XLINK 公网服务 -->
+        <service android:name="io.xlink.wifi.sdk.XlinkTcpService" />
+
+        <service android:name=".SmartHomeServer" />
     </application>
 
 </manifest>

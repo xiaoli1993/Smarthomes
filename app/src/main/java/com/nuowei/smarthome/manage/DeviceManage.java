@@ -40,6 +40,7 @@ public class DeviceManage {
 
     /**
      * 获取所有设备
+     *
      * @return
      */
     public synchronized List<XlinkDevice> getDevices() {
@@ -64,19 +65,14 @@ public class DeviceManage {
         listDev = DataSupport.findAll(XlinkDevice.class);
         for (XlinkDevice device : listDev) {
 //                    MyApplication.getLogger().json(device.getxDevice());
-            try {
-                JSONObject devicejson = new JSONObject(device.getxDevice());
-                XDevice xdevice = XlinkAgent.JsonToDevice(devicejson);
-                XlinkAgent.getInstance().initDevice(xdevice);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            XlinkAgent.getInstance().initDevice(device.getxDevice());
         }
         return listDev;
     }
 
     /**
      * 获取单个设备
+     *
      * @param mac
      * @return
      */
@@ -84,25 +80,29 @@ public class DeviceManage {
         List<XlinkDevice> Xldevice = DataSupport.where("deviceMac = ?", mac).find(XlinkDevice.class);
         return Xldevice.get(0);
     }
+
     /**
      * 获取单个设备
+     *
      * @param deviceid
      * @return
      */
     public XlinkDevice getDevice(int deviceid) {
-        List<XlinkDevice> Xldevice = DataSupport.where("deviceId = ?", deviceid+"").find(XlinkDevice.class);
+        List<XlinkDevice> Xldevice = DataSupport.where("deviceId = ?", deviceid + "").find(XlinkDevice.class);
         return Xldevice.get(0);
     }
+
     /**
      * 添加设备
+     *
      * @param dev
      */
     public void addDevice(XlinkDevice dev) {
         List<XlinkDevice> Xldevice = null;
-        try{
-             Xldevice = DataSupport.where("deviceMac = ?", dev.getDeviceMac()).find(XlinkDevice.class);
+        try {
+            Xldevice = DataSupport.where("deviceMac = ?", dev.getDeviceMac()).find(XlinkDevice.class);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             dev.save();
             MyApplication.getLogger().d("进入这里错误");
         }
@@ -117,6 +117,7 @@ public class DeviceManage {
 
     /**
      * 更新数据
+     *
      * @param device
      */
     public void updateDevice(XlinkDevice device) {
@@ -125,6 +126,7 @@ public class DeviceManage {
 
     /**
      * 删除设备
+     *
      * @param mac
      */
     public void removeDevice(String mac) {

@@ -107,7 +107,7 @@ public class SplashActivity extends AppCompatActivity {
                             MyApplication.getLogger().json(response);
                         }
                     });
-                    startActivity(new Intent(SplashActivity.this, MainTActivity.class));
+                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
                     finish();
                     break;
             }
