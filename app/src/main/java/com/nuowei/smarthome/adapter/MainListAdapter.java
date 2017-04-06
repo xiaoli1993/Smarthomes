@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nuowei.smarthome.Constants;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.helper.MyItemTouchCallback;
 import com.nuowei.smarthome.manage.DeviceManage;
@@ -58,31 +59,40 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
             holder.textView.setText(subDevice.getDeviceName());
 
             switch (subDevice.getDeviceType()) {
-                case 0:
+                case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_RGB:
                     holder.imageView.setImageResource(R.drawable.home_security);
                     break;
-                case 1:
+                case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_DOORS:
                     holder.imageView.setImageResource(R.drawable.home_air);
                     break;
-                case 2:
+                case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_WATER:
                     holder.imageView.setImageResource(R.drawable.home_water);
                     break;
-                case 3:
+                case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_PIR:
                     holder.imageView.setImageResource(R.drawable.home_electric);
                     break;
-                case 4:
+                case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_SMOKE:
                     holder.imageView.setImageResource(R.drawable.home_light);
                     break;
-                case 5:
+                case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_THP:
                     holder.imageView.setImageResource(R.drawable.home_warmfloor);
                     break;
-                case 6:
+                case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_GAS:
                     holder.imageView.setImageResource(R.drawable.home_service);
                     break;
-                case 7:
+                case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_CO:
                     holder.imageView.setImageResource(R.drawable.home_device);
                     break;
-                case 8:
+                case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_SOS:
+                    holder.imageView.setImageResource(R.drawable.home_setting);
+                    break;
+                case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_SW:
+                    holder.imageView.setImageResource(R.drawable.home_setting);
+                    break;
+                case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_PLUGIN:
+                    holder.imageView.setImageResource(R.drawable.home_setting);
+                    break;
+                case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_METRTING_PLUGIN:
                     holder.imageView.setImageResource(R.drawable.home_setting);
                     break;
                 default:
@@ -93,35 +103,20 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
             XlinkDevice xlinkDevice = DeviceManage.getInstance().getDevice(results.get(position).getDeviceMac());
             holder.textView.setText(xlinkDevice.getDeviceName());
             switch (xlinkDevice.getDeviceType()) {
-                case 0:
+                case Constants.DEVICE_TYPE.DEVICE_WIFI_RC:
                     holder.imageView.setImageResource(R.drawable.home_security);
                     break;
-                case 1:
+                case Constants.DEVICE_TYPE.DEVICE_WIFI_GATEWAY:
                     holder.imageView.setImageResource(R.drawable.home_air);
                     break;
-                case 2:
+                case Constants.DEVICE_TYPE.DEVICE_WIFI_PLUGIN:
                     holder.imageView.setImageResource(R.drawable.home_water);
                     break;
-                case 3:
+                case Constants.DEVICE_TYPE.DEVICE_WIFI_METRTING_PLUGIN:
                     holder.imageView.setImageResource(R.drawable.home_electric);
                     break;
-                case 4:
+                case Constants.DEVICE_TYPE.DEVICE_WIFI_AIR:
                     holder.imageView.setImageResource(R.drawable.home_light);
-                    break;
-                case 5:
-                    holder.imageView.setImageResource(R.drawable.home_warmfloor);
-                    break;
-                case 6:
-                    holder.imageView.setImageResource(R.drawable.home_service);
-                    break;
-                case 7:
-                    holder.imageView.setImageResource(R.drawable.home_device);
-                    break;
-                case 8:
-                    holder.imageView.setImageResource(R.drawable.home_setting);
-                    break;
-                default:
-                    holder.imageView.setImageResource(R.drawable.home_device);
                     break;
             }
         }

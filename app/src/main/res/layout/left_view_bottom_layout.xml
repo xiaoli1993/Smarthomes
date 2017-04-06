@@ -3,25 +3,54 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-
-    android:layout_marginBottom="15dp"
     android:gravity="bottom"
     android:orientation="horizontal">
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/ll_list"
         android:layout_width="0dp"
-        android:id="@+id/tv_list"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center"
-        android:text="List" />
+        android:orientation="horizontal"
+        android:padding="20dp">
 
-    <TextView
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:src="@drawable/main_right_list" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:gravity="center"
+            android:text="List"
+            android:textSize="20dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_Grid"
         android:layout_width="0dp"
-        android:id="@+id/tv_Grid"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center"
-        android:text="Grid" />
+        android:orientation="horizontal"
+        android:padding="20dp">
 
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:src="@drawable/main_right_lattice" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:gravity="center"
+            android:text="Grid"
+            android:textSize="20dp" />
+    </LinearLayout>
 </LinearLayout>

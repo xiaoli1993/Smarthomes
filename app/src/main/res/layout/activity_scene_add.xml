@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/activity_title" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_add_execution"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:background="@drawable/rl_selector">
+
+            <ImageView
+                android:id="@+id/image_Add"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="12dp"
+                android:src="@drawable/add" />
+
+            <com.nuowei.smarthome.view.textview.AvenirTextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/image_Add"
+                android:layout_toRightOf="@+id/image_Add"
+                android:gravity="center_vertical"
+                android:paddingLeft="17.0dip"
+                android:text="@string/add_execution_tack"
+                android:textColor="#ff333333"
+                android:textSize="13dp" />
+
+            <ImageView
+
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingRight="12dp"
+                android:src="@drawable/more" />
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/list_execution"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:cacheColorHint="@null"
+            android:divider="@null"
+            android:fadingEdge="none"
+            android:scrollbarSize="10.0dip"
+            android:scrollbars="none"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white">
+
+            <com.nuowei.smarthome.view.textview.AvenirTextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_alignParentTop="true"
+                android:gravity="center_vertical"
+                android:paddingLeft="17.0dip"
+                android:text="@string/start_timer"
+                android:textColor="#ff333333"
+                android:textSize="13dp" />
+
+            <com.kyleduo.switchbutton.SwitchButton
+                android:id="@+id/sw_timer"
+                style="@style/SwitchButtonMD"
+                android:layout_width="31.3dp"
+                android:layout_height="17.3dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/activity_bg" />
+
+        <RelativeLayout
+            android:id="@+id/rl_repeat"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/rl_selector"
+            android:visibility="gone">
+
+            <com.nuowei.smarthome.view.textview.AvenirTextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_alignParentTop="true"
+                android:gravity="center_vertical"
+                android:paddingLeft="17.0dip"
+                android:text="@string/repeat"
+                android:textColor="#ff333333"
+                android:textSize="13dp" />
+
+            <com.nuowei.smarthome.view.textview.AvenirTextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/image_more"
+                android:layout_toStartOf="@+id/image_more"
+                android:gravity="center_vertical"
+                android:paddingRight="5dp"
+                android:text="Monday 08:00" />
+
+            <ImageView
+                android:id="@+id/image_more"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingRight="12dp"
+                android:src="@drawable/more" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_coutdown"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rl_selector"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
+
+        <com.nuowei.smarthome.view.textview.AvenirTextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentTop="true"
+            android:gravity="center_vertical"
+            android:paddingLeft="17.0dip"
+            android:text="@string/countdown"
+            android:textColor="#ff333333"
+            android:textSize="13dp" />
+
+        <com.nuowei.smarthome.view.textview.AvenirTextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/image_more1"
+            android:layout_toStartOf="@+id/image_more1"
+            android:gravity="center_vertical"
+            android:paddingRight="5dp"
+            android:text="00:22:56" />
+
+        <ImageView
+            android:id="@+id/image_more1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="12dp"
+            android:src="@drawable/more" />
+    </RelativeLayout>
+</LinearLayout>

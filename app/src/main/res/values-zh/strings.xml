@@ -31,4 +31,138 @@
     <string name="Share_Device">分享设备</string>
     <string name="Feedback">意见反馈</string>
     <string name="About">关于</string>
+    <string name="pickerview_cancel">取消</string>
+    <string name="pickerview_submit">确定</string>
+    <string name="pickerview_year">年</string>
+    <string name="pickerview_month">月</string>
+    <string name="pickerview_day">日</string>
+    <string name="pickerview_hours">时</string>
+    <string name="pickerview_minutes">分</string>
+    <string name="pickerview_seconds">秒</string>
+    <string name="unknow">不知道</string>
+    <string name="alarm">报警</string>
+    <string name="ALRM_RESUME_17">  %1$s    关闭</string>
+    <string name="ALRM_RESUME_18">  %1$s    无水泄漏</string>
+    <string name="ALRM_RESUME_19">  %1$s    无人经过</string>
+    <string name="ALRM_RESUME_20">  %1$s    报警恢复</string>
+    <string name="ALRM_RESUME_22">  %1$s    报警恢复</string>
+    <string name="ALRM_RESUME_24">  %1$s    报警恢复</string>
+    <string name="ALRM_RESUME_67">  %1$s    关闭</string>
+    <string name="ALRMING_17">  %1$s    打开</string>
+    <string name="ALRMING_18">  %1$s    水泄漏报警</string>
+    <string name="ALRMING_19">  %1$s    有人经过</string>
+    <string name="ALRMING_20">  %1$s    烟雾报警</string>
+    <string name="ALRMING_22">  %1$s    气感报警</string>
+    <string name="ALRMING_24">  %1$s    一氧化碳报警</string>
+    <string name="ALRMING_49">  %1$s    紧急按钮报警</string>
+    <string name="ALRMING_50">  %1$s    遥控器报警</string>
+    <string name="ALRMING_67">  %1$s    打开</string>
+    <string name="ARM_50">  %1$s    外出布防</string>
+    <string name="DISARM_50">  %1$s    撤防</string>
+    <string name="HOMEARM_50">  %1$s    在家布防</string>
+    <string name="HUM_ALARM_21">  %1$s    湿度报警</string>
+    <string name="Power_1042">  %1$s    功率过大</string>
+    <string name="Power_Current_1042">  %1$s    功率电流过大</string>
+    <string name="Current_1042">  %1$s    电流过大</string>
+    <string name="Power_Currentvoltage_1042">  %1$s    垃圾东西</string>
+    <string name="Power_Voltage_1042">  %1$s    功率电压过大</string>
+    <string name="Current_Voltage_1042">  %1$s    电流电压过大</string>
+    <string name="LIGHT_OFF_1">  %1$s    彩灯关闭</string>
+    <string name="LIGHT_ON_1">  %1$s    彩灯开启</string>
+    <string name="RELAY_OFF_67">  %1$s    电源关闭</string>
+    <string name="RELAY_ON_67">  %1$s    电源打开</string>
+    <string name="TAMPER_ALARM_17">  %1$s    打开 (已拆下)</string>
+    <string name="TAMPER_ALARM_19">  %1$s    有人经过(已拆下)</string>
+    <string name="TAMPER_DEVALARM_17">  %1$s   打开 (已拆下)</string>
+    <string name="TAMPER_DEVALARM_19">  %1$s    有人经过(已拆下)</string>
+    <string name="TAMPER_DEVRESUME_17">  %1$s    关闭 (已拆下)</string>
+    <string name="TAMPER_DEVRESUME_19">  %1$s    无人经过(已拆下)</string>
+    <string name="TAMPER_RESUME_17">  %1$s    关闭 (已拆下)</string>
+    <string name="TAMPER_RESUME_19">  %1$s    无人经过(已拆下)</string>
+    <string name="TEMP_ALARM_21">  %1$s    温度报警</string>
+    <string name="TEMP_HUM_ALARM_21">  %1$s    温湿度报警</string>
+    <string name="USB_OFF_67">  %1$s    USB关闭</string>
+    <string name="USB_ON_67">  %1$s    USB打开</string>
+    <string name="add_scene">添加场景</string>
+    <string name="Save">提交</string>
+    <string name="add_execution_tack">添加执行条件</string>
+    <string name="start_timer">Start timer</string>
+    <string name="repeat">Repeat</string>
+    <string name="countdown">Countdown</string>
+    <string name="sunday">Sunday</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string-array name="calendar_week">
+        <item>日</item>
+        <item>一</item>
+        <item>二</item>
+        <item>三</item>
+        <item>四</item>
+        <item>五</item>
+        <item>六</item>
+    </string-array>
+
+
+    <string name="exit_app_hint">再点一次退出应用</string>
+    <string name="cancel">取消</string>
+    <string name="confirm">确定</string>
+    <string name="finish">完成</string>
+    <string name="finished">已完成</string>
+    <string name="start">开始</string>
+
+    <!--calendar-->
+    <string name="calendar_today">今天</string>
+    <string-array name="calendar_month">
+        <item>一月</item>
+        <item>二月</item>
+        <item>三月</item>
+        <item>四月</item>
+        <item>五月</item>
+        <item>六月</item>
+        <item>七月</item>
+        <item>八月</item>
+        <item>九月</item>
+        <item>十月</item>
+        <item>十一月</item>
+        <item>十二月</item>
+    </string-array>
+    <string name="calendar_day">%d日</string>
+    <string name="calendar_year">%d年</string>
+
+    <!--schedule-->
+    <string name="schedule_input_you_do_thing">输入您要做的事情</string>
+    <string name="schedule_input_content_is_no_null">事件内容不能为空</string>
+    <string name="schedule_event_detail_setting">事件详情设置</string>
+    <string name="schedule_title">事件标题</string>
+    <string name="schedule_show_finish_task">显示已完成任务</string>
+    <string name="schedule_hide_finish_task">隐藏已完成任务</string>
+    <string name="schedule_delete_this_schedule">是否删除该行程？</string>
+
+    <!--menu-->
+    <string name="menu_schedule">日程</string>
+    <string name="menu_event_set">事件集</string>
+    <string name="menu_add_event_set">添加事件清单</string>
+    <string name="menu_no_category">未分类</string>
+
+    <!--event.set-->
+    <string name="event_set_list_name">清单名称</string>
+    <string name="event_set_color">颜色</string>
+    <string name="event_set_name_is_not_null">清单名称不能为空</string>
+    <string name="event_set_select_color">选择颜色</string>
+    <string name="event_set_delete_this_event_set">确定要删除该事件集？</string>
+
+    <string name="hour">小时</string>
+    <string name="remarks">备忘录</string>
+    <string name="please_input_desc">请输入备忘信息</string>
+    <string name="date_format">yyyy年MM月dd日 HH:mm</string>
+    <string name="date_format_no_time">%1$s年%2$s月%3$s日</string>
+    <string name="click_here_select_date">点击此处选择时间</string>
+    <string name="click_here_select_location">点击此处选择地点</string>
+    <string name="click_input_location">点击输入地点</string>
+    <string name="add_location">添加地点</string>
+    <string name="select_event_set">选择事件清单</string>
 </resources>

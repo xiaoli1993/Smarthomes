@@ -3,27 +3,50 @@ package com.nuowei.smarthome.util;
  * Copyright ©深圳市海曼科技有限公司
  */
 
+import android.app.ActivityManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
+import android.view.View;
 
+import com.google.gson.Gson;
 import com.nuowei.smarthome.Constants;
+import com.nuowei.smarthome.MyApplication;
+import com.nuowei.smarthome.R;
+import com.nuowei.smarthome.activity.LoginActivity;
+import com.nuowei.smarthome.activity.MainActivity;
 import com.nuowei.smarthome.manage.DeviceManage;
+import com.nuowei.smarthome.modle.DataDevice;
+import com.nuowei.smarthome.modle.EventIsOnline;
+import com.nuowei.smarthome.modle.EventNotifyData;
+import com.nuowei.smarthome.modle.Notifications;
 import com.nuowei.smarthome.modle.XlinkDevice;
+import com.tapadoo.alerter.Alerter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
+import java.text.ParseException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import io.xlink.wifi.sdk.XDevice;
 import io.xlink.wifi.sdk.XlinkAgent;
+import io.xlink.wifi.sdk.bean.EventNotify;
 
 /**
  * @Author :    肖力
@@ -286,6 +309,216 @@ public class MyUtil {
         myIntentFilter.addAction(Constants.BROADCAST_SEND_OVERTIME);
         myIntentFilter.addAction(Constants.BROADCAST_SEND_SUCCESS);
         return myIntentFilter;
+    }
+
+    /**
+     * 判断程序是否处于后台云行
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isApplicationBroughtToBackground(final Context context) {
+        ActivityManager am = (ActivityManager) context
+                .getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(1);
+        if (!tasks.isEmpty()) {
+            ComponentName topActivity = tasks.get(0).topActivity;
+            if (!topActivity.getPackageName().equals(context.getPackageName())) {
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+    /**
+     * 后台推送消息
+     * <p>
+     * //     * @param deviceName 设备名字
+     * //     * @param deviceType 设备类型
+     *
+     * @param deviceMac 设备MAC
+     * @param zigbeeMac Zigbee设备MAC
+     * @param Ticker    标题
+     * @param Title     头部
+     * @param Content   内容
+     * @param soundUri  音乐URL
+     * @param icon      头像
+     * @param ID        消息ID
+     */
+    private static void backgroundDisplay(String deviceMac, String zigbeeMac, String Ticker, long When, String Title, String Content, Uri soundUri, int icon, int ID) {
+        Intent intent = new Intent(MyApplication.getMyApplication(), MainActivity.class);
+//        intent.putExtra(Constants.DEVICE_NAME, deviceName);
+//        intent.putExtra(Constants.DEVICE_TYPES, deviceType);
+        intent.putExtra(Constants.GATEWAY_MAC, deviceMac);
+        intent.putExtra(Constants.ZIGBEE_MAC, zigbeeMac);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(MyApplication.getMyApplication(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        long[] vibrate = {100, 1000, 1000 * 30, 1000};
+        Notification notification = new Notification.Builder(MyApplication.getMyApplication())//实例化Builder
+                .setTicker(Ticker)//在状态栏显示的标题
+                .setWhen(When)//设置显示的时间，默认就是currentTimeMillis()
+                .setContentTitle(Title)//设置标题
+                .setContentText(Content)//设置内容
+                .setSound(soundUri)
+                .setVibrate(vibrate)
+                .setLights(0x00FF00, 300, 1000)
+                .setSmallIcon(icon) //设置图标
+                .setWhen(System.currentTimeMillis()) //发送时间
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)//设置是否自动按下过后取消
+                .setOngoing(false)//设置为true时就不能删除  除非使用notificationManager.cancel(1)方法
+                .build();//创建Notification
+        notification.defaults |= Notification.DEFAULT_LIGHTS;
+        notification.flags |= Notification.FLAG_SHOW_LIGHTS;
+        notification.flags |= Notification.FLAG_INSISTENT;
+        NotificationManager nManager = (NotificationManager) MyApplication.getMyApplication().getSystemService(MyApplication.getMyApplication().NOTIFICATION_SERVICE);
+        nManager.notify(ID, notification);// id是应用中通知的唯一标识
+    }
+
+    /**
+     * 前台显示
+     * <p>
+     * //     * @param deviceName 设备名字
+     * //     * @param deviceType 设备类型
+     *
+     * @param deviceMac 设备MAC
+     * @param zigbeeMac Zigbee设备MAC
+     * @param Title     头部
+     * @param Content   内容
+     * @param icon      头像
+     */
+    private static void broughtDisplay(final String deviceMac, final String zigbeeMac, String Title, String Content, int icon) {
+
+        MyApplication.getLogger().i("activity:" + MyApplication.getMyApplication().getCurrentActivity()
+        );
+        Alerter.create(MyApplication.getMyApplication().getCurrentActivity())
+                .setTitle(Title)
+                .setText(Content)
+                .setDuration(10000)
+                .setIcon(icon)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(MyApplication.getMyApplication(), MainActivity.class);
+//                        intent.putExtra(Constants.DEVICE_NAME, deviceName);
+//                        intent.putExtra(Constants.DEVICE_TYPES, deviceType);
+                        intent.putExtra(Constants.GATEWAY_MAC, deviceMac);
+                        intent.putExtra(Constants.ZIGBEE_MAC, zigbeeMac);
+                        MyApplication.getMyApplication().getCurrentActivity().startActivity(intent);
+                    }
+                })
+                .show();
+    }
+
+    /**
+     * 反映射获取bodyLocKey
+     *
+     * @param bodyLocKey
+     * @return
+     */
+    public static int getBodyString(String bodyLocKey) {
+        try {
+            Field field = R.string.class.getField(bodyLocKey);
+            int i = field.getInt(new R.drawable());
+            return i;
+        } catch (Exception e) {
+            MyApplication.getLogger().e(e.toString());
+            return R.string.unknow;
+        }
+    }
+
+    public static int getDeviceIcon() {
+        return R.mipmap.ic_launcher;
+    }
+
+    /**
+     * 显示报警消息
+     *
+     * @param eventNotify
+     */
+    public static void showAlarm(EventNotify eventNotify) {
+        byte[] new_bts = Arrays.copyOfRange(eventNotify.notifyData, 2,
+                eventNotify.notifyData.length);
+        try {
+            String res = new String(new_bts, "UTF-8");
+            MyApplication.getLogger().json(res);
+            Gson gson = new Gson();
+            try {
+                EventNotifyData eventNotifyData = gson.fromJson(res, EventNotifyData.class);
+                Notifications notification = gson.fromJson(eventNotifyData.getValue(), Notifications.class);
+                String Title = notification.getNotification().getTitle();
+                List<String> bodyLocArgs = notification.getNotification().getBody_loc_args();
+                String Sound = notification.getNotification().getSound();
+                String bodyLocKey = notification.getNotification().getBody_loc_key();
+                XlinkDevice xlinkDevice = DeviceManage.getInstance().getDevice(eventNotify.formId);
+                Uri soundUri;
+                if (Sound.equals("alarm.mp3")) {
+                    soundUri = Uri.parse("android.resource://" + MyApplication.getMyApplication().getPackageName() + "/" + R.raw.alarm);
+                } else if (Sound.equals("alarm_119.mp3")) {
+                    soundUri = Uri.parse("android.resource://" + MyApplication.getMyApplication().getPackageName() + "/" + R.raw.alarm_119);
+                } else {
+                    soundUri = Uri.parse("android.resource://" + MyApplication.getMyApplication().getPackageName() + "/" + R.raw.message);
+                }
+                String zigbeeMac = "";
+                String sAgeFormatString = MyApplication.getMyApplication().getResources().getString(getBodyString(bodyLocKey));
+                String Content = String.format(sAgeFormatString, bodyLocArgs.get(0
+                ));
+
+                if (xlinkDevice.getDeviceType() == Constants.DEVICE_TYPE.DEVICE_WIFI_GATEWAY) {
+                    zigbeeMac = notification.getZigbeeMac();
+                }
+                if (isApplicationBroughtToBackground(MyApplication.getMyApplication().getApplicationContext())) {
+                    try {
+                        backgroundDisplay(xlinkDevice.getDeviceMac(), zigbeeMac, Title + MyApplication.getMyApplication().getString(R.string.alarm), Time.stringToLong(bodyLocArgs.get(0), "yyyy-MM-dd HH:mm:ss"), Title, Content, soundUri, getDeviceIcon(), eventNotify.messageId);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    broughtDisplay(xlinkDevice.getDeviceMac(), zigbeeMac, Title, Content, getDeviceIcon());
+                }
+
+            } catch (Exception e) {
+            }
+            try {
+                EventIsOnline eventIsOnline = gson.fromJson(res, EventIsOnline.class);
+            } catch (Exception e) {
+
+            }
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void saveDataDevice(String Title,List<String> bodyLocArgs,String bodyLocKey,XlinkDevice xlinkDevice,String zigbeeMac,String ID){
+//        DataDevice datadevice = new DataDevice();
+//        datadevice.setDeviceMac(xlinkDevice.getDeviceMac());
+//        datadevice.setMessageID(ID);
+//        datadevice.setMessageType(listsize.get(i).getType());
+//        datadevice.setNotifyType(listsize.get(i).getNotify_type());
+//        datadevice.setPush(listsize.get(i).isIs_push());
+//        datadevice.setRead(listsize.get(i).isIs_read());
+//        datadevice.setAlertName(listsize.get(i).getAlert_name());
+//        datadevice.setAlertValue(listsize.get(i).getAlert_value());
+//        datadevice.setCreateDate(listsize.get(i).getCreate_date());
+//        datadevice.setUserid(MyApplication.getMyApplication().getAppid() + "");
+//        datadevice.setUserName(userName);
+//        datadevice.setXlinkDevice(xlinkDevice);
+//        datadevice.setDeviceId(listsize.get(i).getFrom() + "");
+//        datadevice.setDeviceMac(xlinkDevice.getDeviceMac());
+//        datadevice.setActionName(messagesconte.getNotification().getTitle());
+//        datadevice.setDate(date);
+//        datadevice.setYear(Time.dateToString(date, "yyyy"));
+//        datadevice.setMonth(Time.dateToString(date, "MM"));
+//        datadevice.setDay(Time.dateToString(date, "dd"));
+//        datadevice.setHH(Time.dateToString(date, "HH"));
+//        datadevice.setMm(Time.dateToString(date, "mm"));
+//        datadevice.setSs(Time.dateToString(date, "ss"));
+//        datadevice.setBodyLocKey(loc_key);
+//        datadevice.setSubType(MyUtil.Gettype(loc_key) + "");
+
     }
 
 }

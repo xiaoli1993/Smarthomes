@@ -71,15 +71,16 @@ public class Constants {
     public static final String ures_phone = "phone";
     public static final String YEJIAN = "yejian";
 
-    public static final String DEVICE_Type = "device-type";
+    public static final String DEVICE_TYPES = "device-type";
     public static final String DEVICE_MAC = "device-mac";
     public static final String VDEVICE_NANE = "vdevice-name";
     public static final String RC_OBJECTID = "rc-objectid";
     public static final String Air_Type = "air-type";
     public static final String Air_Tempc = "air-tempc";
     public static final String Air_Data = "air-data";
-    public static final String Gateway_Mac = "gateway-mac";
-    public static final String DEVICE_Name = "device-name";
+    public static final String GATEWAY_MAC = "gateway-mac";
+    public static final String ZIGBEE_MAC = "zigbee-mac";
+    public static final String DEVICE_NAME = "device-name";
     public static final String DEVICE_Switch = "device-switch";
     public static final String DEVICE_UsbSwitch = "device-usbswitch";
     public static final String Plug_Power = "plug-power";

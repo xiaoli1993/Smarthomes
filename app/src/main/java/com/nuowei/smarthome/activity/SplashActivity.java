@@ -20,6 +20,7 @@ import org.apache.http.Header;
 import java.util.Map;
 
 import butterknife.ButterKnife;
+import qiu.niorgai.StatusBarCompat;
 
 /**
  * @Author :    肖力
@@ -34,8 +35,10 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        StatusBarCompat.translucentStatusBar(this, true);
         ButterKnife.bind(this);
         setLoginCacheView();
+
     }
 
     private void setLoginCacheView() {
@@ -80,8 +83,8 @@ public class SplashActivity extends AppCompatActivity {
                 MyApplication.getMyApplication().setRefresh_token(refresh_token);
 
                 MyApplication.getLogger().i("Auth", "accessToken:" + accessToken + "appid:" + appid + "authKey:" + authKey);
-                Hawk.put(Constants.SAVE_appId,appid);
-                Hawk.put(Constants.SAVE_authKey,authKey);
+                Hawk.put(Constants.SAVE_appId, appid);
+                Hawk.put(Constants.SAVE_authKey, authKey);
                 Message message = new Message();
                 message.what = 1;
                 myHandler.sendMessage(message);

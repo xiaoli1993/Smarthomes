@@ -216,7 +216,7 @@ public class SmartHomeServer extends Service {
                 }
             }
         };
-        timer.schedule(task, 1000 * 60 * 90, 1000 * 60 * 90);
+        timer.schedule(task, 1000 * 60 * 60, 1000 * 60 * 60);
     }
 
     @Override

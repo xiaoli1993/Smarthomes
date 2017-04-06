@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements YahooWeatherExcep
         isRegisterBroadcast = true;
         registerReceiver(mBroadcastReceiver, MyUtil.regFilter());
         startCustomService();
+        MyApplication.getMyApplication().setCurrentActivity(this);
     }
 
     // 启动服务
@@ -182,16 +183,16 @@ public class MainActivity extends AppCompatActivity implements YahooWeatherExcep
         };
     }
 
-    @OnClick({R.id.tv_list, R.id.tv_Grid})
+    @OnClick({R.id.ll_list, R.id.ll_Grid})
     void changeList(View view) {
         switch (view.getId()) {
-            case R.id.tv_list:
+            case R.id.ll_list:
                 isList = true;
                 Hawk.put(Constants.ISLIST, isList);
                 initFragment(isList);
                 drawerLayout.closeDrawer(left);
                 break;
-            case R.id.tv_Grid:
+            case R.id.ll_Grid:
                 isList = false;
                 Hawk.put(Constants.ISLIST, isList);
                 initFragment(isList);
@@ -208,11 +209,11 @@ public class MainActivity extends AppCompatActivity implements YahooWeatherExcep
     private void initData() {
         list = new ArrayList<LeftMain>();
 
-        list.add(new LeftMain(R.drawable.home_device, getResources().getString(R.string.Device)));
-        list.add(new LeftMain(R.drawable.home_light, getResources().getString(R.string.Share_Device)));
-        list.add(new LeftMain(R.drawable.home_security, getResources().getString(R.string.Feedback)));
-        list.add(new LeftMain(R.drawable.home_electric, getResources().getString(R.string.About)));
-        list.add(new LeftMain(R.drawable.home_setting, getResources().getString(R.string.Setting)));
+        list.add(new LeftMain(R.drawable.main_right_device, getResources().getString(R.string.Device)));
+        list.add(new LeftMain(R.drawable.main_right_share, getResources().getString(R.string.Share_Device)));
+        list.add(new LeftMain(R.drawable.main_right_feeback, getResources().getString(R.string.Feedback)));
+        list.add(new LeftMain(R.drawable.main_right_about, getResources().getString(R.string.About)));
+        list.add(new LeftMain(R.drawable.main_right_setting, getResources().getString(R.string.Setting)));
     }
 
     private void initFragment(boolean isList) {

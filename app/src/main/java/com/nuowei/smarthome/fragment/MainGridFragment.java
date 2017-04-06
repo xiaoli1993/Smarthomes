@@ -1,36 +1,30 @@
 package com.nuowei.smarthome.fragment;
 
+import android.content.Intent;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.os.Bundle;
-import android.widget.LinearLayout;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 import com.google.gson.Gson;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
-import com.nuowei.smarthome.activity.MainTActivity;
+import com.nuowei.smarthome.activity.SceneAddActivity;
 import com.nuowei.smarthome.adapter.MainGridAdapter;
-import com.nuowei.smarthome.adapter.MainListAdapter;
 import com.nuowei.smarthome.common.DividerGridItemDecoration;
 import com.nuowei.smarthome.helper.MyItemTouchCallback;
 import com.nuowei.smarthome.helper.OnRecyclerItemClickListener;
 import com.nuowei.smarthome.modle.MainDatas;
-import com.nuowei.smarthome.util.ACache;
 import com.nuowei.smarthome.util.SharePreferenceUtil;
 import com.nuowei.smarthome.util.VibratorUtil;
-import com.nuowei.smarthome.view.gridview.DragGridView;
-import com.nuowei.smarthome.view.textview.AvenirTextView;
 import com.orhanobut.hawk.Hawk;
 
 import org.json.JSONArray;
@@ -38,7 +32,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -90,12 +83,12 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
         }, 2000);
 
         shimmerRecyclerView.showShimmerAdapter();
-        final ItemTouchHelper  itemTouchHelper = new ItemTouchHelper(new MyItemTouchCallback(mAdapter).setOnDragListener(this));
+        final ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new MyItemTouchCallback(mAdapter).setOnDragListener(this));
         itemTouchHelper.attachToRecyclerView(shimmerRecyclerView);
         shimmerRecyclerView.addOnItemTouchListener(new OnRecyclerItemClickListener(shimmerRecyclerView) {
             @Override
             public void onLongClick(RecyclerView.ViewHolder vh) {
-                if (vh.getLayoutPosition() != dataSourceList.size() -1) {
+                if (vh.getLayoutPosition() != dataSourceList.size() - 1) {
                     itemTouchHelper.startDrag(vh);
                     VibratorUtil.Vibrate(getActivity(), 70);   //震动70ms
                 }
@@ -104,6 +97,30 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
             @Override
             public void onItemClick(RecyclerView.ViewHolder vh) {
                 HashMap<String, MainDatas> item = dataSourceList.get(vh.getLayoutPosition());
+                switch (item.get("Main").getMainType()) {
+                    case 0:
+                        startActivity(new Intent(getActivity(), SceneAddActivity.class));
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
+                    case 7:
+                        break;
+                    case 8:
+                        break;
+                    default:
+                        break;
+                }
+
                 Toast.makeText(getActivity(), item.get("Main").getMainsort() + " " + item.get("Main").getMainString(), Toast.LENGTH_SHORT).show();
             }
         });

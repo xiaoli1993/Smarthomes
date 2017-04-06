@@ -19,6 +19,7 @@ import com.nuowei.smarthome.manage.DeviceManage;
 import com.nuowei.smarthome.modle.XlinkDevice;
 import com.nuowei.smarthome.smarthomesdk.utils.XlinkUtils;
 import com.nuowei.smarthome.util.Cockroach;
+import com.nuowei.smarthome.util.MyUtil;
 import com.nuowei.smarthome.util.SharePreferenceUtil;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.LogInterceptor;
@@ -444,9 +445,7 @@ public class MyApplication extends LitePalApplication implements XlinkNetListene
                 ", notifyData=" + new String(eventNotify.notifyData) +
                 '}';
         getLogger().e("onEventNotify:" + str);
-        //        int badgeCount = 12;
-//        ShortcutBadger.applyCount(this, badgeCount); //for 1.1.4+
-//        ShortcutBadger.(getApplicationContext()).count(badgeCount); //for 1.1.3
+        MyUtil.showAlarm(eventNotify);
     }
 
 

@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/activity_title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.nuowei.smarthome.view.loopview.LoopView
+            android:id="@+id/loop_hour"
+            android:layout_width="0dp"
+            android:layout_height="130dp"
+            android:layout_weight="1"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            app:awv_textsize="16" />
+
+        <com.nuowei.smarthome.view.loopview.LoopView
+            android:id="@+id/loop_min"
+            android:layout_width="0dp"
+            android:layout_height="130dp"
+            android:layout_weight="1"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            app:awv_textsize="16" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_Sunday"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/rl_selector">
+
+        <com.nuowei.smarthome.view.textview.AvenirTextView
+            android:id="@+id/tv_Sunday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:text="@string/sunday"
+            android:textColor="@color/text_title"
+            android:textSize="14dp" />
+
+        <ImageView
+            android:id="@+id/image_Sunday"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/selected"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/activity_bg" />
+
+    <RelativeLayout
+        android:id="@+id/rl_Monday"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/rl_selector">
+
+        <com.nuowei.smarthome.view.textview.AvenirTextView
+            android:id="@+id/tv_Monday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:text="@string/monday"
+            android:textColor="@color/text_title"
+            android:textSize="14dp" />
+
+        <ImageView
+            android:id="@+id/image_Monday"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/selected"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/activity_bg" />
+
+    <RelativeLayout
+        android:id="@+id/rl_Tuesday"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/rl_selector">
+
+        <com.nuowei.smarthome.view.textview.AvenirTextView
+            android:id="@+id/tv_Tuesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:text="@string/tuesday"
+            android:textColor="@color/text_title"
+            android:textSize="14dp" />
+
+        <ImageView
+            android:id="@+id/image_Tuesday"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/selected"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/activity_bg" />
+
+    <RelativeLayout
+        android:id="@+id/rl_Wednesday"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/rl_selector">
+
+        <com.nuowei.smarthome.view.textview.AvenirTextView
+            android:id="@+id/tv_Wednesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:text="@string/wednesday"
+            android:textColor="@color/text_title"
+            android:textSize="14dp" />
+
+        <ImageView
+            android:id="@+id/image_Wednesday"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/selected"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/activity_bg" />
+
+    <RelativeLayout
+        android:id="@+id/rl_Thursday"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/rl_selector">
+
+        <com.nuowei.smarthome.view.textview.AvenirTextView
+            android:id="@+id/tv_Thursday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:text="@string/thursday"
+            android:textColor="@color/text_title"
+            android:textSize="14dp" />
+
+        <ImageView
+            android:id="@+id/image_Thursday"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/selected"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/activity_bg" />
+
+    <RelativeLayout
+        android:id="@+id/rl_Friday"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/rl_selector">
+
+        <com.nuowei.smarthome.view.textview.AvenirTextView
+            android:id="@+id/tv_Friday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:text="@string/friday"
+            android:textColor="@color/text_title"
+            android:textSize="14dp" />
+
+        <ImageView
+            android:id="@+id/image_Friday"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/selected"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/activity_bg" />
+
+    <RelativeLayout
+        android:id="@+id/rl_Saturday"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/rl_selector">
+
+        <com.nuowei.smarthome.view.textview.AvenirTextView
+            android:id="@+id/tv_Saturday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:text="@string/saturday"
+            android:textColor="@color/text_title"
+            android:textSize="14dp" />
+
+        <ImageView
+            android:id="@+id/image_Saturday"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/selected"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/activity_bg" />
+</LinearLayout>

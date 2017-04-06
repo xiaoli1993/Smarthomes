@@ -30,8 +30,10 @@
     <string name="Share_Device">Share Device</string>
     <string name="Feedback">Feedback</string>
     <string name="About">About</string>
+    <string name="add_execution_tack">Add execution tack</string>
 
- <string name="large_text">
+
+    <string name="large_text">
         "Material is the metaphor.\n\n"
 
         "A material metaphor is the unifying theory of a rationalized space and a system of motion."
@@ -120,4 +122,145 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+
+    <string-array name="calendar_week">
+        <item>Sun</item>
+        <item>Mon</item>
+        <item>Tues</item>
+        <item>Wed</item>
+        <item>Thur</item>
+        <item>Fri</item>
+        <item>Sat</item>
+    </string-array>
+    <string name="time_prev">Previous</string>
+    <string name="time_next">Next</string>
+    <string name="unknow">unknow</string>
+    <string name="alarm">alarm</string>
+
+
+    <string name="ALRM_RESUME_17">  %1$s    Close</string>
+    <string name="ALRM_RESUME_18">  %1$s    Sensor dry</string>
+    <string name="ALRM_RESUME_19">  %1$s    Nobody passby</string>
+    <string name="ALRM_RESUME_20">  %1$s    Smoke normal</string>
+    <string name="ALRM_RESUME_22">  %1$s    Gas normal</string>
+    <string name="ALRM_RESUME_24">  %1$s    CO normal</string>
+    <string name="ALRM_RESUME_67">  %1$s    Close</string>
+    <string name="ALRMING_17">  %1$s    Open</string>
+    <string name="ALRMING_18">  %1$s    Dlooded with water</string>
+    <string name="ALRMING_19">  %1$s    Someone passby</string>
+    <string name="ALRMING_20">  %1$s    Smoke alarm</string>
+    <string name="ALRMING_22">  %1$s    Gas alarm</string>
+    <string name="ALRMING_24">  %1$s    CO alarm</string>
+    <string name="ALRMING_49">  %1$s    Alarm</string>
+    <string name="ALRMING_50">  %1$s    Alarm</string>
+    <string name="ALRMING_67">  %1$s    Open</string>
+    <string name="ARM_50">  %1$s    Leaving mode</string>
+    <string name="DISARM_50">  %1$s    Disarm</string>
+    <string name="HOMEARM_50">  %1$s    Home mode</string>
+    <string name="HUM_ALARM_21">  %1$s    HUM alarm</string>
+    <string name="Power_1042">  %1$s    Power Over</string>
+    <string name="Power_Current_1042">  %1$s    P and C Over</string>
+    <string name="Current_1042">  %1$s    Current Over</string>
+    <string name="Power_Currentvoltage_1042">  %1$s    PVC Over</string>
+    <string name="Power_Voltage_1042">  %1$s    P and V Over</string>
+    <string name="Current_Voltage_1042">  %1$s    V and C Over</string>
+    <string name="LIGHT_OFF_1">  %1$s   Light Close</string>
+    <string name="LIGHT_ON_1">  %1$s   Light Open</string>
+    <string name="RELAY_OFF_67">  %1$s   Relay Close</string>
+    <string name="RELAY_ON_67">  %1$s   Relay Open</string>
+    <string name="TAMPER_ALARM_17">  %1$s    Open (Tamper)</string>
+    <string name="TAMPER_ALARM_19">  %1$s    Someone passby (Tamper)</string>
+    <string name="TAMPER_DEVALARM_17">  %1$s   Open (Tamper)</string>
+    <string name="TAMPER_DEVALARM_19">  %1$s    Someone passby (Tamper)</string>
+    <string name="TAMPER_DEVRESUME_17">  %1$s    Close (Tamper)</string>
+    <string name="TAMPER_DEVRESUME_19">  %1$s    Nobody passby (Tamper)</string>
+    <string name="TAMPER_RESUME_17">  %1$s    Close (Tamper)</string>
+    <string name="TAMPER_RESUME_19">  %1$s    Nobody passby (Tamper)</string>
+    <string name="TEMP_ALARM_21">  %1$s    Temp. alarm</string>
+    <string name="TEMP_HUM_ALARM_21">  %1$s    Temp. and HUM alarm</string>
+    <string name="USB_OFF_67">  %1$s   USB Close</string>
+    <string name="USB_ON_67">  %1$s   USB Open</string>
+
+    <string name="add_scene">Add Scene</string>
+    <string name="Save">Save</string>
+    <string name="start_timer">Start timer</string>
+    <string name="repeat">Repeat</string>
+    <string name="countdown">Countdown</string>
+    <string name="sunday">Sunday</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+
+    <string name="pickerview_cancel">Cancel</string>
+    <string name="pickerview_submit">Submit</string>
+    <string name="pickerview_year">Year</string>
+    <string name="pickerview_month">Month</string>
+    <string name="pickerview_day">Day</string>
+    <string name="pickerview_hours">Hours</string>
+    <string name="pickerview_minutes">Minutes</string>
+    <string name="pickerview_seconds">Seconds</string>
+
+
+
+    <string name="exit_app_hint">Click to exit.</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+    <string name="finish">Finish</string>
+    <string name="finished">Finished</string>
+    <string name="start">Start</string>
+
+    <!--calendar-->
+    <string name="calendar_today">Today</string>
+    <string-array name="calendar_month">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+    <string name="calendar_day">%d day</string>
+    <string name="calendar_year">%d-</string>
+
+    <!--schedule-->
+    <string name="schedule_input_you_do_thing">Input what to do</string>
+    <string name="schedule_input_content_is_no_null">Content can\'t be empty.</string>
+    <string name="schedule_event_detail_setting">Detail setting</string>
+    <string name="schedule_title">Schedule title</string>
+    <string name="schedule_show_finish_task">Show completed</string>
+    <string name="schedule_hide_finish_task">Hide completed</string>
+    <string name="schedule_delete_this_schedule">Delete the schedule?</string>
+
+    <!--menu-->
+    <string name="menu_schedule">Schedule</string>
+    <string name="menu_event_set">Events</string>
+    <string name="menu_add_event_set">Add event list</string>
+    <string name="menu_no_category">Unclassified </string>
+
+    <!--event.set-->
+    <string name="event_set_list_name">List name</string>
+    <string name="event_set_color">Color</string>
+    <string name="event_set_name_is_not_null">List name can\'t be empty.</string>
+    <string name="event_set_select_color">Choose color</string>
+    <string name="event_set_delete_this_event_set">Delete events?</string>
+
+    <string name="hour">Hour</string>
+    <string name="remarks">Reminders</string>
+    <string name="please_input_desc">Input the reminders</string>
+    <string name="date_format">yyyy-MM-dd HH:mm</string>
+    <string name="date_format_no_time">%1$s-%2$s-%3$s</string>
+    <string name="click_here_select_date">Click to choose time</string>
+    <string name="click_here_select_location">Click to select location</string>
+    <string name="click_input_location">Click to input location</string>
+    <string name="add_location">Add spot</string>
+    <string name="select_event_set">Choose events</string>
 </resources>
