@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/activity_title" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/divider"></View>
+
+    <include layout="@layout/item_lists" />
+
+    <ListView
+        android:id="@+id/mList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:cacheColorHint="@null"
+        android:divider="@null"
+        android:fadingEdge="none"
+        android:scrollbarSize="10.0dip"
+        android:scrollbars="none" />
+
+</LinearLayout>

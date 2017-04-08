@@ -60,40 +60,40 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
 
             switch (subDevice.getDeviceType()) {
                 case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_RGB:
-                    holder.imageView.setImageResource(R.drawable.home_security);
+                    holder.imageView.setImageResource(R.drawable.device_light);
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_DOORS:
-                    holder.imageView.setImageResource(R.drawable.home_air);
+                    holder.imageView.setImageResource(R.drawable.device_door);
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_WATER:
-                    holder.imageView.setImageResource(R.drawable.home_water);
+                    holder.imageView.setImageResource(R.drawable.device_water);
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_PIR:
-                    holder.imageView.setImageResource(R.drawable.home_electric);
+                    holder.imageView.setImageResource(R.drawable.device_pir);
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_SMOKE:
-                    holder.imageView.setImageResource(R.drawable.home_light);
+                    holder.imageView.setImageResource(R.drawable.device_smoke);
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_THP:
-                    holder.imageView.setImageResource(R.drawable.home_warmfloor);
+                    holder.imageView.setImageResource(R.drawable.device_thp);
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_GAS:
-                    holder.imageView.setImageResource(R.drawable.home_service);
+                    holder.imageView.setImageResource(R.drawable.device_gas);
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_CO:
-                    holder.imageView.setImageResource(R.drawable.home_device);
+                    holder.imageView.setImageResource(R.drawable.device_co);
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_SOS:
-                    holder.imageView.setImageResource(R.drawable.home_setting);
+                    holder.imageView.setImageResource(R.drawable.device_sos);
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_SW:
-                    holder.imageView.setImageResource(R.drawable.home_setting);
+                    holder.imageView.setImageResource(R.drawable.device_sw);
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_PLUGIN:
-                    holder.imageView.setImageResource(R.drawable.home_setting);
+                    holder.imageView.setImageResource(R.drawable.device_plug);
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_METRTING_PLUGIN:
-                    holder.imageView.setImageResource(R.drawable.home_setting);
+                    holder.imageView.setImageResource(R.drawable.device_plug);
                     break;
                 default:
                     holder.imageView.setImageResource(R.drawable.home_device);
@@ -107,10 +107,10 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
                     holder.imageView.setImageResource(R.drawable.home_security);
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_WIFI_GATEWAY:
-                    holder.imageView.setImageResource(R.drawable.home_air);
+                    holder.imageView.setImageResource(R.drawable.device_gw);
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_WIFI_PLUGIN:
-                    holder.imageView.setImageResource(R.drawable.home_water);
+                    holder.imageView.setImageResource(R.drawable.device_plug);
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_WIFI_METRTING_PLUGIN:
                     holder.imageView.setImageResource(R.drawable.home_electric);

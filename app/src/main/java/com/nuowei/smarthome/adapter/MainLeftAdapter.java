@@ -51,8 +51,7 @@ public class MainLeftAdapter extends BaseAdapter {
         ViewHold hold;
         if (convertView == null) {
             hold = new ViewHold();
-            convertView = LayoutInflater.from(context).inflate(
-                    R.layout.item_left_main, null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_left_main, null);
             convertView.setTag(hold);
         } else {
             hold = (ViewHold) convertView.getTag();

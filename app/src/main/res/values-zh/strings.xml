@@ -165,4 +165,17 @@
     <string name="click_input_location">点击输入地点</string>
     <string name="add_location">添加地点</string>
     <string name="select_event_set">选择事件清单</string>
+    <string name="Perform_tasks">执行任务</string>
+    <string name="Disarm">Disarm</string>
+    <string name="OutAlert">Out Alert</string>
+    <string name="AtHome">At Home</string>
+    <string name="PFUF">Power Off | USB Off</string>
+    <string name="PFUN">Power Off | USB On</string>
+    <string name="poweron">Power On</string>
+    <string name="usboff">USB Off</string>
+    <string name="usbon">USB On</string>
+    <string name="Brightness">Brightness</string>
+    <string name="Arming">Arming</string>
+
+
 </resources>

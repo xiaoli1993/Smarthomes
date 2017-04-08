@@ -6,20 +6,28 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.SimpleAdapter;
 
 import com.kyleduo.switchbutton.SwitchButton;
+import com.nuowei.smarthome.Constants;
+import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
+import com.nuowei.smarthome.adapter.MainLeftAdapter;
+import com.nuowei.smarthome.modle.LeftMain;
 import com.nuowei.smarthome.util.Time;
 import com.nuowei.smarthome.view.pickerview.TimePickerView;
 import com.nuowei.smarthome.view.textview.AvenirTextView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,9 +65,15 @@ public class SceneAddActivity extends BaseActivity {
     AvenirTextView tvTitle;
     @BindView(R.id.tv_right)
     AvenirTextView tvRight;
+    private MainLeftAdapter adapter;
 
     private TimePickerView pvTime;
     private int coutdown = 0, hours = 0, mins = 0;
+
+    private List<LeftMain> list;
+    private final static int REQUEST_CODE = 1;
+    private final static int SUB_DEVICE_CODE = 2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,18 +111,48 @@ public class SceneAddActivity extends BaseActivity {
                 .setContentSize(20)
                 .setDate(selectedDate)
                 .build();
+        list = new ArrayList<LeftMain>();
+        adapter = new MainLeftAdapter(this, list);
+        listExecution.setAdapter(adapter);
     }
 
     @OnClick(R.id.rl_add_execution)
     public void onAddExecution(View v) {
-
+//        list.add(new LeftMain(R.drawable.main_right_device, getResources().getString(R.string.Device)));
+//        listExecution.setVisibility(View.VISIBLE);
+//        adapter.notifyDataSetChanged();
+        startActivityForResult(new Intent(SceneAddActivity.this, ScenenChoiceActivity.class), SUB_DEVICE_CODE);
     }
 
     @OnClick(R.id.rl_repeat)
     public void onRepeat(View v) {
-        startActivity(new Intent(SceneAddActivity.this, RepeatActivity.class));
+        startActivityForResult(new Intent(SceneAddActivity.this, RepeatActivity.class), REQUEST_CODE);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_CODE:
+                if (resultCode == RepeatActivity.RESULT_CODE) {
+                    Bundle bundle = data.getExtras();
+                    int wk = bundle.getInt("wk");
+                    int hour = bundle.getInt("hour");
+                    int min = bundle.getInt("min");
+                    MyApplication.getLogger().i("wk:" + wk + "hour:" + hour + "min:" + min);
+                }
+                break;
+            case SUB_DEVICE_CODE:
+                if (resultCode == ScenenChoiceActivity.SUB_DEVICE_CODE) {
+                    Bundle bundle = data.getExtras();
+                    String gwMac = bundle.getString(Constants.GATEWAY_MAC);
+                    String subMac = bundle.getString(Constants.ZIGBEE_MAC);
+                    String action = bundle.getString("action");
+                    boolean isGw = bundle.getBoolean("isGw");
+                    MyApplication.getLogger().i("gwMac:" + gwMac + "subMac:" + subMac + "action:" + action);
+                }
+                break;
+        }
+    }
 
     @OnClick(R.id.rl_coutdown)
     public void onCoutdown(View v) {

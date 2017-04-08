@@ -1,5 +1,6 @@
 package com.nuowei.smarthome.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 
@@ -95,6 +96,7 @@ public class RepeatActivity extends BaseActivity {
 
     private boolean isSunday, isMonday, isTuesday, isWednesday, isThursday, isFriday, isSaturday;
     private int hour = 0, min = 0;
+    public final static int RESULT_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,7 +146,14 @@ public class RepeatActivity extends BaseActivity {
     @OnClick(R.id.tv_right)
     void onRight() {
         int wk = wkFlag + intMonday + intTuesday + intWednesday + intThursday + intFriday + intSaturday + intSunday + intEveryday;
-        MyApplication.getLogger().i("周期WK：" + wk + "时间hour:" + hour + "min:" + min);
+//        MyApplication.getLogger().i("周期WK：" + wk + "时间hour:" + hour + "min:" + min);
+        Intent intent = new Intent();
+        intent.putExtra("wk", wk);
+        intent.putExtra("hour", hour);
+        intent.putExtra("min", min);
+        setResult(RESULT_CODE, intent);
+        finish();
+
     }
 
 

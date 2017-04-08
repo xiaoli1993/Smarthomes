@@ -43,6 +43,8 @@
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.MainTActivity" />
         <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.ScenenChoiceActivity" />
+        <activity android:name=".activity.SceneActionActivity" />
         <activity android:name="com.avos.avoscloud.feedback.ThreadActivity" />
 
         <!-- sdk初始化 -->
@@ -84,9 +86,9 @@
         <activity android:name=".activity.DiaryActivity" />
 
 
-        <activity android:name=".calendar.activity.AddEventSetActivity" />
+     <!--   <activity android:name=".calendar.activity.AddEventSetActivity" />
         <activity android:name=".calendar.activity.MainActivity" />
-        <activity android:name=".calendar.activity.ScheduleDetailActivity" />
+        <activity android:name=".calendar.activity.ScheduleDetailActivity" />-->
 
     </application>
 

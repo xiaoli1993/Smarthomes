@@ -492,7 +492,7 @@ public class MyUtil {
     }
 
 
-    private void saveDataDevice(String Title,List<String> bodyLocArgs,String bodyLocKey,XlinkDevice xlinkDevice,String zigbeeMac,String ID){
+    private void saveDataDevice(String Title, List<String> bodyLocArgs, String bodyLocKey, XlinkDevice xlinkDevice, String zigbeeMac, String ID) {
 //        DataDevice datadevice = new DataDevice();
 //        datadevice.setDeviceMac(xlinkDevice.getDeviceMac());
 //        datadevice.setMessageID(ID);
@@ -521,4 +521,130 @@ public class MyUtil {
 
     }
 
+    /**
+     * 场景动作
+     *
+     * @param context
+     * @param loadaction 执行动作
+     * @return
+     */
+    public static int Sceneactivon(Context context, String loadaction) {
+        if (loadaction.equals(context.getResources().getString(R.string.Disarm))) {
+            return 0xFF00;
+        } else if (loadaction.equals(context.getResources().getString(R.string.AtHome))) {
+            return 0xFF02;
+        } else if (loadaction.equals(context.getResources().getString(R.string.OutAlert))) {
+            return 0xFF01;
+        } else if (loadaction.equals(context.getResources().getString(R.string.Arming))) {
+            return 0xFF01;
+        } else if (loadaction.equals(context.getResources().getString(R.string.poweroff))) {
+            return 0xFF00;
+        } else if (loadaction.equals(context.getResources().getString(R.string.poweron))) {
+            return 0xFF01;
+        } else if (loadaction.equals(context.getResources().getString(R.string.usboff))) {
+            return 0x00FF;
+        } else if (loadaction.equals(context.getResources().getString(R.string.usbon))) {
+            return 0x01FF;
+        } else if (loadaction.equals(context.getResources().getString(R.string.PNUN))) {
+            return 0x0101;
+        } else if (loadaction.equals(context.getResources().getString(R.string.PNUF))) {
+            return 0x0001;
+        } else if (loadaction.equals(context.getResources().getString(R.string.PFUN))) {
+            return 0x0100;
+        } else if (loadaction.equals(context.getResources().getString(R.string.PFUF))) {
+            return 0x0000;
+        } else if (loadaction.equals(context.getResources().getString(R.string.turned_on))) {
+            return 0xFE01;
+        } else if (loadaction.equals(context.getResources().getString(R.string.turned_off))) {
+            return 0xFF00;
+        } else {
+            try {
+                String[] s = loadaction.split(":");
+                if (s[0].equals(context.getResources().getString(R.string.Brightness))) {
+                    int a = Integer.parseInt(s[1]);
+                    return (a * 255 / 100) * 255 + 0x01;
+                } else {
+                    return 0;
+                }
+            } catch (Exception e) {
+                return 0;
+            }
+        }
+//        else if (loadaction.equals(context.getResources().getString(R.string.Out_alert))) {
+//
+//        } else if (loadaction.equals(context.getResources().getString(R.string.Disarm_alarm))) {
+//
+//        }
+    }
+
+    /**
+     * 获取场景执行动作
+     *
+     * @param context
+     * @param type       设备类型
+     * @param loadaction 执行动作
+     * @return
+     */
+    public static String getSceneactivon(Context context, int type, int loadaction) {
+        if (type == Constants.DEVICE_TYPE.DEVICE_WIFI_GATEWAY) {
+            if (loadaction == 0xff00) {
+                return context.getResources().getString(R.string.Disarm);
+            } else if (loadaction == 0xff01) {
+                return context.getResources().getString(R.string.OutAlert);
+            } else if (loadaction == 0xff02) {
+                return context.getResources().getString(R.string.AtHome);
+            } else {
+                return context.getResources().getString(R.string.Disarm);
+            }
+        } else if (type == Constants.DEVICE_TYPE.DEVICE_WIFI_PLUGIN || type == Constants.DEVICE_TYPE.DEVICE_ZIGBEE_PLUGIN) {
+            if (loadaction == 0x0000) {
+                return context.getResources().getString(R.string.PFUF);
+            } else if (loadaction == 0x0100) {
+                return context.getResources().getString(R.string.PFUN);
+            } else if (loadaction == 0x0001) {
+                return context.getResources().getString(R.string.PNUF);
+            } else if (loadaction == 0x0101) {
+                return context.getResources().getString(R.string.PNUN);
+            } else if (loadaction == 0xff00) {
+                return context.getResources().getString(R.string.poweroff);
+            } else if (loadaction == 0xff01) {
+                return context.getResources().getString(R.string.poweron);
+            } else if (loadaction == 0x00ff) {
+                return context.getResources().getString(R.string.usboff);
+            } else if (loadaction == 0x01ff) {
+                return context.getResources().getString(R.string.usbon);
+            } else {
+                return context.getResources().getString(R.string.poweron);
+            }
+        } else if (type == Constants.DEVICE_TYPE.DEVICE_ZIGBEE_METRTING_PLUGIN) {
+            if (loadaction == 0xFF00) {
+                return context.getResources().getString(R.string.poweroff);
+            } else if (loadaction == 0xFF01) {
+                return context.getResources().getString(R.string.poweron);
+            } else {
+                return context.getResources().getString(R.string.poweron);
+            }
+        } else if (type == Constants.DEVICE_TYPE.DEVICE_ZIGBEE_RGB) {
+            if (loadaction == 0xFE01) {
+                return context.getResources().getString(R.string.turned_on);
+            } else if (loadaction == 0xFF00) {
+                return context.getResources().getString(R.string.turned_off);
+            } else {
+                loadaction = (((loadaction - 0x01) / 255) * 100) / 255;
+                return context.getResources().getString(R.string.turned_on)
+                        + " | " + context.getResources().getString(R.string.Brightness)
+                        + ":" + loadaction;
+            }
+        } else if (type == Constants.DEVICE_TYPE.DEVICE_ZIGBEE_DOORS || type == Constants.DEVICE_TYPE.DEVICE_ZIGBEE_PIR) {
+            if (loadaction == 0xFF00) {
+                return context.getResources().getString(R.string.Disarm);
+            } else if (loadaction == 0xFF01) {
+                return context.getResources().getString(R.string.Arming);
+            } else {
+                return context.getResources().getString(R.string.Disarm);
+            }
+        } else {
+            return context.getResources().getString(R.string.Disarm);
+        }
+    }
 }

@@ -68,6 +68,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onError(Header[] headers, HttpManage.Error error) {
                 MyApplication.getLogger().e("Code:" + error.getCode());
+                splash2Activity();
             }
 
             @Override
