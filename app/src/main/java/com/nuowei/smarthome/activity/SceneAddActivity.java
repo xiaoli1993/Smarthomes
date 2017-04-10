@@ -38,7 +38,7 @@ import butterknife.OnClick;
  * @Email : 554674787@qq.com
  * @Phone : 18312377810
  * @Time :  2017/3/31 11:37
- * @Description :
+ * @Description : 场景添加设备
  */
 public class SceneAddActivity extends BaseActivity {
     @BindView(R.id.linearLayout1)
@@ -65,6 +65,8 @@ public class SceneAddActivity extends BaseActivity {
     AvenirTextView tvTitle;
     @BindView(R.id.tv_right)
     AvenirTextView tvRight;
+    @BindView(R.id.tv_timer)
+    AvenirTextView tvTimer;
     private MainLeftAdapter adapter;
 
     private TimePickerView pvTime;
@@ -73,7 +75,12 @@ public class SceneAddActivity extends BaseActivity {
     private List<LeftMain> list;
     private final static int REQUEST_CODE = 1;
     private final static int SUB_DEVICE_CODE = 2;
-
+    private int wk;
+    private int hour;
+    private int min;
+    private String gwMac;
+    private String subMac;
+    private String action;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,9 +125,6 @@ public class SceneAddActivity extends BaseActivity {
 
     @OnClick(R.id.rl_add_execution)
     public void onAddExecution(View v) {
-//        list.add(new LeftMain(R.drawable.main_right_device, getResources().getString(R.string.Device)));
-//        listExecution.setVisibility(View.VISIBLE);
-//        adapter.notifyDataSetChanged();
         startActivityForResult(new Intent(SceneAddActivity.this, ScenenChoiceActivity.class), SUB_DEVICE_CODE);
     }
 
@@ -135,18 +139,21 @@ public class SceneAddActivity extends BaseActivity {
             case REQUEST_CODE:
                 if (resultCode == RepeatActivity.RESULT_CODE) {
                     Bundle bundle = data.getExtras();
-                    int wk = bundle.getInt("wk");
-                    int hour = bundle.getInt("hour");
-                    int min = bundle.getInt("min");
+                    wk = bundle.getInt("wk");
+                    hour = bundle.getInt("hour");
+                    min = bundle.getInt("min");
                     MyApplication.getLogger().i("wk:" + wk + "hour:" + hour + "min:" + min);
+//                    for (int i=0x01;i<0x80;i>>>1){
+//
+//                    }
                 }
                 break;
             case SUB_DEVICE_CODE:
                 if (resultCode == ScenenChoiceActivity.SUB_DEVICE_CODE) {
                     Bundle bundle = data.getExtras();
-                    String gwMac = bundle.getString(Constants.GATEWAY_MAC);
-                    String subMac = bundle.getString(Constants.ZIGBEE_MAC);
-                    String action = bundle.getString("action");
+                    gwMac = bundle.getString(Constants.GATEWAY_MAC);
+                    subMac = bundle.getString(Constants.ZIGBEE_MAC);
+                    action = bundle.getString("action");
                     boolean isGw = bundle.getBoolean("isGw");
                     MyApplication.getLogger().i("gwMac:" + gwMac + "subMac:" + subMac + "action:" + action);
                 }
@@ -162,6 +169,12 @@ public class SceneAddActivity extends BaseActivity {
     @OnClick(R.id.tv_right)
     void onRight() {
 //        startActivity(new Intent(SceneAddActivity.this, DiaryActivity.class));
+        MyApplication.getLogger().i("gwMac:" + gwMac + "subMac:" + subMac + "action:" + action);
+        if (swTimer.isChecked()) {
+            MyApplication.getLogger().i("wk:" + wk + "hour:" + hour + "min:" + min);
+        } else {
+
+        }
     }
 
     @OnClick(R.id.image_btn_backs)

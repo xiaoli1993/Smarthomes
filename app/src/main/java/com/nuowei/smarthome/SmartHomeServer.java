@@ -15,6 +15,7 @@ import com.nuowei.smarthome.manage.DeviceManage;
 import com.nuowei.smarthome.manage.SubDeviceManage;
 import com.nuowei.smarthome.modle.PlugGwDevice;
 import com.nuowei.smarthome.modle.RGBGwDevice;
+import com.nuowei.smarthome.modle.RefreshToken;
 import com.nuowei.smarthome.modle.SensorGwDevice;
 import com.nuowei.smarthome.modle.SubDevice;
 import com.nuowei.smarthome.modle.THPGwDevice;
@@ -24,6 +25,7 @@ import com.nuowei.smarthome.util.MyUtil;
 import com.nuowei.smarthome.util.Time;
 
 import org.apache.http.Header;
+import org.json.JSONException;
 
 import java.util.Date;
 import java.util.Map;
@@ -65,20 +67,27 @@ public class SmartHomeServer extends Service {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    HttpManage.getInstance().onRefresh(SmartHomeServer.this, new HttpManage.ResultCallback<Map<String, String>>() {
-                        @Override
-                        public void onError(Header[] headers, HttpManage.Error error) {
 
-                        }
+                    try {
+                        HttpManage.getInstance().onRefreshs(SmartHomeServer.this, new HttpManage.ResultCallback<String>() {
+                            @Override
+                            public void onError(Header[] headers, HttpManage.Error error) {
+                                MyApplication.getLogger().e("失败" + error.getMsg() + "s:" + error.getCode());
+                            }
 
-                        @Override
-                        public void onSuccess(int code, Map<String, String> response) {
-                            String accessToken = response.get("access_token");
-                            String refresh_token = response.get("refresh_token");
-                            MyApplication.getMyApplication().setAccessToken(accessToken);
-                            MyApplication.getMyApplication().setRefresh_token(refresh_token);
-                        }
-                    });
+                            @Override
+                            public void onSuccess(int code, String response) {
+                                Gson gson = new Gson();
+                                RefreshToken refreshToken = gson.fromJson(response, RefreshToken.class);
+                                String accessToken = refreshToken.getAccess_token();
+                                String refresh_token = refreshToken.getRefresh_token();
+                                MyApplication.getMyApplication().setAccessToken(accessToken);
+                                MyApplication.getMyApplication().setRefresh_token(refresh_token);
+                            }
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     break;
             }
         }

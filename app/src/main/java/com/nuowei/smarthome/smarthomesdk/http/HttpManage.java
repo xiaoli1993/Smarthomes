@@ -758,8 +758,15 @@ public class HttpManage {
         Map<String, String> headers = new HashMap<String, String>();
         headers.put("Access-Token", MyApplication.getMyApplication().getAccessToken());
         post(context, refreshUrl, params, headers, callback);
+        MyApplication.getLogger().i("refreshUrl:"+refreshUrl+"\t"+MyApplication.getMyApplication().getAccessToken()+"\t"+MyApplication.getMyApplication().getRefresh_token());
     }
-
+    public void onRefreshs(Context context, final ResultCallback callback) throws JSONException {
+        RequestParams params = new RequestParams();
+        params.put("refresh_token", MyApplication.getMyApplication().getRefresh_token());
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put("Access-Token", MyApplication.getMyApplication().getAccessToken());
+        post2(context, refreshUrl, params.getJsonEntity(), callback, headers);
+    }
     /**
      * .用户查询设备固件最新版本
      *

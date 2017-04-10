@@ -56,7 +56,7 @@ public class ActionAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.item_lists, null);
+            convertView = layoutInflater.inflate(R.layout.item_text, null);
             convertView.setTag(new ActionAdapter.ViewHolder(convertView));
         }
         initializeViews((Action) getItem(position), (ActionAdapter.ViewHolder) convertView.getTag());
@@ -65,8 +65,8 @@ public class ActionAdapter extends BaseAdapter {
 
     private void initializeViews(Action action, ActionAdapter.ViewHolder holder) {
         //TODO implement
-        holder.deviceIcon.setVisibility(View.GONE);
-        holder.imageRight.setVisibility(View.GONE);
+//        holder.deviceIcon.setVisibility(View.GONE);
+//        holder.imageRight.setVisibility(View.GONE);
 
         if (action.isChoise()) {
             holder.deviceName.setTextColor(context.getResources().getColor(R.color.color_start));
@@ -76,12 +76,12 @@ public class ActionAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        @BindView(R.id.device_icon)
-        ImageView deviceIcon;
+//        @BindView(R.id.device_icon)
+//        ImageView deviceIcon;
         @BindView(R.id.device_name)
         AvenirTextView deviceName;
-        @BindView(R.id.image_right)
-        ImageView imageRight;
+//        @BindView(R.id.image_right)
+//        ImageView imageRight;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

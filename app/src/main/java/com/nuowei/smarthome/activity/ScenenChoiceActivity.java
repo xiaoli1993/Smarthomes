@@ -25,7 +25,7 @@ import butterknife.OnClick;
 /**
  * @Author : 肖力
  * @Time :  2017/4/8 10:47
- * @Description :
+ * @Description :场景选择设备
  * @Modify record :
  */
 
