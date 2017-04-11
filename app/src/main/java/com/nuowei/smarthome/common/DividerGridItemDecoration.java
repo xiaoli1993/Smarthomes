@@ -39,7 +39,7 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     public DividerGridItemDecoration() {
-        this(Color.parseColor("#cccccc"));
+        this(Color.parseColor("#ffffff"));
     }
 
     @Override
@@ -160,7 +160,7 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
 //        {
 ////            if (b){
 ////                outRect.set(0, 0, lineWidth, lineWidth);
-////            }else {
+////            }else {.
 //                outRect.set(0, 0, 0, lineWidth);
 ////            }
 //        }

@@ -387,6 +387,11 @@ public class WheelTime {
                /* textSize = textSize * 4;*/
 
                 wv_seconds.setVisibility(View.GONE);
+            case HOURS_MINS_SECOND:
+               /* textSize = textSize * 4;*/
+                wv_year.setVisibility(View.GONE);
+                wv_month.setVisibility(View.GONE);
+                wv_day.setVisibility(View.GONE);
         }
         setContentTextSize();
     }

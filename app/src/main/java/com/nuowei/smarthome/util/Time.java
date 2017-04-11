@@ -29,7 +29,10 @@ public class Time {
         SimpleDateFormat format = new SimpleDateFormat("mm");
         return Integer.parseInt(format.format(date));
     }
-
+    public static int getSecond(Date date) {
+        SimpleDateFormat format = new SimpleDateFormat("ss");
+        return Integer.parseInt(format.format(date));
+    }
     // date类型转换为String类型
     // formatType格式为yyyy-MM-dd HH:mm:ss//yyyy年MM月dd日 HH时mm分ss秒
     // data Date类型的时间

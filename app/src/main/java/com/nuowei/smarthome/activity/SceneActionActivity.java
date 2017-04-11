@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -43,7 +44,7 @@ public class SceneActionActivity extends BaseActivity {
     @BindView(R.id.device_name)
     AvenirTextView deviceName;
     @BindView(R.id.rl_device)
-    RelativeLayout rlDevice;
+    LinearLayout rlDevice;
 
     private ActionAdapter actionAdapter;
     private List<Action> list;
@@ -118,6 +119,7 @@ public class SceneActionActivity extends BaseActivity {
                 intent.putExtra(Constants.ZIGBEE_MAC, list.get(position).getSubMac());
                 intent.putExtra("action", list.get(position).getAction());
                 intent.putExtra("isGw", list.get(position).isGw());
+                intent.putExtra(Constants.DEVICE_TYPES, list.get(position).getDeviceType());
                 setResult(SUB_DEVICE_CODE, intent);
                 finish();
             }

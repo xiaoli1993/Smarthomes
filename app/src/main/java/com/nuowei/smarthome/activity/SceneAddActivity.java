@@ -19,7 +19,10 @@ import com.nuowei.smarthome.Constants;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.adapter.MainLeftAdapter;
+import com.nuowei.smarthome.manage.SubDeviceManage;
 import com.nuowei.smarthome.modle.LeftMain;
+import com.nuowei.smarthome.modle.SubDevice;
+import com.nuowei.smarthome.util.MyUtil;
 import com.nuowei.smarthome.util.Time;
 import com.nuowei.smarthome.view.pickerview.TimePickerView;
 import com.nuowei.smarthome.view.textview.AvenirTextView;
@@ -67,6 +70,10 @@ public class SceneAddActivity extends BaseActivity {
     AvenirTextView tvRight;
     @BindView(R.id.tv_timer)
     AvenirTextView tvTimer;
+    @BindView(R.id.tv_contdown)
+    AvenirTextView tvContdown;
+
+
     private MainLeftAdapter adapter;
 
     private TimePickerView pvTime;
@@ -81,6 +88,8 @@ public class SceneAddActivity extends BaseActivity {
     private String gwMac;
     private String subMac;
     private String action;
+    private int seconds;
+    private int deviceType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,8 +120,10 @@ public class SceneAddActivity extends BaseActivity {
                 /*btn_Time.setText(getTime(date));*/
                 hours = Time.getHour(date);
                 mins = Time.getMinute(date);
+                seconds = Time.getSecond(date);
+                tvContdown.setText(String.format("%02d", hours) + ":" + String.format("%02d", mins) + ":" + String.format("%02d", seconds));
             }
-        }).setType(TimePickerView.Type.HOURS_MINS)
+        }).setType(TimePickerView.Type.HOURS_MINS_SECOND)
                 .setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
                 .setDividerColor(getResources().getColor(R.color.divider))
                 .setContentSize(20)
@@ -142,10 +153,7 @@ public class SceneAddActivity extends BaseActivity {
                     wk = bundle.getInt("wk");
                     hour = bundle.getInt("hour");
                     min = bundle.getInt("min");
-                    MyApplication.getLogger().i("wk:" + wk + "hour:" + hour + "min:" + min);
-//                    for (int i=0x01;i<0x80;i>>>1){
-//
-//                    }
+                    tvTimer.setText(MyUtil.getWkString(MyApplication.getMyApplication(), wk) + " " + String.format("%02d", hour) + ":" + String.format("%02d", min));
                 }
                 break;
             case SUB_DEVICE_CODE:
@@ -154,8 +162,15 @@ public class SceneAddActivity extends BaseActivity {
                     gwMac = bundle.getString(Constants.GATEWAY_MAC);
                     subMac = bundle.getString(Constants.ZIGBEE_MAC);
                     action = bundle.getString("action");
+                    deviceType = bundle.getInt(Constants.DEVICE_TYPES);
                     boolean isGw = bundle.getBoolean("isGw");
                     MyApplication.getLogger().i("gwMac:" + gwMac + "subMac:" + subMac + "action:" + action);
+                    if (!isGw) {
+                        SubDevice subDevice = SubDeviceManage.getInstance().getDevice(gwMac, subMac);
+                        list.add(new LeftMain(MyUtil.getDeviceToImage(subDevice.getDeviceType()), subDevice.getDeviceName() + "\t" + action));
+                    }
+                    adapter.notifyDataSetChanged();
+                    listExecution.setVisibility(View.VISIBLE);
                 }
                 break;
         }

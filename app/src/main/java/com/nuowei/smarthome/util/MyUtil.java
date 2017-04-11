@@ -647,4 +647,127 @@ public class MyUtil {
             return context.getResources().getString(R.string.Disarm);
         }
     }
+
+    private static final int Period_Sign = 0x80;
+    private static final int Monday = 0x01;
+    private static final int Tuesday = 0x02;
+    private static final int Wednesday = 0x04;
+    private static final int Thursday = 0x08;
+    private static final int Friday = 0x10;
+    private static final int Saturday = 0x20;
+    private static final int Sunday = 0x40;
+    private static final int Everyday = 0x7f;
+
+    public static String getWkString(Context mContext, int wk) {
+        String WkString = "";
+        int i = 0x01;
+        while (i < 0x80) {
+            int s = wk & i;
+            switch (s) {
+                case Monday:
+                    WkString = mContext.getString(R.string.Monday);
+                    break;
+                case Tuesday:
+                    WkString = WkString + " " + mContext.getString(R.string.Tuesday);
+                    break;
+                case Wednesday:
+                    WkString = WkString + " " + mContext.getString(R.string.Wednesday);
+                    break;
+                case Thursday:
+                    WkString = WkString + " " + mContext.getString(R.string.Thursday);
+                    break;
+                case Friday:
+                    WkString = WkString + " " + mContext.getString(R.string.Friday);
+                    break;
+                case Saturday:
+                    WkString = WkString + " " + mContext.getString(R.string.Saturday);
+                    break;
+                case Sunday:
+                    WkString = WkString + " " + mContext.getString(R.string.Sunday);
+                    break;
+            }
+            i = i << 1;
+        }
+        if (WkString.equals(mContext.getString(R.string.Monday)
+                + " " + mContext.getString(R.string.Tuesday)
+                + " " + mContext.getString(R.string.Wednesday)
+                + " " + mContext.getString(R.string.Thursday)
+                + " " + mContext.getString(R.string.Friday)
+                + " " + mContext.getString(R.string.Saturday)
+                + " " + mContext.getString(R.string.Sunday))) {
+            WkString = mContext.getString(R.string.everyday);
+        } else if (WkString.equals(mContext.getString(R.string.Monday)
+                + " " + mContext.getString(R.string.Tuesday)
+                + " " + mContext.getString(R.string.Wednesday)
+                + " " + mContext.getString(R.string.Thursday)
+                + " " + mContext.getString(R.string.Friday))) {
+            WkString = mContext.getString(R.string.Daily);
+        } else if (WkString.equals(" " + mContext.getString(R.string.Saturday)
+                + " " + mContext.getString(R.string.Sunday))) {
+            WkString = mContext.getString(R.string.Weekdays);
+        }
+        return WkString;
+    }
+
+    public static int getDeviceToImage(int deviceType) {
+        int image = 0;
+        switch (deviceType) {
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_RGB:
+                image = R.drawable.device_light;
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_DOORS:
+                image = R.drawable.device_door;
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_WATER:
+                image = R.drawable.device_water;
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_PIR:
+                image = R.drawable.device_pir;
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_SMOKE:
+                image = R.drawable.device_smoke;
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_THP:
+                image = R.drawable.device_thp;
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_GAS:
+                image = R.drawable.device_gas;
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_CO:
+                image = R.drawable.device_co;
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_SOS:
+                image = R.drawable.device_sos;
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_SW:
+                image = R.drawable.device_sw;
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_PLUGIN:
+                image = R.drawable.device_plug;
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_METRTING_PLUGIN:
+                image = R.drawable.device_plug;
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_WIFI_RC:
+                image = R.drawable.home_security;
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_WIFI_GATEWAY:
+                image = R.drawable.device_gw;
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_WIFI_PLUGIN:
+                image = R.drawable.device_plug;
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_WIFI_METRTING_PLUGIN:
+                image = R.drawable.home_electric;
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_WIFI_AIR:
+                image = R.drawable.home_light;
+                break;
+            default:
+                image = R.drawable.home_device;
+                break;
+        }
+        return image;
+    }
+
 }

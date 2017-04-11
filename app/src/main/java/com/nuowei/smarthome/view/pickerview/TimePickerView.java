@@ -30,7 +30,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     private CustomListener customListener;
 
     public enum Type {
-        ALL, YEAR_MONTH_DAY, HOURS_MINS, MONTH_DAY_HOUR_MIN, YEAR_MONTH, YEAR_MONTH_DAY_HOUR_MIN
+        ALL, YEAR_MONTH_DAY, HOURS_MINS, MONTH_DAY_HOUR_MIN, YEAR_MONTH, YEAR_MONTH_DAY_HOUR_MIN,HOURS_MINS_SECOND
     } // 六种选择模式，年月日时分秒，年月日，时分，月日时分，年月，年月日时分
 
     WheelTime wheelTime; //自定义控件

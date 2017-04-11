@@ -278,6 +278,14 @@
     <string name="turned_off">Turned off</string>
     <string name="Brightness">Brightness</string>
     <string name="Arming">Arming</string>
-
-
+    <string name="Monday">Monday</string>
+    <string name="Tuesday">Tuesday</string>
+    <string name="Wednesday">Wednesday</string>
+    <string name="Thursday">Thursday</string>
+    <string name="Friday">Friday</string>
+    <string name="Saturday">Saturday</string>
+    <string name="Sunday">Sunday</string>
+    <string name="everyday">Everyday</string>
+    <string name="Daily">Daily</string>
+    <string name="Weekdays">Weekdays</string>
 </resources>

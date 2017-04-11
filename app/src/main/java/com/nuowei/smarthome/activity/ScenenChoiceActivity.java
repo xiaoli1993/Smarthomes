@@ -101,6 +101,7 @@ public class ScenenChoiceActivity extends BaseActivity {
                     intent.putExtra(Constants.ZIGBEE_MAC, bundle.getString(Constants.ZIGBEE_MAC));
                     intent.putExtra("action", bundle.getString("action"));
                     intent.putExtra("isGW", bundle.getString("isGw"));
+                    intent.putExtra(Constants.DEVICE_TYPES, bundle.getString(Constants.DEVICE_TYPES));
                     setResult(SUB_DEVICE_CODE, intent);
                     finish();
                 }

@@ -1,50 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_device"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="wrap_content"
     android:background="@drawable/list_selector">
 
-    <ImageView
-        android:id="@+id/device_icon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="24dp"
-        android:layout_marginStart="24dp"
-        android:src="@drawable/device_co" />
-
-    <com.nuowei.smarthome.view.textview.AvenirTextView
-        android:id="@+id/device_name"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_toEndOf="@+id/device_icon"
-        android:layout_toRightOf="@+id/device_icon"
-        android:text=""
-        android:textColor="#ff333333"
-        android:textSize="15dp" />
+        android:layout_height="80dp">
 
-    <ImageView
-        android:id="@+id/image_right"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
-        android:background="#00000000"
-        android:scaleType="fitXY"
-        android:src="@drawable/more" />
+        <ImageView
+            android:id="@+id/device_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
+            android:src="@drawable/device_co" />
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1px"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="@color/divider"></View>
-</RelativeLayout>
+        <com.nuowei.smarthome.view.textview.AvenirTextView
+            android:id="@+id/device_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_toEndOf="@+id/device_icon"
+            android:layout_toRightOf="@+id/device_icon"
+            android:text=""
+            android:textColor="#ff333333"
+            android:textSize="15dp" />
+
+        <ImageView
+            android:id="@+id/image_right"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="#00000000"
+            android:scaleType="fitXY"
+            android:src="@drawable/more" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="@color/divider" />
+    </RelativeLayout>
+</LinearLayout>

@@ -1129,7 +1129,7 @@ public class Constants {
 
     public static final int USER_HEADER_WIDTH_HEIGHT = 500;
     public static final String HEIMANEmail = "@bm.com";
-    public static final String HEIMANPASS = "8888";
+    public static final String HEIMANPASS = "123456";
 
     public static String HawkPass = "52113149";                                  //Hawk保存中的密码.
 
