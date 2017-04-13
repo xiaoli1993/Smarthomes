@@ -92,13 +92,13 @@ public class MyApplication extends LitePalApplication implements XlinkNetListene
         //数据库加密保存
         Hawk.init(this)
                 .setEncryption(new NoEncryption())
-                .setLogInterceptor(new LogInterceptor() {
-                    @Override
-                    public void onLog(String message) {
-                        MyApplication.getLogger().i(message);
+//                .setLogInterceptor(new LogInterceptor() {
+//                    @Override
+//                    public void onLog(String message) {
+//                        MyApplication.getLogger().i(message);
 
-                    }
-                })
+//                    }
+//                })
 //                .setConverter(new MyConverter())
 //                .setParser(new MyParser())
 //                .setStorage(HawkBuilder.newSqliteStorage(this))

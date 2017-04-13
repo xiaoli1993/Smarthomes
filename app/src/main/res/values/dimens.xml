@@ -2,7 +2,7 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="app_bar_height">254dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <!-- 顶部按钮栏高度 -->
     <dimen name="pickerview_topbar_height">44dp</dimen>
@@ -81,4 +81,5 @@
     <integer name="small_calendar_text_size">10</integer>
     <dimen name="small_week_bar_height">28dp</dimen>
     <dimen name="small_month_calendar_height">224dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

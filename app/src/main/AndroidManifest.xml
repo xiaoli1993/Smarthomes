@@ -85,11 +85,16 @@
         <activity android:name=".activity.RepeatActivity" />
         <activity android:name=".activity.DiaryActivity" />
 
-
-     <!--   <activity android:name=".calendar.activity.AddEventSetActivity" />
+        <!--
+        <activity android:name=".calendar.activity.AddEventSetActivity" />
         <activity android:name=".calendar.activity.MainActivity" />
-        <activity android:name=".calendar.activity.ScheduleDetailActivity" />-->
+        <activity android:name=".calendar.activity.ScheduleDetailActivity" />
+        -->
 
+        <activity
+            android:name=".activity.ScrollingActivity"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

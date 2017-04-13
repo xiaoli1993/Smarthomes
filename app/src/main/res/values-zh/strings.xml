@@ -186,4 +186,15 @@
     <string name="everyday">每天</string>
     <string name="Daily">工作日</string>
     <string name="Weekdays">周末</string>
+    <string name="grid">Grid</string>
+    <string name="list">List</string>
+    <string name="pm2_5">pm2.5</string>
+    <string name="tds">TDS</string>
+    <string name="c">°C</string>
+    <string name="temperature">Temperature</string>
+    <string name="water_quality">Water Quality</string>
+    <string name="excellent">Excellent</string>
+    <string name="disarm">Disarm</string>
+    <string name="away">Away</string>
+    <string name="home">Home</string>
 </resources>

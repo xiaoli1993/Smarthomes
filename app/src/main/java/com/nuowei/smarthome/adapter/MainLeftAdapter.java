@@ -59,7 +59,7 @@ public class MainLeftAdapter extends BaseAdapter {
 
         hold.imageView = (ImageView) convertView.findViewById(R.id.item_imageview);
         hold.textView = (TextView) convertView.findViewById(R.id.item_textview);
-        hold.imageView.setColorFilter(context.getResources().getColor(R.color.text_title));
+//        hold.imageView.setColorFilter(context.getResources().getColor(R.color.text_title));
         hold.imageView.setImageResource(list.get(position).getImageView());
         hold.textView.setText(list.get(position).getText());
         return convertView;

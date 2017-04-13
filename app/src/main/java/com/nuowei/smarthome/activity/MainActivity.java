@@ -7,10 +7,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,6 +27,7 @@ import com.nuowei.smarthome.SmartHomeServer;
 import com.nuowei.smarthome.adapter.MainLeftAdapter;
 import com.nuowei.smarthome.fragment.MainGridFragment;
 import com.nuowei.smarthome.fragment.MainListFragment;
+import com.nuowei.smarthome.fragment.MainListTFragment;
 import com.nuowei.smarthome.manage.DeviceManage;
 import com.nuowei.smarthome.modle.DataDevice;
 import com.nuowei.smarthome.modle.IpMac;
@@ -77,7 +81,7 @@ import qiu.niorgai.StatusBarCompat;
  * @Time :  2017/2/24 08:29
  * @Description :
  */
-public class MainActivity extends AppCompatActivity implements YahooWeatherExceptionListener, YahooWeatherInfoListener {
+public class MainActivity extends AppCompatActivity  {
 
     @BindView(R.id.left_listview)
     ListView listView;
@@ -89,7 +93,17 @@ public class MainActivity extends AppCompatActivity implements YahooWeatherExcep
     DrawerLayout drawerLayout;
     @BindView(R.id.left)
     RelativeLayout left;
-    private YahooWeather mYahooWeather = YahooWeather.getInstance(5000, 5000, true);
+    @BindView(R.id.image_list)
+    ImageView imageList;
+    @BindView(R.id.image_grid)
+    ImageView imageGrid;
+    @BindView(R.id.tv_list)
+    TextView tvList;
+    @BindView(R.id.tv_grid)
+    TextView tvGrid;
+
+
+
 
     private List<LeftMain> list;
 
@@ -103,14 +117,16 @@ public class MainActivity extends AppCompatActivity implements YahooWeatherExcep
     private final Timer timer = new Timer();
     private TimerTask task;
     private boolean isRunTask = true;
-
+    private Fragment mTab01;
+    private Fragment mTab02;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        LoginResult loginResult = NetManager.getInstance(this).createLoginResult(NetManager.getInstance(this).login("554674787@qq.com", "8888"));
+        MyApplication.getLogger().i(loginResult.contactId + "\n" + loginResult.error_code);
         initXlink();
-        initWeather();
         initData();
         initEven();
         initDevice();
@@ -118,6 +134,10 @@ public class MainActivity extends AppCompatActivity implements YahooWeatherExcep
         registerReceiver(mBroadcastReceiver, MyUtil.regFilter());
         startCustomService();
         MyApplication.getMyApplication().setCurrentActivity(this);
+    }
+
+    public void openDrawers() {
+        drawerLayout.openDrawer(left);
     }
 
     // 启动服务
@@ -161,8 +181,10 @@ public class MainActivity extends AppCompatActivity implements YahooWeatherExcep
         if (isLists) {
             isList = Hawk.get(Constants.ISLIST);
             initFragment(isList);
+//            setSelect(0);
         } else {
             initFragment(false);
+//            setSelect(1);
         }
         if (!XlinkAgent.getInstance().isConnectedLocal()) {
             MyApplication.getLogger().i("启动Xlink");
@@ -192,12 +214,22 @@ public class MainActivity extends AppCompatActivity implements YahooWeatherExcep
                 Hawk.put(Constants.ISLIST, isList);
                 initFragment(isList);
                 drawerLayout.closeDrawer(left);
+                imageList.setImageResource(R.drawable.main_right_list_pressed);
+                imageGrid.setImageResource(R.drawable.main_right_lattice_normal);
+                tvList.setTextColor(getResources().getColor(R.color.text_o));
+                tvGrid.setTextColor(getResources().getColor(R.color.text_title));
+//                setSelect(0);
                 break;
             case R.id.ll_Grid:
                 isList = false;
                 Hawk.put(Constants.ISLIST, isList);
                 initFragment(isList);
                 drawerLayout.closeDrawer(left);
+                imageList.setImageResource(R.drawable.main_right_list_normal);
+                imageGrid.setImageResource(R.drawable.main_right_lattice_pressed);
+                tvGrid.setTextColor(getResources().getColor(R.color.text_o));
+                tvList.setTextColor(getResources().getColor(R.color.text_title));
+//                setSelect(1);
                 break;
         }
     }
@@ -223,13 +255,55 @@ public class MainActivity extends AppCompatActivity implements YahooWeatherExcep
         list.add(new LeftMain(R.drawable.main_right_setting, getResources().getString(R.string.Setting)));
     }
 
+    private void setSelect(int i) {
+        setTab(i);
+    }
+
+    private void hideFragment(FragmentTransaction transaction) {
+        if (mTab01 != null) {
+            transaction.hide(mTab01);
+        }
+        if (mTab02 != null) {
+            transaction.hide(mTab02);
+        }
+    }
+    private void setTab(int i) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        hideFragment(transaction);
+        // 切换内容区域
+        switch (i) {
+            case 0:
+                if (mTab01 == null) {
+                    mTab01 = new MainListTFragment();
+                    transaction.add(R.id.fragment_layout, mTab01);
+                } else {
+                    transaction.show(mTab01);
+                }
+            case 1:
+                if (mTab02 == null) {
+                    mTab02 = new MainGridFragment();
+                    transaction.add(R.id.fragment_layout, mTab02);
+                } else {
+                    transaction.show(mTab02);
+                }
+        }
+    }
     private void initFragment(boolean isList) {
 
         Fragment fragment = null;
         if (isList) {
-            fragment = new MainListFragment();
+            fragment = new MainListTFragment();
+            imageList.setImageResource(R.drawable.main_right_list_pressed);
+            imageGrid.setImageResource(R.drawable.main_right_lattice_normal);
+            tvList.setTextColor(getResources().getColor(R.color.text_o));
+            tvGrid.setTextColor(getResources().getColor(R.color.text_title));
         } else {
             fragment = new MainGridFragment();
+            imageList.setImageResource(R.drawable.main_right_list_normal);
+            imageGrid.setImageResource(R.drawable.main_right_lattice_pressed);
+            tvGrid.setTextColor(getResources().getColor(R.color.text_o));
+            tvList.setTextColor(getResources().getColor(R.color.text_title));
         }
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_layout, fragment)
@@ -237,120 +311,7 @@ public class MainActivity extends AppCompatActivity implements YahooWeatherExcep
                 .commit();
     }
 
-    private void initWeather() {
-        LoginResult loginResult = NetManager.getInstance(this).createLoginResult(NetManager.getInstance(this).login("554674787@qq.com", "8888"));
-        MyApplication.getLogger().i(loginResult.contactId + "\n" + loginResult.error_code);
-        String url = "http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=json";
-        OkHttpUtils.get().url(url).build().execute(new StringCallback() {
-            @Override
-            public void onError(Call call, Exception e, int id) {
-                MyApplication.getLogger().e("\t" + e.getMessage());
-            }
 
-            @Override
-            public void onResponse(String response, int id) {
-                MyApplication.getLogger().i("response:" + response);
-                Gson gson = new Gson();
-                IpMac ipmac = gson.fromJson(response, IpMac.class);
-                MyApplication.getLogger().i("City:" + ipmac.getCity());
-                searchByPlaceName(ipmac.getCity());
-            }
-
-        });
-    }
-
-
-    private void searchByGPS() {
-        mYahooWeather.setNeedDownloadIcons(true);
-        mYahooWeather.setUnit(YahooWeather.UNIT.CELSIUS);
-        mYahooWeather.setSearchMode(YahooWeather.SEARCH_MODE.GPS);
-        mYahooWeather.queryYahooWeatherByGPS(getApplicationContext(), this);
-    }
-
-    private void searchByPlaceName(String location) {
-        mYahooWeather.setNeedDownloadIcons(true);
-        mYahooWeather.setUnit(YahooWeather.UNIT.CELSIUS);
-        mYahooWeather.setSearchMode(YahooWeather.SEARCH_MODE.PLACE_NAME);
-        mYahooWeather.queryYahooWeatherByPlaceName(getApplicationContext(), location, MainActivity.this);
-    }
-
-    @Override
-    public void onFailConnection(final Exception e) {
-        // TODO Auto-generated method stub
-        Toast.makeText(getApplicationContext(), "Fail Connection", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onFailParsing(final Exception e) {
-        // TODO Auto-generated method stub
-        Toast.makeText(getApplicationContext(), "Fail Parsing", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onFailFindLocation(final Exception e) {
-        // TODO Auto-generated method stub
-        Toast.makeText(getApplicationContext(), "Fail Find Location", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void gotWeatherInfo(WeatherInfo weatherInfo) {
-        if (weatherInfo != null) {
-            if (mYahooWeather.getSearchMode() == YahooWeather.SEARCH_MODE.GPS) {
-                if (weatherInfo.getAddress() != null) {
-//                    mEtAreaOfCity.setText(YahooWeather.addressToPlaceName(weatherInfo.getAddress()));
-                }
-            }
-            MyApplication.getLogger().v("====== CURRENT ======" + "\n" +
-                    "date: " + weatherInfo.getCurrentConditionDate() + "\n" +
-                    "weather: " + weatherInfo.getCurrentText() + "\n" +
-                    "temperature in ºC: " + weatherInfo.getCurrentTemp() + "\n" +
-                    "wind chill: " + weatherInfo.getWindChill() + "\n" +
-                    "wind direction: " + weatherInfo.getWindDirection() + "\n" +
-                    "wind speed: " + weatherInfo.getWindSpeed() + "\n" +
-                    "Humidity: " + weatherInfo.getAtmosphereHumidity() + "\n" +
-                    "Pressure: " + weatherInfo.getAtmospherePressure() + "\n" +
-                    "Visibility: " + weatherInfo.getAtmosphereVisibility());
-//            mTvWeather0.setText("====== CURRENT ======" + "\n" +
-//                    "date: " + weatherInfo.getCurrentConditionDate() + "\n" +
-//                    "weather: " + weatherInfo.getCurrentText() + "\n" +
-//                    "temperature in ºC: " + weatherInfo.getCurrentTemp() + "\n" +
-//                    "wind chill: " + weatherInfo.getWindChill() + "\n" +
-//                    "wind direction: " + weatherInfo.getWindDirection() + "\n" +
-//                    "wind speed: " + weatherInfo.getWindSpeed() + "\n" +
-//                    "Humidity: " + weatherInfo.getAtmosphereHumidity() + "\n" +
-//                    "Pressure: " + weatherInfo.getAtmospherePressure() + "\n" +
-//                    "Visibility: " + weatherInfo.getAtmosphereVisibility()
-//            );
-            if (weatherInfo.getCurrentConditionIcon() != null) {
-//                mIvWeather0.setImageBitmap(weatherInfo.getCurrentConditionIcon());
-            }
-            for (int i = 0; i < YahooWeather.FORECAST_INFO_MAX_SIZE; i++) {
-//                final LinearLayout forecastInfoLayout = (LinearLayout)
-//                        getLayoutInflater().inflate(R.layout.forecastinfo, null);
-//                final TextView tvWeather = (TextView) forecastInfoLayout.findViewById(R.id.textview_forecast_info);
-                final WeatherInfo.ForecastInfo forecastInfo = weatherInfo.getForecastInfoList().get(i);
-//                tvWeather.setText("====== FORECAST " + (i + 1) + " ======" + "\n" +
-//                        "date: " + forecastInfo.getForecastDate() + "\n" +
-//                        "weather: " + forecastInfo.getForecastText() + "\n" +
-//                        "low  temperature in ºC: " + forecastInfo.getForecastTempLow() + "\n" +
-//                        "high temperature in ºC: " + forecastInfo.getForecastTempHigh() + "\n"
-//                );
-//                final ImageView ivForecast = (ImageView) forecastInfoLayout.findViewById(R.id.imageview_forecast_info);
-//                if (forecastInfo.getForecastConditionIcon() != null) {
-//                    ivForecast.setImageBitmap(forecastInfo.getForecastConditionIcon());
-//                }
-//                mWeatherInfosLayout.addView(forecastInfoLayout);
-                MyApplication.getLogger().d("====== FORECAST " + (i + 1) + " ======" + "\n" +
-                        "date: " + forecastInfo.getForecastDate() + "\n" +
-                        "weather: " + forecastInfo.getForecastText() + "\n" +
-                        "low  temperature in ºC: " + forecastInfo.getForecastTempLow() + "\n" +
-                        "high temperature in ºC: " + forecastInfo.getForecastTempHigh() + "\n");
-            }
-        } else {
-//            setNoResultLayout();
-        }
-
-    }
 
     private boolean isRegisterBroadcast = false;
 
