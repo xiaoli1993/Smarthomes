@@ -12,7 +12,7 @@
         android:background="@drawable/dialog_background"
         android:orientation="vertical">
 
-        <TextView
+        <com.nuowei.smarthome.view.textview.DinProTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/space_10dp"
@@ -41,7 +41,7 @@
             android:layout_height="@dimen/line_height"
             android:background="@color/color_schedule_line"/>
 
-        <TextView
+        <com.nuowei.smarthome.view.textview.DinProTextView
             android:id="@+id/tvAddEventSet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
             android:layout_marginRight="@dimen/space_20dp"
             android:layout_marginTop="@dimen/space_16dp">
 
-            <TextView
+            <com.nuowei.smarthome.view.textview.DinProTextView
                 android:id="@+id/tvCancel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
                 android:text="@string/cancel"
                 android:textColor="@color/colorWrite"/>
 
-            <TextView
+            <com.nuowei.smarthome.view.textview.DinProTextView
                 android:id="@+id/tvConfirm"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

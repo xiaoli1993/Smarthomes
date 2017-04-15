@@ -37,7 +37,7 @@
         android:textColor="@color/color_schedule_finish_title_text"
         android:textSize="@dimen/text_size_16sp"/>
 
-    <TextView
+    <com.nuowei.smarthome.view.textview.DinProTextView
         android:id="@+id/tvScheduleTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -17,7 +17,7 @@
         android:textColor="@drawable/selector_pickerview_btn"
         android:textSize="@dimen/pickerview_topbar_btn_textsize" />
 
-    <TextView
+    <com.nuowei.smarthome.view.textview.DinProTextView
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

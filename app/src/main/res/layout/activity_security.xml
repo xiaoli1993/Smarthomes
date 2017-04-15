@@ -9,7 +9,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="20dp" />
+        android:layout_height="7dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,12 +27,14 @@
             android:padding="20dp">
 
             <ImageButton
+                android:id="@+id/image_home"
                 android:layout_width="61dp"
                 android:layout_height="61dp"
                 android:background="@color/transparent"
-                android:src="@drawable/gw_home" />
+                android:src="@drawable/gw_home_normal" />
 
-            <TextView
+            <com.nuowei.smarthome.view.textview.DinProTextView
+                android:id="@+id/tv_home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -49,12 +51,14 @@
             android:padding="20dp">
 
             <ImageButton
+                android:id="@+id/image_away"
                 android:layout_width="61dp"
                 android:layout_height="61dp"
                 android:background="@color/transparent"
-                android:src="@drawable/gw_away" />
+                android:src="@drawable/gw_away_normal" />
 
-            <TextView
+            <com.nuowei.smarthome.view.textview.DinProTextView
+                android:id="@+id/tv_away"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -71,12 +75,14 @@
             android:padding="20dp">
 
             <ImageButton
+                android:id="@+id/image_disarm"
                 android:layout_width="61dp"
                 android:layout_height="61dp"
                 android:background="@color/transparent"
-                android:src="@drawable/gw_disarm" />
+                android:src="@drawable/gw_disarm_normal" />
 
-            <TextView
+            <com.nuowei.smarthome.view.textview.DinProTextView
+                android:id="@+id/tv_disarm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -89,7 +95,7 @@
         android:id="@+id/shimmer_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="7dp"
         android:paddingBottom="10dp"
         app:demo_child_count="10"
         app:demo_layout="@layout/layout_demo" />

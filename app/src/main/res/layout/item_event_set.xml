@@ -30,7 +30,7 @@
                 android:layout_marginRight="@dimen/space_12dp"
                 android:src="@mipmap/ic_event_set_icon"/>
 
-            <TextView
+            <com.nuowei.smarthome.view.textview.DinProTextView
                 android:id="@+id/tvEventSetName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

@@ -10,7 +10,7 @@
               android:orientation="vertical"
               android:tag="menu">
 
-    <TextView
+    <com.nuowei.smarthome.view.textview.DinProTextView
         android:id="@+id/tvMenuTitle"
         android:layout_width="match_parent"
         android:layout_height="@dimen/action_bar_height"
@@ -50,7 +50,7 @@
                         android:layout_marginLeft="@dimen/space_20dp"
                         android:src="@mipmap/ic_menu_schedule"/>
 
-                    <TextView
+                    <com.nuowei.smarthome.view.textview.DinProTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/space_10dp"
@@ -86,7 +86,7 @@
                             android:layout_marginLeft="@dimen/space_20dp"
                             android:src="@mipmap/ic_menu_event_set"/>
 
-                        <TextView
+                        <com.nuowei.smarthome.view.textview.DinProTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/space_10dp"
@@ -113,7 +113,7 @@
                         android:layout_marginLeft="@dimen/space_30dp"
                         android:src="@mipmap/ic_menu_category"/>
 
-                    <TextView
+                    <com.nuowei.smarthome.view.textview.DinProTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/space_16dp"
@@ -140,7 +140,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
-                <TextView
+                <com.nuowei.smarthome.view.textview.DinProTextView
                     android:id="@+id/tvMenuAddEventSet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

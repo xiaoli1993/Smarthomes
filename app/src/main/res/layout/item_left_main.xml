@@ -14,12 +14,13 @@
         android:layout_marginLeft="20dp"
         android:src="@drawable/icon_head" />
 
-    <TextView
+    <com.nuowei.smarthome.view.textview.DinProTextView
         android:id="@+id/item_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:text="aa"
-        android:textSize="20dp" />
+        android:textColor="@color/text_title"
+        android:textSize="14dp" />
 
 </LinearLayout>

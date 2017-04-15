@@ -21,7 +21,7 @@
             android:contentDescription="@string/time_prev"
             android:src="@drawable/ic_arrow_left" />
 
-        <TextView
+        <com.nuowei.smarthome.view.textview.DinProTextView
             android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="match_parent"

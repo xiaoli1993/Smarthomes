@@ -18,7 +18,7 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp" >
 
-        <TextView
+        <com.nuowei.smarthome.view.textview.DinProTextView
             android:id="@+id/avoscloud_feedback_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,13 +34,13 @@
             android:visibility="gone" >
         </ImageView>
 
-        <TextView
+        <com.nuowei.smarthome.view.textview.DinProTextView
             android:id="@+id/avoscloud_feedback_timestamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/avoscloud_timestamp_gray"
             android:textSize="12sp" >
-        </TextView>
+        </com.nuowei.smarthome.view.textview.DinProTextView>
     </LinearLayout>
 
 </RelativeLayout>

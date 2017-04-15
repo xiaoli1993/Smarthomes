@@ -123,6 +123,7 @@ public class MainListTAdapter extends RecyclerView.Adapter<MainListTAdapter.MyVi
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         public TextView textView;
+        public TextView textState;
         public ImageView imageView;
 
         public MyViewHolder(View itemView) {
@@ -133,6 +134,7 @@ public class MainListTAdapter extends RecyclerView.Adapter<MainListTAdapter.MyVi
             layoutParams.height = width / 4;
             itemView.setLayoutParams(layoutParams);
             textView = (TextView) itemView.findViewById(R.id.tv_txt);
+            textState = (TextView) itemView.findViewById(R.id.tv_state);
             imageView = (ImageView) itemView.findViewById(R.id.image_icon);
         }
     }

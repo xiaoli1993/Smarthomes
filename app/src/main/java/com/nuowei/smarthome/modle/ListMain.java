@@ -10,12 +10,22 @@ package com.nuowei.smarthome.modle;
 public class ListMain {
     private String deviceMac;
     private String subMac;
+    private int deviceType;
     private boolean isSub;
 
-    public ListMain(String deviceMac, String deviceMac1, boolean issub) {
+    public ListMain(String deviceMac, String deviceMac1, boolean issub,int deviceType) {
         this.deviceMac = deviceMac1;
         this.subMac = deviceMac;
         this.isSub = issub;
+        this.deviceType = deviceType;
+    }
+
+    public int getDeviceType() {
+        return deviceType;
+    }
+
+    public void setDeviceType(int deviceType) {
+        this.deviceType = deviceType;
     }
 
     public boolean isSub() {

@@ -20,6 +20,8 @@ package com.nuowei.smarthome.yahoo;
 import android.graphics.Bitmap;
 import android.location.Address;
 
+import com.nuowei.smarthome.MyApplication;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -156,6 +158,7 @@ public class WeatherInfo {
 	protected void setCurrentCode(int currentCode) {
 		mCurrentCode = currentCode;
 		mCurrentConditionIconURL = "http://l.yimg.com/a/i/us/we/52/" + currentCode + ".gif";
+		MyApplication.getLogger().i(mCurrentConditionIconURL);
 	}
 	
 	protected void setCurrentTemp(int currentTemp) {

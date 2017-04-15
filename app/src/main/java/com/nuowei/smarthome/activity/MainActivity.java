@@ -102,9 +102,6 @@ public class MainActivity extends AppCompatActivity  {
     @BindView(R.id.tv_grid)
     TextView tvGrid;
 
-
-
-
     private List<LeftMain> list;
 
     private HashMap<Integer, Fragment> fragments = new HashMap<>();

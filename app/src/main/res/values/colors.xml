@@ -6,8 +6,14 @@
     <!--UI设计师提供颜色-->
     <color name="activity_bg">#8ff8f8f8</color>
     <color name="text_title">#3b424c</color>
+    <color name="text_title_g">#98a4b6</color>
+    <color name="text_max_g">#b0bbcb</color>
     <color name="text_o">#ff8a44</color>
     <color name="divider">#c5c5c5</color>
+    <color name="calendar_tv_coclor_f">#d8dde5</color>
+    <color name="calendar_tv_coclor_sel">#98a4b6</color>
+    <color name="white_50">#7FFFFFFF</color>
+    <color name="white_80">#CCFFFFFF</color>
 
     <color name="main_table">#318dc4</color>
     <color name="table_bg">#f1f5f8</color>

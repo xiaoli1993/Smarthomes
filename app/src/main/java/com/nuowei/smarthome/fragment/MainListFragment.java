@@ -80,13 +80,13 @@ public class MainListFragment extends Fragment implements MyItemTouchCallback.On
         for (int x = 0; x < xlinkDeviceList.size(); x++) {
 
             MyApplication.getLogger().w("List列表:" + xlinkDeviceList.get(x).getDeviceMac());
-            dataSourceList.add(new ListMain("", xlinkDeviceList.get(x).getDeviceMac(), false));
+            dataSourceList.add(new ListMain("", xlinkDeviceList.get(x).getDeviceMac(), false, xlinkDeviceList.get(x).getDeviceType()));
         }
         List<SubDevice> subDeviceList = SubDeviceManage.getInstance().getDevices();
         for (int i = 0; i < subDeviceList.size(); i++) {
 
             MyApplication.getLogger().w("List列表:" + subDeviceList.get(i).getZigbeeMac() + "\t" + subDeviceList.get(i).getDeviceMac());
-            dataSourceList.add(new ListMain(subDeviceList.get(i).getZigbeeMac(),subDeviceList.get(i).getDeviceMac(), true));
+            dataSourceList.add(new ListMain(subDeviceList.get(i).getZigbeeMac(), subDeviceList.get(i).getDeviceMac(), true, subDeviceList.get(i).getDeviceType()));
         }
     }
 

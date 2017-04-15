@@ -82,7 +82,7 @@
                 android:layout_marginLeft="@dimen/space_18dp"
                 android:background="@drawable/bg_add_event_set_item">
 
-                <TextView
+                <com.nuowei.smarthome.view.textview.DinProTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/space_12dp"

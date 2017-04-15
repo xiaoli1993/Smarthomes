@@ -84,7 +84,7 @@
         <activity android:name=".activity.SceneAddActivity" />
         <activity android:name=".activity.RepeatActivity" />
         <activity android:name=".activity.DiaryActivity" />
-
+        <activity android:name=".activity.Diary2Activity" />
         <!--
         <activity android:name=".calendar.activity.AddEventSetActivity" />
         <activity android:name=".calendar.activity.MainActivity" />

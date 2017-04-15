@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
+            <com.nuowei.smarthome.view.textview.DinProTextView
                 android:id="@+id/tvCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -33,7 +33,7 @@
                 android:textColor="@color/simple_title_bar_text_color"
                 android:textSize="@dimen/text_size_16sp"/>
 
-            <TextView
+            <com.nuowei.smarthome.view.textview.DinProTextView
                 android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
                 android:textSize="@dimen/text_size_18sp"
                 android:textStyle="bold"/>
 
-            <TextView
+            <com.nuowei.smarthome.view.textview.DinProTextView
                 android:id="@+id/tvFinish"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

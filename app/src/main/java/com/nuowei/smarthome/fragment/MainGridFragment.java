@@ -19,6 +19,8 @@ import android.view.View;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.os.Bundle;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +29,8 @@ import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 import com.google.gson.Gson;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
+import com.nuowei.smarthome.activity.Diary2Activity;
+import com.nuowei.smarthome.activity.DiaryActivity;
 import com.nuowei.smarthome.activity.MainActivity;
 import com.nuowei.smarthome.activity.SceneAddActivity;
 import com.nuowei.smarthome.activity.ScrollingActivity;
@@ -41,6 +45,7 @@ import com.nuowei.smarthome.modle.MainDatas;
 import com.nuowei.smarthome.util.SharePreferenceUtil;
 import com.nuowei.smarthome.util.VibratorUtil;
 import com.nuowei.smarthome.view.scrollview.MyLinearLayoutManager;
+import com.nuowei.smarthome.view.textview.DinProTextView;
 import com.nuowei.smarthome.yahoo.WeatherInfo;
 import com.nuowei.smarthome.yahoo.YahooWeather;
 import com.nuowei.smarthome.yahoo.YahooWeatherExceptionListener;
@@ -60,6 +65,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import okhttp3.Call;
 
 /**
@@ -88,7 +94,22 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
     TextView tvTds;
     @BindView(R.id.tv_temp)
     TextView tvTemp;
+    @BindView(R.id.image_home)
+    ImageButton imageHome;
+    @BindView(R.id.image_away)
+    ImageButton imageAway;
+    @BindView(R.id.image_disarm)
+    ImageButton imageDisarm;
+    @BindView(R.id.tv_home)
+    DinProTextView tvHome;
+    @BindView(R.id.tv_away)
+    DinProTextView tvAway;
+    @BindView(R.id.tv_disarm)
+    DinProTextView tvDisarm;
+    @BindView(R.id.image_weather)
+    ImageView imageWeather;
 
+    Unbinder unbinder;
     private List<HashMap<String, MainDatas>> dataSourceList = new ArrayList<HashMap<String, MainDatas>>();
     private CollapsingToolbarLayoutState state;
     private MainGridAdapter mAdapter;
@@ -104,7 +125,7 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         initWeather();
         initToobar();
         initData();
@@ -119,6 +140,7 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
     private void initToobar() {
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolBar);
         setHasOptionsMenu(true);
+        toolBar.setBackgroundColor(getResources().getColor(R.color.main_table));
         appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -187,8 +209,10 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
                         startActivity(new Intent(getActivity(), ScrollingActivity.class));
                         break;
                     case 2:
+//                        startActivity(new Intent(getActivity(), DiaryActivity.class));
                         break;
                     case 3:
+//                        startActivity(new Intent(getActivity(), Diary2Activity.class));
                         break;
                     case 4:
                         break;
@@ -216,6 +240,7 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        unbinder.unbind();
     }
 
 //    @Override
@@ -375,10 +400,10 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
             tvWeather.setText(weatherInfo.getCurrentText() + "");
             Hawk.put("weater", weatherInfo);
             if (weatherInfo.getCurrentConditionIcon() != null) {
-                Drawable imageIcon = new BitmapDrawable(weatherInfo.getCurrentConditionIcon());
-                imageIcon.setBounds(0, 0, imageIcon.getMinimumWidth(), imageIcon.getMinimumHeight());
-                tvWeather.setCompoundDrawables(imageIcon, null, null, null); //设置左图标
-//                mIvWeather0.setImageBitmap(weatherInfo.getCurrentConditionIcon());
+//                Drawable imageIcon = new BitmapDrawable(weatherInfo.getCurrentConditionIcon());
+//                imageIcon.setBounds(0, 0, imageIcon.getMinimumWidth(), imageIcon.getMinimumHeight());
+//                tvWeather.setCompoundDrawables(imageIcon, null, null, null); //设置左图标
+                imageWeather.setImageBitmap(weatherInfo.getCurrentConditionIcon());
             }
             for (int i = 0; i < YahooWeather.FORECAST_INFO_MAX_SIZE; i++) {
                 final WeatherInfo.ForecastInfo forecastInfo = weatherInfo.getForecastInfoList().get(i);
@@ -402,20 +427,55 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
     /**
      * 在家布防、外出布防、撤防
      */
-    @OnClick(R.id.btn_home)
-    void onBtnHomeClick() {
-        //TODO implement
+    @OnClick({R.id.btn_home, R.id.btn_away, R.id.btn_disarm, R.id.image_home, R.id.image_away, R.id.image_disarm})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_home:
+                setDefence(1);
+                break;
+            case R.id.btn_away:
+                setDefence(0);
+                break;
+            case R.id.btn_disarm:
+                setDefence(2);
+                break;
+            case R.id.image_home:
+                setDefence(1);
+                break;
+            case R.id.image_away:
+                setDefence(0);
+                break;
+            case R.id.image_disarm:
+                setDefence(2);
+                break;
+        }
     }
 
-    @OnClick(R.id.btn_away)
-    void onBtnAwayClick() {
-        //TODO implement
+    private void setDefence(int defence) {
+        initImage();
+        switch (defence) {
+            case 0:
+                imageAway.setImageResource(R.drawable.gw_away_pressed);
+                tvAway.setTextColor(getResources().getColor(R.color.text_title));
+                break;
+            case 1:
+                imageHome.setImageResource(R.drawable.gw_home_pressed);
+                tvHome.setTextColor(getResources().getColor(R.color.text_title));
+                break;
+            case 2:
+                imageDisarm.setImageResource(R.drawable.gw_disarm_pressed);
+                tvDisarm.setTextColor(getResources().getColor(R.color.text_title));
+                break;
+        }
     }
 
-
-    @OnClick(R.id.btn_disarm)
-    void onBtnDisarmClick() {
-        //TODO implement
+    private void initImage() {
+        imageAway.setImageResource(R.drawable.gw_away_normal);
+        imageHome.setImageResource(R.drawable.gw_home_normal);
+        imageDisarm.setImageResource(R.drawable.gw_disarm_normal);
+        tvAway.setTextColor(getResources().getColor(R.color.text_title_g));
+        tvHome.setTextColor(getResources().getColor(R.color.text_title_g));
+        tvDisarm.setTextColor(getResources().getColor(R.color.text_title_g));
     }
 
 }

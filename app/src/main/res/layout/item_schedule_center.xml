@@ -5,7 +5,7 @@
                 android:layout_marginBottom="4dp"
                 android:orientation="vertical">
 
-    <TextView
+    <com.nuowei.smarthome.view.textview.DinProTextView
         android:id="@+id/tvChangeTaskList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
         android:text="@string/schedule_show_finish_task"
         android:textColor="@color/colorWrite"/>
 
-    <TextView
+    <com.nuowei.smarthome.view.textview.DinProTextView
         android:id="@+id/tvFinishHint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

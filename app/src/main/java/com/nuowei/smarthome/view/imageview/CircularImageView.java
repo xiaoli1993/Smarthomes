@@ -23,8 +23,8 @@ import com.nuowei.smarthome.R;
  * @Time :  2017/3/24 09:27
  * @Description :
  */
-public class CircularImageView extends ImageView
-{
+@SuppressLint("AppCompatCustomView")
+public class CircularImageView extends ImageView {
     private int borderWidth = 4;
     private int viewWidth;
     private int viewHeight;
@@ -33,26 +33,22 @@ public class CircularImageView extends ImageView
     private Paint paintBorder;
     private BitmapShader shader;
 
-    public CircularImageView(Context context)
-    {
+    public CircularImageView(Context context) {
         super(context);
         setup();
     }
 
-    public CircularImageView(Context context, AttributeSet attrs)
-    {
+    public CircularImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setup();
     }
 
-    public CircularImageView(Context context, AttributeSet attrs, int defStyle)
-    {
+    public CircularImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         setup();
     }
 
-    private void setup()
-    {
+    private void setup() {
         // init paint
         paint = new Paint();
         paint.setAntiAlias(true);
@@ -64,22 +60,19 @@ public class CircularImageView extends ImageView
         paintBorder.setShadowLayer(12.0f, 3.0f, 6f, getResources().getColor(R.color.text_ash));
     }
 
-    public void setBorderWidth(int borderWidth)
-    {
+    public void setBorderWidth(int borderWidth) {
         this.borderWidth = borderWidth;
         this.invalidate();
     }
 
-    public void setBorderColor(int borderColor)
-    {
+    public void setBorderColor(int borderColor) {
         if (paintBorder != null)
             paintBorder.setColor(borderColor);
 
         this.invalidate();
     }
 
-    private void loadBitmap()
-    {
+    private void loadBitmap() {
         BitmapDrawable bitmapDrawable = (BitmapDrawable) this.getDrawable();
 
         if (bitmapDrawable != null)
@@ -88,14 +81,12 @@ public class CircularImageView extends ImageView
 
     @SuppressLint("DrawAllocation")
     @Override
-    public void onDraw(Canvas canvas)
-    {
+    public void onDraw(Canvas canvas) {
         // load the bitmap
         loadBitmap();
 
         // init shader
-        if (image != null)
-        {
+        if (image != null) {
             shader = new BitmapShader(Bitmap.createScaledBitmap(image, canvas.getWidth(), canvas.getHeight(), false), Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
             paint.setShader(shader);
             int circleCenter = viewWidth / 2;
@@ -103,14 +94,13 @@ public class CircularImageView extends ImageView
             // circleCenter is the x or y of the view's center
             // radius is the radius in pixels of the cirle to be drawn
             // paint contains the shader that will texture the shape
-            canvas.drawCircle(circleCenter + borderWidth, circleCenter + borderWidth, circleCenter  - 12.0f, paintBorder);
+            canvas.drawCircle(circleCenter + borderWidth, circleCenter + borderWidth, circleCenter - 12.0f, paintBorder);
             canvas.drawCircle(circleCenter + borderWidth, circleCenter + borderWidth, circleCenter - 12.0f, paint);
         }
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
-    {
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int width = measureWidth(widthMeasureSpec);
         int height = measureHeight(heightMeasureSpec, widthMeasureSpec);
 
@@ -120,19 +110,15 @@ public class CircularImageView extends ImageView
         setMeasuredDimension(width, height);
     }
 
-    private int measureWidth(int measureSpec)
-    {
+    private int measureWidth(int measureSpec) {
         int result = 0;
         int specMode = MeasureSpec.getMode(measureSpec);
         int specSize = MeasureSpec.getSize(measureSpec);
 
-        if (specMode == MeasureSpec.EXACTLY)
-        {
+        if (specMode == MeasureSpec.EXACTLY) {
             // We were told how big to be
             result = specSize;
-        }
-        else
-        {
+        } else {
             // Measure the text
             result = viewWidth;
         }
@@ -140,19 +126,15 @@ public class CircularImageView extends ImageView
         return result;
     }
 
-    private int measureHeight(int measureSpecHeight, int measureSpecWidth)
-    {
+    private int measureHeight(int measureSpecHeight, int measureSpecWidth) {
         int result = 0;
         int specMode = MeasureSpec.getMode(measureSpecHeight);
         int specSize = MeasureSpec.getSize(measureSpecHeight);
 
-        if (specMode == MeasureSpec.EXACTLY)
-        {
+        if (specMode == MeasureSpec.EXACTLY) {
             // We were told how big to be
             result = specSize;
-        }
-        else
-        {
+        } else {
             // Measure the text (beware: ascent is a negative number)
             result = viewHeight;
         }
