@@ -13,7 +13,7 @@
     <com.nuowei.smarthome.view.calendar.WeekBarView
         android:layout_width="match_parent"
         android:layout_height="@dimen/week_bar_height"
-        android:background="@color/calendar_bg_color"
+        android:background="@color/white"
         app:week_text_size="@integer/calendar_text_size" />
 
     <com.nuowei.smarthome.view.calendars.CalendarLayout
@@ -32,7 +32,8 @@
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ffffff" />
+            android:background="@color/activity_bg"
+            android:divider="@null" />
 
     </com.nuowei.smarthome.view.calendars.CalendarLayout>
 

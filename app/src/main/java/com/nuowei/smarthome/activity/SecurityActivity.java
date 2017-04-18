@@ -1,14 +1,18 @@
 package com.nuowei.smarthome.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 import com.nuowei.smarthome.Constants;
@@ -20,10 +24,14 @@ import com.nuowei.smarthome.helper.OnRecyclerItemClickListener;
 import com.nuowei.smarthome.manage.SubDeviceManage;
 import com.nuowei.smarthome.modle.ListMain;
 import com.nuowei.smarthome.modle.SubDevice;
+import com.nuowei.smarthome.smarthomesdk.Json.ZigbeeGW;
 import com.nuowei.smarthome.util.ACache;
 import com.nuowei.smarthome.util.VibratorUtil;
+import com.nuowei.smarthome.view.scrollview.CustomLoadMoreView;
 import com.nuowei.smarthome.view.textview.AvenirTextView;
 import com.nuowei.smarthome.view.textview.DinProTextView;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,16 +39,24 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.iwgang.familiarrecyclerview.FamiliarRecyclerView;
+import cn.iwgang.familiarrecyclerview.FamiliarRefreshRecyclerView;
+import io.xlink.wifi.sdk.XDevice;
+import io.xlink.wifi.sdk.XlinkAgent;
+import io.xlink.wifi.sdk.listener.SendPipeListener;
 
-public class SecurityActivity extends BaseActivity implements MyItemTouchCallback.OnDragListener {
+public class SecurityActivity extends BaseActivity {//implements MyItemTouchCallback.OnDragListener {
     @BindView(R.id.tb_toolbar)
     RelativeLayout tbToolbar;
     @BindView(R.id.tv_title)
     AvenirTextView tvTitle;
     @BindView(R.id.tv_right)
     AvenirTextView tvRight;
-    @BindView(R.id.shimmer_recycler_view)
-    ShimmerRecyclerView shimmerRecyclerView;
+    //    @BindView(R.id.shimmer_recycler_view)
+//    ShimmerRecyclerView shimmerRecyclerView;
+    @BindView(R.id.refreshListRecyclerView)
+    FamiliarRefreshRecyclerView refreshListRecyclerView;
+
     @BindView(R.id.activity_security)
     LinearLayout activitySecurity;
     @BindView(R.id.image_home)
@@ -55,8 +71,15 @@ public class SecurityActivity extends BaseActivity implements MyItemTouchCallbac
     DinProTextView tvAway;
     @BindView(R.id.tv_disarm)
     DinProTextView tvDisarm;
+    @BindView(R.id.btn_right)
+    ImageButton btn_right;
+
+
     private List<ListMain> dataSourceList = new ArrayList<ListMain>();
     private MainListAdapter mAdapter;
+
+    private FamiliarRecyclerView mFamiliarRecyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,67 +107,128 @@ public class SecurityActivity extends BaseActivity implements MyItemTouchCallbac
     }
 
     private void initEven() {
-        tvTitle.setText(getResources().getString(R.string.add_scene));
-        mAdapter = new MainListAdapter(R.layout.item_list, dataSourceList);
-        shimmerRecyclerView.setHasFixedSize(true);
-        shimmerRecyclerView.setAdapter(mAdapter);
-        shimmerRecyclerView.setLayoutManager(new LinearLayoutManager(SecurityActivity.this));
-        shimmerRecyclerView.showShimmerAdapter();
+        tvTitle.setText(getResources().getString(R.string.Security));
+        tvRight.setVisibility(View.GONE);
+        btn_right.setVisibility(View.VISIBLE);
+        mAdapter = new MainListAdapter(R.layout.item_lists, dataSourceList);
 
-        shimmerRecyclerView.postDelayed(new Runnable() {
+
+//        shimmerRecyclerView.setHasFixedSize(true);
+//        shimmerRecyclerView.setAdapter(mAdapter);
+//        shimmerRecyclerView.setLayoutManager(new LinearLayoutManager(SecurityActivity.this));
+//        shimmerRecyclerView.showShimmerAdapter();
+//
+//        shimmerRecyclerView.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                loadCards();
+//            }
+//        }, 2000);
+//
+//        shimmerRecyclerView.showShimmerAdapter();
+//
+//        final ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new MyItemTouchCallback(mAdapter));
+//        itemTouchHelper.attachToRecyclerView(shimmerRecyclerView);
+//
+//        shimmerRecyclerView.addOnItemTouchListener(new OnRecyclerItemClickListener(shimmerRecyclerView) {
+//            @Override
+//            public void onLongClick(RecyclerView.ViewHolder vh) {
+//                if (vh.getLayoutPosition() != dataSourceList.size() - 1) {
+//                    itemTouchHelper.startDrag(vh);
+//                    VibratorUtil.Vibrate(SecurityActivity.this, 70);   //震动70ms
+//                }
+//            }
+//
+//            @Override
+//            public void onItemClick(RecyclerView.ViewHolder vh) {
+//                ListMain item = dataSourceList.get(vh.getLayoutPosition());
+//                if (item.isSub()) {
+//                    switch (item.getDeviceType()) {
+//                        case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_RGB:
+//
+//                            break;
+//                        case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_DOORS:
+//                            openDiary(item.getDeviceMac(), item.getSubMac(),item.isSub());
+//                            break;
+//                        case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_WATER:
+//                            openDiary(item.getDeviceMac(), item.getSubMac(),item.isSub());
+//                            break;
+//                        case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_PIR:
+//                            openDiary(item.getDeviceMac(), item.getSubMac(),item.isSub());
+//                            break;
+//                        case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_SMOKE:
+//                            openDiary(item.getDeviceMac(), item.getSubMac(),item.isSub());
+//                            break;
+//                        case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_THP:
+//                            break;
+//                        case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_GAS:
+//                            openDiary(item.getDeviceMac(), item.getSubMac(),item.isSub());
+//                            break;
+//                        case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_CO:
+//                            openDiary(item.getDeviceMac(), item.getSubMac(),item.isSub());
+//                            break;
+//                        case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_SOS:
+//                            openDiary(item.getDeviceMac(), item.getSubMac(),item.isSub());
+//                            break;
+//                        case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_SW:
+//                            openDiary(item.getDeviceMac(), item.getSubMac(),item.isSub());
+//                            break;
+//                        case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_PLUGIN:
+//                            break;
+//                        case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_METRTING_PLUGIN:
+//                            break;
+//                        default:
+//                            break;
+//                    }
+//                } else {
+//
+//                }
+//
+//            }
+//        });
+
+        refreshListRecyclerView.setLoadMoreEnabled(false);
+
+        mFamiliarRecyclerView = refreshListRecyclerView.getFamiliarRecyclerView();
+        // ItemAnimator
+        mFamiliarRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        // Item Click and Item Long Click
+        refreshListRecyclerView.setOnItemClickListener(new FamiliarRecyclerView.OnItemClickListener() {
             @Override
-            public void run() {
-                loadCards();
-            }
-        }, 2000);
-
-        shimmerRecyclerView.showShimmerAdapter();
-
-        final ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new MyItemTouchCallback(mAdapter));
-        itemTouchHelper.attachToRecyclerView(shimmerRecyclerView);
-
-        shimmerRecyclerView.addOnItemTouchListener(new OnRecyclerItemClickListener(shimmerRecyclerView) {
-            @Override
-            public void onLongClick(RecyclerView.ViewHolder vh) {
-                if (vh.getLayoutPosition() != dataSourceList.size() - 1) {
-                    itemTouchHelper.startDrag(vh);
-                    VibratorUtil.Vibrate(SecurityActivity.this, 70);   //震动70ms
-                }
-            }
-
-            @Override
-            public void onItemClick(RecyclerView.ViewHolder vh) {
-                ListMain item = dataSourceList.get(vh.getLayoutPosition());
+            public void onItemClick(FamiliarRecyclerView familiarRecyclerView, View view, int position) {
+                Log.i("wg", "onItemClick = " + familiarRecyclerView + " _ " + view + " _ " + position);
+                ListMain item = dataSourceList.get(position);
                 if (item.isSub()) {
                     switch (item.getDeviceType()) {
                         case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_RGB:
 
                             break;
                         case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_DOORS:
-                            openDiary(item.getDeviceMac(), item.getSubMac(),item.isSub());
+                            openDiary(item.getDeviceMac(), item.getSubMac(), item.isSub());
                             break;
                         case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_WATER:
-                            openDiary(item.getDeviceMac(), item.getSubMac(),item.isSub());
+                            openDiary(item.getDeviceMac(), item.getSubMac(), item.isSub());
                             break;
                         case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_PIR:
-                            openDiary(item.getDeviceMac(), item.getSubMac(),item.isSub());
+                            openDiary(item.getDeviceMac(), item.getSubMac(), item.isSub());
                             break;
                         case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_SMOKE:
-                            openDiary(item.getDeviceMac(), item.getSubMac(),item.isSub());
+                            openDiary(item.getDeviceMac(), item.getSubMac(), item.isSub());
                             break;
                         case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_THP:
                             break;
                         case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_GAS:
-                            openDiary(item.getDeviceMac(), item.getSubMac(),item.isSub());
+                            openDiary(item.getDeviceMac(), item.getSubMac(), item.isSub());
                             break;
                         case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_CO:
-                            openDiary(item.getDeviceMac(), item.getSubMac(),item.isSub());
+                            openDiary(item.getDeviceMac(), item.getSubMac(), item.isSub());
                             break;
                         case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_SOS:
-                            openDiary(item.getDeviceMac(), item.getSubMac(),item.isSub());
+                            openDiary(item.getDeviceMac(), item.getSubMac(), item.isSub());
                             break;
                         case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_SW:
-                            openDiary(item.getDeviceMac(), item.getSubMac(),item.isSub());
+                            openDiary(item.getDeviceMac(), item.getSubMac(), item.isSub());
                             break;
                         case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_PLUGIN:
                             break;
@@ -156,9 +240,39 @@ public class SecurityActivity extends BaseActivity implements MyItemTouchCallbac
                 } else {
 
                 }
-
             }
         });
+//        refreshListRecyclerView.setOnItemLongClickListener(new FamiliarRecyclerView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(FamiliarRecyclerView familiarRecyclerView, View view, int position) {
+//                Log.i("wg", "onItemLongClick = " + familiarRecyclerView + " _ " + view + " _ " + position);
+//                return true;
+//            }
+//        });
+        refreshListRecyclerView.setOnPullRefreshListener(new FamiliarRefreshRecyclerView.OnPullRefreshListener() {
+            @Override
+            public void onPullRefresh() {
+                new android.os.Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+//                        String getSub = ZigbeeGW.GetSubDevice(userName);
+//                        XlinkAgent.getInstance().sendPipeData(xDevice, getSub.getBytes(), new SendPipeListener() {
+//                            @Override
+//                            public void onSendLocalPipeData(XDevice xDevice, int i, int i1) {
+//                                JSONObject object = XlinkAgent.deviceToJson(xDevice);
+//                                MyApplication.getLogger().i("发送:" + i + "\n" + getSub);
+//                            }
+//                        });
+                        mAdapter.notifyDataSetChanged();
+                        refreshListRecyclerView.pullRefreshComplete();
+                    }
+                }, 1000);
+            }
+        });
+
+
+        refreshListRecyclerView.setAdapter(mAdapter);
+
     }
 
     private void openDiary(String gwMac, String zigbeeMac, boolean isgw) {
@@ -173,15 +287,15 @@ public class SecurityActivity extends BaseActivity implements MyItemTouchCallbac
         startActivity(intent);
     }
 
-    private void loadCards() {
-        shimmerRecyclerView.hideShimmerAdapter();
-    }
+//    private void loadCards() {
+//        shimmerRecyclerView.hideShimmerAdapter();
+//    }
 
 
-    @Override
-    public void onFinishDrag() {
-        ACache.get(SecurityActivity.this).put("main_device_list", (ArrayList<ListMain>) dataSourceList);
-    }
+//    @Override
+//    public void onFinishDrag() {
+//        ACache.get(SecurityActivity.this).put("main_device_list", (ArrayList<ListMain>) dataSourceList);
+//    }
 
     @OnClick(R.id.image_btn_backs)
     void onImageBtnBacksClick() {

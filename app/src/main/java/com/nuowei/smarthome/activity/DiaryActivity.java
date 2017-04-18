@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.nuowei.smarthome.manage.SubDeviceManage;
 import com.nuowei.smarthome.modle.DataDevice;
 import com.nuowei.smarthome.modle.SubDevice;
 import com.nuowei.smarthome.modle.XlinkDevice;
+import com.nuowei.smarthome.util.CloseActivityClass;
 import com.nuowei.smarthome.view.calendars.CaledarAdapter;
 import com.nuowei.smarthome.view.calendars.CalendarBean;
 import com.nuowei.smarthome.view.calendars.CalendarDateView;
@@ -40,6 +42,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import qiu.niorgai.StatusBarCompat;
 
 import static com.nuowei.smarthome.util.MyUtil.px;
 
@@ -79,6 +82,8 @@ public class DiaryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diary2);
+        CloseActivityClass.activityList.add(this);
+        StatusBarCompat.translucentStatusBar(this, false);
         ButterKnife.bind(this);
         initData();
         initList();
@@ -89,7 +94,7 @@ public class DiaryActivity extends AppCompatActivity {
 
     private void initData() {
         int[] data = CalendarUtil.getYMD(new Date());
-        tvTitle.setText(data[0] + "/" + data[1] + "/" + data[2]);
+//        tvTitle.setText(data[0] + "/" + data[1] + "/" + data[2]);
         dataDeviceList = new ArrayList<DataDevice>();
         //新页面接收数据
         Bundle bundle = this.getIntent().getExtras();
@@ -100,13 +105,16 @@ public class DiaryActivity extends AppCompatActivity {
 
         if (isgw) {
             SubDevice subDevice = SubDeviceManage.getInstance().getDevice(gwMac, zigbeeMac);
-            dataDeviceList = DataSupport.where("deviceMac = ? and subMac = ? and year = ? and month = ? and day = ?", gwMac, zigbeeMac, data[0] + "", new DecimalFormat("00").format(data[1]) + "", new DecimalFormat("00").format(data[2] - 1) + "").find(DataDevice.class);
+            dataDeviceList = DataSupport.where("deviceMac = ? and subMac = ? and year = ? and month = ? and day = ?", gwMac, zigbeeMac, data[0] + "", new DecimalFormat("00").format(data[1]) + "", new DecimalFormat("00").format(data[2]) + "").find(DataDevice.class);
             for (int i = 0; i < dataDeviceList.size(); i++) {
                 MyApplication.getLogger().i("这日记内容:" + dataDeviceList.get(i).getBodyLocKey() + dataDeviceList.get(i).getActionName() + "\n" + dataDeviceList.get(i).getDate());
             }
+            tvTitle.setText(subDevice.getDeviceName());
+
         } else {
             XlinkDevice xlinkDevice = DeviceManage.getInstance().getDevice(gwMac);
 //            List<DataDevice> Xldevice = DataSupport.where("deviceMac = ? and zigbeeMac = ?", gwMac,subMac).find(DataDevice.class);
+            tvTitle.setText(xlinkDevice.getDeviceName());
         }
 
     }
@@ -168,7 +176,7 @@ public class DiaryActivity extends AppCompatActivity {
 //                }, 1000);
 //            }
 //        });
-        mDiaryAdapter = new DiaryAdapter(R.layout.item_list, dataDeviceList);
+//        mDiaryAdapter = new DiaryAdapter(R.layout.item_list, dataDeviceList);
 //        mCvRefreshListRecyclerView.setAdapter(mDiaryAdapter);
         mDiary2Adapter = new Diary2Adapter(DiaryActivity.this, dataDeviceList);
         mlist.setAdapter(mDiary2Adapter);
@@ -198,22 +206,23 @@ public class DiaryActivity extends AppCompatActivity {
         calendarDateView.setOnItemClickListener(new CalendarView.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int postion, CalendarBean bean) {
-                tvTitle.setText(bean.year + "/" + getDisPlayNumber(bean.moth) + "/" + getDisPlayNumber(bean.day));
                 MyApplication.getLogger().i("时间是：" + bean.year + "/" + getDisPlayNumber(bean.moth) + "/" + getDisPlayNumber(bean.day));
                 dataDeviceList.clear();
                 dataDeviceList = DataSupport.where("deviceMac = ? and subMac = ? and year = ? and month = ? and day = ?", gwMac, zigbeeMac, bean.year + "", getDisPlayNumber(bean.moth), getDisPlayNumber(bean.day)).find(DataDevice.class);
                 for (int i = 0; i < dataDeviceList.size(); i++) {
                     MyApplication.getLogger().i("这日记内容:" + dataDeviceList.get(i).getBodyLocKey() + dataDeviceList.get(i).getActionName() + "\n" + dataDeviceList.get(i).getDate());
                 }
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        Message message = new Message();
-                        message.what = 1;
-                        handler.sendMessage(message);
-                    }
-                }).start();
+                mDiary2Adapter = new Diary2Adapter(DiaryActivity.this, dataDeviceList);
+                mlist.setAdapter(mDiary2Adapter);
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//                        Message message = new Message();
+//                        message.what = 1;
+//                        handler.sendMessage(message);
+//                    }
+//                }).start();
             }
         });
     }
@@ -241,4 +250,23 @@ public class DiaryActivity extends AppCompatActivity {
             }
         }
     };
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
+    }
+
+    /**
+     * 处理后退键的情况
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            this.finish(); // finish当前activity
+            overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
+            return true;
+        }
+        return true;
+    }
 }

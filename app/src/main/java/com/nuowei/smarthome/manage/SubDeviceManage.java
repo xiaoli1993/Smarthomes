@@ -43,7 +43,7 @@ public class SubDeviceManage {
      */
     public synchronized List<SubDevice> getDevices() {
         listDev.clear();
-        listDev = DataSupport.findAll(SubDevice.class);
+        listDev = DataSupport.order("deviceType").find(SubDevice.class);
         return listDev;
     }
 

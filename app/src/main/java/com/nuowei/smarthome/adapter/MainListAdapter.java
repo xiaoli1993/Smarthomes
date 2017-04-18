@@ -21,13 +21,14 @@ import com.nuowei.smarthome.manage.SubDeviceManage;
 import com.nuowei.smarthome.modle.ListMain;
 import com.nuowei.smarthome.modle.SubDevice;
 import com.nuowei.smarthome.modle.XlinkDevice;
+import com.nuowei.smarthome.view.textview.DinProTextView;
 
 import java.util.Collections;
 import java.util.List;
 
 /**
  * @Author : 肖力
- * @Time :  2017/3/27 11:53
+ * @Time :  2017/4/27 11:53
  * @Description :
  * @Modify record :
  */
@@ -61,39 +62,172 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
             switch (subDevice.getDeviceType()) {
                 case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_RGB:
                     holder.imageView.setImageResource(R.drawable.device_light);
+                    if (subDevice.getRgbOnoff() == 1) {
+                        holder.textState.setText(context.getResources().getString(R.string.Open));
+                    } else {
+                        holder.textState.setText(context.getResources().getString(R.string.Close));
+                    }
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_DOORS:
                     holder.imageView.setImageResource(R.drawable.device_door);
+                    switch (subDevice.getDeviceOnoff()) {
+                        case 5:
+                            holder.textState.setText(context.getResources().getString(R.string.Open));
+                            break;
+                        case 4:
+                            holder.textState.setText(context.getResources().getString(R.string.Close));
+                            break;
+                        case 1:
+                            holder.textState.setText(context.getResources().getString(R.string.Open));
+                            break;
+                        case 0:
+                            holder.textState.setText(context.getResources().getString(R.string.Close));
+                            break;
+                    }
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_WATER:
                     holder.imageView.setImageResource(R.drawable.device_water);
+                    switch (subDevice.getDeviceOnoff()) {
+                        case 5:
+                            holder.textState.setText(context.getResources().getString(R.string.Alarm));
+                            break;
+                        case 4:
+                            holder.textState.setText(context.getResources().getString(R.string.Clear));
+                            break;
+                        case 1:
+                            holder.textState.setText(context.getResources().getString(R.string.Alarm));
+                            break;
+                        case 0:
+                            holder.textState.setText(context.getResources().getString(R.string.Clear));
+                            break;
+                    }
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_PIR:
                     holder.imageView.setImageResource(R.drawable.device_pir);
+                    switch (subDevice.getDeviceOnoff()) {
+                        case 5:
+                            holder.textState.setText(context.getResources().getString(R.string.Alarm));
+                            break;
+                        case 4:
+                            holder.textState.setText(context.getResources().getString(R.string.Clear));
+                            break;
+                        case 1:
+                            holder.textState.setText(context.getResources().getString(R.string.Alarm));
+                            break;
+                        case 0:
+                            holder.textState.setText(context.getResources().getString(R.string.Clear));
+                            break;
+                    }
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_SMOKE:
                     holder.imageView.setImageResource(R.drawable.device_smoke);
+                    switch (subDevice.getDeviceOnoff()) {
+                        case 5:
+                            holder.textState.setText(context.getResources().getString(R.string.Alarm));
+                            break;
+                        case 4:
+                            holder.textState.setText(context.getResources().getString(R.string.Clear));
+                            break;
+                        case 1:
+                            holder.textState.setText(context.getResources().getString(R.string.Alarm));
+                            break;
+                        case 0:
+                            holder.textState.setText(context.getResources().getString(R.string.Clear));
+                            break;
+                    }
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_THP:
                     holder.imageView.setImageResource(R.drawable.device_thp);
+                    holder.textState.setText(subDevice.getTemp() + "° " + subDevice.getHumidity() + "%");
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_GAS:
                     holder.imageView.setImageResource(R.drawable.device_gas);
+                    switch (subDevice.getDeviceOnoff()) {
+                        case 5:
+                            holder.textState.setText(context.getResources().getString(R.string.Alarm));
+                            break;
+                        case 4:
+                            holder.textState.setText(context.getResources().getString(R.string.Clear));
+                            break;
+                        case 1:
+                            holder.textState.setText(context.getResources().getString(R.string.Alarm));
+                            break;
+                        case 0:
+                            holder.textState.setText(context.getResources().getString(R.string.Clear));
+                            break;
+                    }
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_CO:
                     holder.imageView.setImageResource(R.drawable.device_co);
+                    switch (subDevice.getDeviceOnoff()) {
+                        case 5:
+                            holder.textState.setText(context.getResources().getString(R.string.Alarm));
+                            break;
+                        case 4:
+                            holder.textState.setText(context.getResources().getString(R.string.Clear));
+                            break;
+                        case 1:
+                            holder.textState.setText(context.getResources().getString(R.string.Alarm));
+                            break;
+                        case 0:
+                            holder.textState.setText(context.getResources().getString(R.string.Clear));
+                            break;
+                    }
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_SOS:
                     holder.imageView.setImageResource(R.drawable.device_sos);
+                    switch (subDevice.getDeviceOnoff()) {
+                        case 1:
+                            holder.textState.setText(context.getResources().getString(R.string.Alarm));
+                            break;
+                    }
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_SW:
                     holder.imageView.setImageResource(R.drawable.device_sw);
+                    switch (subDevice.getDeviceOnoff()) {
+                        case 3:
+                            holder.textState.setText(context.getResources().getString(R.string.Alarm));
+                            break;
+                        case 2:
+                            holder.textState.setText(context.getResources().getString(R.string.home));
+                            break;
+                        case 1:
+                            holder.textState.setText(context.getResources().getString(R.string.away));
+                            break;
+                        case 0:
+                            holder.textState.setText(context.getResources().getString(R.string.disarm));
+                            break;
+                    }
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_PLUGIN:
                     holder.imageView.setImageResource(R.drawable.device_plug);
+                    if (subDevice.getRelayOnoff() == 1) {
+                        if (subDevice.getUsbOnoff() == 1) {
+                            holder.textState.setText(context.getResources().getString(R.string.PNUN));
+
+                        } else {
+                            holder.textState.setText(context.getResources().getString(R.string.PNUF));
+
+                        }
+                    } else {
+                        if (subDevice.getUsbOnoff() == 1) {
+                            holder.textState.setText(context.getResources().getString(R.string.PFUN));
+
+                        } else {
+                            holder.textState.setText(context.getResources().getString(R.string.PFUF));
+
+                        }
+                    }
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_METRTING_PLUGIN:
                     holder.imageView.setImageResource(R.drawable.device_plug);
+                    if (subDevice.getRelayOnoff() == 1) {
+                        holder.textState.setText(context.getResources().getString(R.string.Open));
+
+                    } else {
+                        holder.textState.setText(context.getResources().getString(R.string.Close));
+
+                    }
                     break;
                 default:
                     holder.imageView.setImageResource(R.drawable.home_device);
@@ -155,16 +289,18 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
 
         public TextView textView;
         public ImageView imageView;
+        public TextView textState;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-            int width = wm.getDefaultDisplay().getWidth();
-            ViewGroup.LayoutParams layoutParams = itemView.getLayoutParams();
-            layoutParams.height = width / 4;
-            itemView.setLayoutParams(layoutParams);
-            textView = (TextView) itemView.findViewById(R.id.tv_txt);
-            imageView = (ImageView) itemView.findViewById(R.id.image_icon);
+//            WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+//            int width = wm.getDefaultDisplay().getWidth();
+//            ViewGroup.LayoutParams layoutParams = itemView.getLayoutParams();
+//            layoutParams.height = width / 5;
+//            itemView.setLayoutParams(layoutParams);
+            textView = (DinProTextView) itemView.findViewById(R.id.device_name);
+            textState = (DinProTextView) itemView.findViewById(R.id.tv_state);
+            imageView = (ImageView) itemView.findViewById(R.id.device_icon);
         }
     }
 

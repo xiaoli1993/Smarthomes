@@ -11,6 +11,7 @@ import com.nuowei.smarthome.Constants;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.modle.SubDevice;
 import com.nuowei.smarthome.view.textview.AvenirTextView;
+import com.nuowei.smarthome.view.textview.DinProTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,7 +114,7 @@ public class SubDeviceAdapter extends BaseAdapter {
         @BindView(R.id.device_icon)
         ImageView deviceIcon;
         @BindView(R.id.device_name)
-        AvenirTextView deviceName;
+        DinProTextView deviceName;
         @BindView(R.id.image_right)
         ImageView imageRight;
 

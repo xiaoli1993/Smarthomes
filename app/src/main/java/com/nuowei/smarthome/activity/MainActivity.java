@@ -342,7 +342,6 @@ public class MainActivity extends AppCompatActivity  {
                                         if (ret < 0) {
                                             MyApplication.getLogger().i("连接失败:" + ret);
                                         } else {
-
                                             MyApplication.getLogger().i("连接成功:" + ret);
                                             XlinkAgent.getInstance().sendPipeData(xDevice, getSub.getBytes(), new SendPipeListener() {
                                                 @Override

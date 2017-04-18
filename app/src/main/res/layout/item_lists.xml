@@ -20,7 +20,7 @@
             android:layout_marginStart="24dp"
             android:src="@drawable/device_co" />
 
-        <com.nuowei.smarthome.view.textview.AvenirTextView
+        <com.nuowei.smarthome.view.textview.DinProTextView
             android:id="@+id/device_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,6 +32,16 @@
             android:text=""
             android:textColor="#ff333333"
             android:textSize="15dp" />
+
+        <com.nuowei.smarthome.view.textview.DinProTextView
+            android:id="@+id/tv_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/image_right"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/image_right"
+            android:layout_toStartOf="@+id/image_right"
+            android:text="" />
 
         <ImageView
             android:id="@+id/image_right"

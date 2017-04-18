@@ -198,4 +198,8 @@
     <string name="away">Away</string>
     <string name="home">Home</string>
     <string name="Diary">Diary</string>
+    <string name="Open">Open</string>
+    <string name="Close">Close</string>
+    <string name="Alarm">Alarm</string>
+    <string name="Clear">Clear</string>
 </resources>
