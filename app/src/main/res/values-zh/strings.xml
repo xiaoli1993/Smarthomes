@@ -27,7 +27,7 @@
     <string name="Equipment">设备</string>
     <string name="Setting">设置</string>
     <string name="Device">设备</string>
-
+    <string name="Scene">场景</string>
     <string name="Share_Device">分享设备</string>
     <string name="Feedback">意见反馈</string>
     <string name="About">关于</string>
@@ -202,4 +202,24 @@
     <string name="Close">Close</string>
     <string name="Alarm">Alarm</string>
     <string name="Clear">Clear</string>
+    <string name="execute">execute</string>
+    <string name="time_onoff">timer off</string>
+    <string name="no_set_time">Not set time</string>
+    <string name="action_time">action time</string>
+    <string name="open_period">Open Period</string>
+    <string name="choice_add_device">Select Device</string>
+    <string name="device_rgb">RGB</string>
+    <string name="device_door_sensor">Door</string>
+    <string name="device_water_sensor">Water</string>
+    <string name="device_pir_sensor">Pir</string>
+    <string name="device_smoke_sensor">Smoke</string>
+    <string name="device_thp_sensor"><![CDATA[Temp. &amp; Humidity]]></string>
+    <string name="device_gas_sensor">Gas</string>
+    <string name="device_co_sensor">Co</string>
+    <string name="device_sos_sensor">Sos</string>
+    <string name="device_sw_sensor">Sw</string>
+    <string name="device_smart_plug">Plug</string>
+    <string name="device_metering_Plug">Metering Plug</string>
+    <string name="device_gateway">Gateway</string>
+    <string name="message">message</string>
 </resources>

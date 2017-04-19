@@ -20,6 +20,7 @@ import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.helper.MyItemTouchCallback;
 import com.nuowei.smarthome.modle.MainDatas;
 import com.nuowei.smarthome.view.textview.AvenirTextView;
+import com.nuowei.smarthome.view.textview.DinProTextView;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -120,7 +121,7 @@ public class MainGridAdapter extends RecyclerView.Adapter<MainGridAdapter.MyView
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public AvenirTextView textView;
+        public DinProTextView textView;
         public ImageView imageView;
 
         public MyViewHolder(View itemView) {
@@ -130,7 +131,7 @@ public class MainGridAdapter extends RecyclerView.Adapter<MainGridAdapter.MyView
             ViewGroup.LayoutParams layoutParams = itemView.getLayoutParams();
             layoutParams.height = width / 3;
             itemView.setLayoutParams(layoutParams);
-            textView = (AvenirTextView) itemView.findViewById(R.id.tv_txt);
+            textView = (DinProTextView) itemView.findViewById(R.id.tv_txt);
             imageView = (ImageView) itemView.findViewById(R.id.image_icon);
         }
     }

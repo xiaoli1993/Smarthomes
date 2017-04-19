@@ -1,5 +1,6 @@
 package com.nuowei.smarthome.fragment;
 
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 import com.google.gson.Gson;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
+import com.nuowei.smarthome.activity.AddDeviceActivity;
 import com.nuowei.smarthome.activity.MainActivity;
 import com.nuowei.smarthome.adapter.MainListTAdapter;
 import com.nuowei.smarthome.helper.MyItemTouchCallback;
@@ -126,6 +128,11 @@ public class MainListTFragment extends Fragment implements MyItemTouchCallback.O
         initEven();
     }
 
+    @OnClick(R.id.image_add)
+    void addDevice() {
+        startActivity(new Intent(getActivity(), AddDeviceActivity.class));
+    }
+
     @OnClick(R.id.image_menu)
     void openDrawers() {
         ((MainActivity) getActivity()).openDrawers();
@@ -218,7 +225,7 @@ public class MainListTFragment extends Fragment implements MyItemTouchCallback.O
             itemHashMap5.put("Main", new MainDatas(getResources().getString(R.string.Floor_heating), 5, 5));
             dataSourceList.add(itemHashMap5);
             HashMap<String, MainDatas> itemHashMap6 = new HashMap<String, MainDatas>();
-            itemHashMap6.put("Main", new MainDatas(getResources().getString(R.string.Service), 6, 6));
+            itemHashMap6.put("Main", new MainDatas(getResources().getString(R.string.Scene), 6, 6));
             dataSourceList.add(itemHashMap6);
             HashMap<String, MainDatas> itemHashMap7 = new HashMap<String, MainDatas>();
             itemHashMap7.put("Main", new MainDatas(getResources().getString(R.string.Equipment), 7, 7));
@@ -359,7 +366,7 @@ public class MainListTFragment extends Fragment implements MyItemTouchCallback.O
 //                Drawable imageIcon = new BitmapDrawable(weatherInfo.getCurrentConditionIcon());
 //                imageIcon.setBounds(0, 0, imageIcon.getMinimumWidth(), imageIcon.getMinimumHeight());
 //                tvWeather.setCompoundDrawables(imageIcon, null, null, null); //设置左图标
-                 imageWeather.setImageBitmap(weatherInfo.getCurrentConditionIcon());
+                imageWeather.setImageBitmap(weatherInfo.getCurrentConditionIcon());
             }
             for (int i = 0; i < YahooWeather.FORECAST_INFO_MAX_SIZE; i++) {
                 final WeatherInfo.ForecastInfo forecastInfo = weatherInfo.getForecastInfoList().get(i);

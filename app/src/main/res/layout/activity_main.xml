@@ -12,7 +12,7 @@
     <FrameLayout
         android:id="@+id/fragment_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></FrameLayout>
+        android:layout_height="match_parent" />
     <!--侧滑菜单-->
     <RelativeLayout
         android:id="@+id/left"

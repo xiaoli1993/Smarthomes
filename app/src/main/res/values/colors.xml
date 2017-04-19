@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <!--UI设计师提供颜色-->
+    <color name="personal_bg">#3498db</color>
     <color name="activity_bg">#f8f8f8</color>
     <color name="text_title">#3b424c</color>
     <color name="text_title_g">#98a4b6</color>

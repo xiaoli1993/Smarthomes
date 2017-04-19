@@ -13,6 +13,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -36,8 +38,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Date;
@@ -47,6 +54,7 @@ import java.util.Locale;
 import io.xlink.wifi.sdk.XDevice;
 import io.xlink.wifi.sdk.XlinkAgent;
 import io.xlink.wifi.sdk.bean.EventNotify;
+
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -67,8 +75,8 @@ import android.view.WindowManager;
  * @Description :
  */
 public class MyUtil {
-    public static  int getColor(Context context,int res){
-        Resources r=context.getResources();
+    public static int getColor(Context context, int res) {
+        Resources r = context.getResources();
         return r.getColor(res);
     }
 
@@ -81,8 +89,8 @@ public class MyUtil {
 
 
     public static int px(float dipValue) {
-        Resources r=Resources.getSystem();
-        final float scale =r.getDisplayMetrics().density;
+        Resources r = Resources.getSystem();
+        final float scale = r.getDisplayMetrics().density;
         return (int) (dipValue * scale + 0.5f);
     }
 
@@ -90,7 +98,7 @@ public class MyUtil {
     //获取显示版本
     public static String getVersionName(Context context) {
         try {
-            PackageManager manager =context.getPackageManager();
+            PackageManager manager = context.getPackageManager();
             PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
             String version = info.versionName;
             return version;
@@ -149,12 +157,12 @@ public class MyUtil {
         int select = android.R.attr.state_selected;
         StateListDrawable drawable = new StateListDrawable();
 
-        GradientDrawable drawable2=new GradientDrawable();
+        GradientDrawable drawable2 = new GradientDrawable();
         drawable2.setShape(GradientDrawable.OVAL);
         drawable2.setColor(color);
 
         drawable.addState(new int[]{select}, drawable2);
-        drawable.addState(new int[]{},null);
+        drawable.addState(new int[]{}, null);
 
         return drawable;
     }
@@ -811,6 +819,96 @@ public class MyUtil {
         return WkString;
     }
 
+    public static int getImageDiary(Context mContext, String Alarm) {
+        int image = 0;
+        if (Alarm.equals(mContext.getString(R.string.ALRM_RESUME_17))) {
+            image = R.drawable.device_state_close;
+        } else if (Alarm.equals(mContext.getString(R.string.ALRMING_17))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.ALRM_RESUME_18))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.ALRMING_18))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.ALRM_RESUME_19))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.ALRMING_19))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.ALRM_RESUME_20))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.ALRMING_20))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.ALRM_RESUME_22))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.ALRMING_22))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.ALRM_RESUME_24))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.ALRMING_24))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.ALRM_RESUME_67))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.ALRMING_67))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.ALRMING_49))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.ALRMING_50))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.ARM_50))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.DISARM_50))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.HOMEARM_50))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.HUM_ALARM_21))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.TEMP_ALARM_21))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.TEMP_HUM_ALARM_21))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.Power_1042))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.Power_Current_1042))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.Current_1042))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.Power_Currentvoltage_1042))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.Power_Voltage_1042))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.Current_Voltage_1042))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.LIGHT_OFF_1))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.LIGHT_ON_1))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.RELAY_OFF_67))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.RELAY_ON_67))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.TAMPER_ALARM_17))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.TAMPER_ALARM_19))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.TAMPER_DEVALARM_17))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.TAMPER_DEVALARM_19))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.TAMPER_DEVRESUME_17))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.TAMPER_DEVRESUME_19))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.TAMPER_RESUME_17))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.TAMPER_RESUME_19))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.USB_OFF_67))) {
+            image = R.drawable.device_state_open;
+        } else if (Alarm.equals(mContext.getString(R.string.USB_ON_67))) {
+            image = R.drawable.device_state_open;
+        }
+        return image;
+    }
+
     public static int getDeviceToImage(int deviceType) {
         int image = 0;
         switch (deviceType) {
@@ -872,4 +970,30 @@ public class MyUtil {
         return image;
     }
 
+    /**
+     * 根据URL获取图片 Bitmap
+     * @param url
+     * @return
+     */
+    public static Bitmap getHttpBitmap(String url) {
+        Bitmap bitmap = null;
+        URL myUrl;
+        try {
+            myUrl = new URL(url);
+            HttpURLConnection conn = (HttpURLConnection) myUrl.openConnection();
+            conn.setConnectTimeout(5000);
+            conn.connect();
+            InputStream is = conn.getInputStream();
+            bitmap = BitmapFactory.decodeStream(is);
+            is.close();
+        } catch (MalformedURLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        //返回圆形bitmap
+        return bitmap;
+    }
 }

@@ -1,6 +1,5 @@
 package com.nuowei.smarthome.adapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -12,7 +11,6 @@ import android.widget.ImageView;
 
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
-import com.nuowei.smarthome.modle.Action;
 import com.nuowei.smarthome.modle.DataDevice;
 import com.nuowei.smarthome.util.MyUtil;
 import com.nuowei.smarthome.view.textview.DinProTextView;
@@ -61,12 +59,12 @@ public class Diary2Adapter extends BaseAdapter {
     private void initializeViews(DataDevice dataDevice, ViewHolder holder) {
         //TODO implement
         String sAgeFormatString = MyApplication.getMyApplication().getResources().getString(MyUtil.getBodyString(dataDevice.getBodyLocKey()));
+        holder.imageIcon.setImageResource(MyUtil.getImageDiary(context, sAgeFormatString));
         String Content = String.format(sAgeFormatString, "");
-        MyApplication.getLogger().i("Content:"+Content);
+        MyApplication.getLogger().i("Content:" + Content);
         holder.tvTxt.setText(Content);
         holder.tvTimer.setText(dataDevice.getHH() + ":" + dataDevice.getMm());
         holder.tvState.setText("Here is the message content");
-
     }
 
     static class ViewHolder {

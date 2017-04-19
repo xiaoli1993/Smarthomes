@@ -20,11 +20,11 @@
     <string name="Security">Security</string>
     <string name="Air">Air</string>
     <string name="Water">Water</string>
-    <string name="Electricity">Electricity</string>
+    <string name="Electricity">Power</string>
     <string name="Lights">Lights</string>
     <string name="Floor_heating">Floor heating</string>
     <string name="Service">Service</string>
-    <string name="Equipment">Equipment</string>
+    <string name="Equipment">Device</string>
     <string name="Setting">Setting</string>
     <string name="Device">Device</string>
     <string name="Share_Device">Share Device</string>
@@ -181,6 +181,8 @@
     <string name="USB_OFF_67">  %1$s   USB Close</string>
     <string name="USB_ON_67">  %1$s   USB Open</string>
 
+    <string name="Scene">Scene</string>
+
     <string name="add_scene">Add Scene</string>
     <string name="Save">Save</string>
     <string name="start_timer">Start timer</string>
@@ -306,4 +308,24 @@
     <string name="Close">Close</string>
     <string name="Alarm">Alarm</string>
     <string name="Clear">Clear</string>
+    <string name="execute">execute</string>
+    <string name="time_onoff">timer off</string>
+    <string name="no_set_time">Not set time</string>
+    <string name="action_time">action time</string>
+    <string name="open_period">Open Period</string>
+    <string name="choice_add_device">Select Device</string>
+    <string name="device_rgb">RGB</string>
+    <string name="device_door_sensor">Door</string>
+    <string name="device_water_sensor">Water</string>
+    <string name="device_pir_sensor">Pir</string>
+    <string name="device_smoke_sensor">Smoke</string>
+    <string name="device_thp_sensor"><![CDATA[Temp. &amp; Humidity]]></string>
+    <string name="device_gas_sensor">Gas</string>
+    <string name="device_co_sensor">Co</string>
+    <string name="device_sos_sensor">Sos</string>
+    <string name="device_sw_sensor">Sw</string>
+    <string name="device_smart_plug">Plug</string>
+    <string name="device_metering_Plug">Metering Plug</string>
+    <string name="device_gateway">Gateway</string>
+    <string name="message">message</string>
 </resources>

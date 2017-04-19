@@ -16,6 +16,7 @@ import com.jiongbull.jlog.constant.LogLevel;
 import com.jiongbull.jlog.constant.LogSegment;
 import com.jiongbull.jlog.util.TimeUtils;
 import com.nuowei.smarthome.manage.DeviceManage;
+import com.nuowei.smarthome.modle.UserInfo;
 import com.nuowei.smarthome.modle.XlinkDevice;
 import com.nuowei.smarthome.smarthomesdk.utils.XlinkUtils;
 import com.nuowei.smarthome.util.Cockroach;
@@ -72,6 +73,7 @@ public class MyApplication extends LitePalApplication implements XlinkNetListene
     public String authKey;
     public String accessToken;
     public String refresh_token;
+    public UserInfo userInfo;
 
     @Override
     public void onCreate() {
@@ -561,5 +563,13 @@ public class MyApplication extends LitePalApplication implements XlinkNetListene
 
     public void setRefresh_token(String refresh_token) {
         this.refresh_token = refresh_token;
+    }
+
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
     }
 }

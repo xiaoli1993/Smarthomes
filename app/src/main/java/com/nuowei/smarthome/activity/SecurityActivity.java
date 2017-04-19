@@ -35,6 +35,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,7 +75,6 @@ public class SecurityActivity extends BaseActivity {//implements MyItemTouchCall
     @BindView(R.id.btn_right)
     ImageButton btn_right;
 
-
     private List<ListMain> dataSourceList = new ArrayList<ListMain>();
     private MainListAdapter mAdapter;
 
@@ -85,7 +85,6 @@ public class SecurityActivity extends BaseActivity {//implements MyItemTouchCall
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_security);
-        ButterKnife.bind(this);
         initData();
         initEven();
     }
@@ -276,13 +275,17 @@ public class SecurityActivity extends BaseActivity {//implements MyItemTouchCall
     }
 
     private void openDiary(String gwMac, String zigbeeMac, boolean isgw) {
+        int isGw2 = 0;
         Intent intent = new Intent(SecurityActivity.this, DiaryActivity.class);
         //用Bundle携带数据
         Bundle bundle = new Bundle();
         //传递name参数为tinyphp
         bundle.putString(Constants.GATEWAY_MAC, gwMac);
         bundle.putString(Constants.ZIGBEE_MAC, zigbeeMac);
-        bundle.putBoolean("isGw", isgw);
+        if (isgw) {
+            isGw2 =1;
+        }
+        bundle.putInt("isGw", isGw2);
         intent.putExtras(bundle);
         startActivity(intent);
     }

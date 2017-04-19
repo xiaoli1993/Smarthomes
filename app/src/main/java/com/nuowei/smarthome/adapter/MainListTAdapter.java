@@ -22,6 +22,7 @@ import com.nuowei.smarthome.modle.ListMain;
 import com.nuowei.smarthome.modle.MainDatas;
 import com.nuowei.smarthome.modle.SubDevice;
 import com.nuowei.smarthome.modle.XlinkDevice;
+import com.nuowei.smarthome.view.textview.DinProTextView;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -122,8 +123,8 @@ public class MainListTAdapter extends RecyclerView.Adapter<MainListTAdapter.MyVi
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView textView;
-        public TextView textState;
+        public DinProTextView textView;
+        public DinProTextView textState;
         public ImageView imageView;
 
         public MyViewHolder(View itemView) {
@@ -133,8 +134,8 @@ public class MainListTAdapter extends RecyclerView.Adapter<MainListTAdapter.MyVi
             ViewGroup.LayoutParams layoutParams = itemView.getLayoutParams();
             layoutParams.height = width / 4;
             itemView.setLayoutParams(layoutParams);
-            textView = (TextView) itemView.findViewById(R.id.tv_txt);
-            textState = (TextView) itemView.findViewById(R.id.tv_state);
+            textView = (DinProTextView) itemView.findViewById(R.id.tv_txt);
+            textState = (DinProTextView) itemView.findViewById(R.id.tv_state);
             imageView = (ImageView) itemView.findViewById(R.id.image_icon);
         }
     }

@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,9 +19,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.nuowei.smarthome.Constants;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
+import com.nuowei.smarthome.modle.UserInfo;
 import com.nuowei.smarthome.smarthomesdk.http.HttpManage;
 import com.nuowei.smarthome.view.circularanim.CircularAnim;
 import com.nuowei.smarthome.view.imageview.CircleImageView;
@@ -110,15 +114,40 @@ public class LoginActivity extends AppCompatActivity {
                 MyApplication.getMyApplication().setRefresh_token(refresh_token);
 
                 MyApplication.getLogger().i("Auth", "accessToken:" + accessToken + "appid:" + appid + "authKey:" + authKey);
-                Hawk.put(Constants.SAVE_appId,appid);
-                Hawk.put(Constants.SAVE_authKey,authKey);
+                Hawk.put(Constants.SAVE_appId, appid);
+                Hawk.put(Constants.SAVE_authKey, authKey);
                 Hawk.put("MY_ACCOUNT", ClientName);
                 Hawk.put("MY_PASSWORD", Password);
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                finish();
+
+                mHandler.sendEmptyMessage(1);
+
             }
         });
     }
+
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    HttpManage.getInstance().getUserInfo(MyApplication.getMyApplication(), new HttpManage.ResultCallback<String>() {
+                        @Override
+                        public void onError(Header[] headers, HttpManage.Error error) {
+
+                        }
+
+                        @Override
+                        public void onSuccess(int code, String response) {
+                            Gson gson = new Gson();
+                            MyApplication.getMyApplication().setUserInfo(gson.fromJson(response, UserInfo.class));
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            finish();
+                        }
+                    });
+                    break;
+            }
+        }
+    };
 
     @OnClick(R.id.tv_forget_password)
     void onForgetPassword() {

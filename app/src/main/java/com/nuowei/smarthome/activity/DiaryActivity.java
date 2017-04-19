@@ -76,6 +76,7 @@ public class DiaryActivity extends AppCompatActivity {
     private Diary2Adapter mDiary2Adapter;
     private String gwMac;
     private String zigbeeMac;
+    private int isgw;
 
     //    private FamiliarRecyclerView mFamiliarRecyclerView;
     @Override
@@ -101,83 +102,23 @@ public class DiaryActivity extends AppCompatActivity {
         //接收name值
         gwMac = bundle.getString(Constants.GATEWAY_MAC);
         zigbeeMac = bundle.getString(Constants.ZIGBEE_MAC);
-        boolean isgw = bundle.getBoolean("isGw");
+        isgw = bundle.getInt("isGw");
 
-        if (isgw) {
+        if (isgw == 1) {
             SubDevice subDevice = SubDeviceManage.getInstance().getDevice(gwMac, zigbeeMac);
             dataDeviceList = DataSupport.where("deviceMac = ? and subMac = ? and year = ? and month = ? and day = ?", gwMac, zigbeeMac, data[0] + "", new DecimalFormat("00").format(data[1]) + "", new DecimalFormat("00").format(data[2]) + "").find(DataDevice.class);
-            for (int i = 0; i < dataDeviceList.size(); i++) {
-                MyApplication.getLogger().i("这日记内容:" + dataDeviceList.get(i).getBodyLocKey() + dataDeviceList.get(i).getActionName() + "\n" + dataDeviceList.get(i).getDate());
-            }
             tvTitle.setText(subDevice.getDeviceName());
-
+        } else if (isgw == 1) {
+            dataDeviceList = DataSupport.where("dyear = ? and month = ? and day = ?", data[0] + "", new DecimalFormat("00").format(data[1]) + "", new DecimalFormat("00").format(data[2]) + "").find(DataDevice.class);
+            tvTitle.setText(getResources().getString(R.string.message));
         } else {
             XlinkDevice xlinkDevice = DeviceManage.getInstance().getDevice(gwMac);
-//            List<DataDevice> Xldevice = DataSupport.where("deviceMac = ? and zigbeeMac = ?", gwMac,subMac).find(DataDevice.class);
             tvTitle.setText(xlinkDevice.getDeviceName());
         }
 
     }
 
     private void initList() {
-//        mCvRefreshListRecyclerView.setLoadMoreView(new CustomLoadMoreView(this));
-//        mCvRefreshListRecyclerView.setColorSchemeColors(0xFFFF5000, Color.RED, Color.YELLOW, Color.GREEN);
-//        mCvRefreshListRecyclerView.setLoadMoreEnabled(true);
-//
-//        mFamiliarRecyclerView = mCvRefreshListRecyclerView.getFamiliarRecyclerView();
-//        // ItemAnimator
-//        mFamiliarRecyclerView.setItemAnimator(new DefaultItemAnimator());
-//        // head view
-////        mFamiliarRecyclerView.addHeaderView(HeaderAndFooterViewUtil.getHeadView(this, true, 0xFFFF5000, "Head View 1"));
-//
-//
-//        // Item Click and Item Long Click
-//        mCvRefreshListRecyclerView.setOnItemClickListener(new FamiliarRecyclerView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(FamiliarRecyclerView familiarRecyclerView, View view, int position) {
-//                MyApplication.getLogger().i("wg", "onItemClick = " + familiarRecyclerView + " _ " + view + " _ " + position);
-//            }
-//        });
-//        mCvRefreshListRecyclerView.setOnItemLongClickListener(new FamiliarRecyclerView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(FamiliarRecyclerView familiarRecyclerView, View view, int position) {
-//                MyApplication.getLogger().i("wg", "onItemLongClick = " + familiarRecyclerView + " _ " + view + " _ " + position);
-//                return true;
-//            }
-//        });
-//        mCvRefreshListRecyclerView.setOnPullRefreshListener(new FamiliarRefreshRecyclerView.OnPullRefreshListener() {
-//            @Override
-//            public void onPullRefresh() {
-//                new android.os.Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-////                        mDatas.clear();
-////                        mDatas.addAll(getDatas());
-////                        mDiaryAdapter.notifyDataSetChanged();
-//                        mCvRefreshListRecyclerView.pullRefreshComplete();
-//                        MyApplication.getLogger().i("wg", "加载完成啦...");
-//                    }
-//                }, 1000);
-//            }
-//        });
-//
-//        mCvRefreshListRecyclerView.setOnLoadMoreListener(new FamiliarRefreshRecyclerView.OnLoadMoreListener() {
-//            @Override
-//            public void onLoadMore() {
-//                new android.os.Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-////                        int startPos = dataDeviceList.size();
-////                        List<String> newDatas = getDatas();
-////                        mDatas.addAll(newDatas);
-////                        mDiaryAdapter.notifyItemInserted(startPos);
-//                        mCvRefreshListRecyclerView.loadMoreComplete();
-//                    }
-//                }, 1000);
-//            }
-//        });
-//        mDiaryAdapter = new DiaryAdapter(R.layout.item_list, dataDeviceList);
-//        mCvRefreshListRecyclerView.setAdapter(mDiaryAdapter);
         mDiary2Adapter = new Diary2Adapter(DiaryActivity.this, dataDeviceList);
         mlist.setAdapter(mDiary2Adapter);
 
@@ -208,21 +149,13 @@ public class DiaryActivity extends AppCompatActivity {
             public void onItemClick(View view, int postion, CalendarBean bean) {
                 MyApplication.getLogger().i("时间是：" + bean.year + "/" + getDisPlayNumber(bean.moth) + "/" + getDisPlayNumber(bean.day));
                 dataDeviceList.clear();
-                dataDeviceList = DataSupport.where("deviceMac = ? and subMac = ? and year = ? and month = ? and day = ?", gwMac, zigbeeMac, bean.year + "", getDisPlayNumber(bean.moth), getDisPlayNumber(bean.day)).find(DataDevice.class);
-                for (int i = 0; i < dataDeviceList.size(); i++) {
-                    MyApplication.getLogger().i("这日记内容:" + dataDeviceList.get(i).getBodyLocKey() + dataDeviceList.get(i).getActionName() + "\n" + dataDeviceList.get(i).getDate());
+                if (isgw == 1) {
+                    dataDeviceList = DataSupport.where("deviceMac = ? and subMac = ? and year = ? and month = ? and day = ?", gwMac, zigbeeMac, bean.year + "", getDisPlayNumber(bean.moth), getDisPlayNumber(bean.day)).find(DataDevice.class);
+                } else if (isgw == 2) {
+                    dataDeviceList = DataSupport.where("year = ? and month = ? and day = ?", bean.year + "", getDisPlayNumber(bean.moth), getDisPlayNumber(bean.day)).find(DataDevice.class);
                 }
                 mDiary2Adapter = new Diary2Adapter(DiaryActivity.this, dataDeviceList);
                 mlist.setAdapter(mDiary2Adapter);
-//                new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                        Message message = new Message();
-//                        message.what = 1;
-//                        handler.sendMessage(message);
-//                    }
-//                }).start();
             }
         });
     }

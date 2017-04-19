@@ -3,21 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/avoscloud_feedback_input_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/avoscloud_feedback_input_wrap_background" >
+        android:background="@color/avoscloud_feedback_input_wrap_background">
 
         <FrameLayout
             android:id="@+id/avoscloud_feedback_functional_wrap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerInParent="true" >
+            android:layout_centerInParent="true">
 
             <ImageView
                 android:id="@+id/avoscloud_feedback_add_image"
@@ -26,9 +26,7 @@
                 android:layout_marginLeft="5dp"
                 android:background="@color/avoscloud_feedback_input_wrap_background"
                 android:padding="5dp"
-                
-                android:src="@android:drawable/ic_menu_gallery" >
-            </ImageView>
+                android:src="@android:drawable/ic_menu_gallery" />
 
             <Button
                 android:id="@+id/avoscloud_feedback_send"
@@ -40,8 +38,7 @@
                 android:text="@string/avoscloud_feedback_send_text"
                 android:textColor="@color/avoscloud_feedback_text_gray"
                 android:textStyle="bold"
-                android:visibility="invisible" >
-            </Button>
+                android:visibility="invisible" />
         </FrameLayout>
 
         <EditText
@@ -57,8 +54,7 @@
             android:hint="@string/avoscloud_feedback_input_hint"
             android:minHeight="40dp"
             android:textColor="@color/avoscloud_feedback_text_gray"
-            android:textCursorDrawable="@null" >
-        </EditText>
+            android:textCursorDrawable="@null" />
     </RelativeLayout>
 
     <EditText
@@ -84,7 +80,6 @@
         android:layout_below="@id/avoscloud_feedback_contact"
         android:divider="#000"
         android:dividerHeight="0dp"
-        android:transcriptMode="normal" >
-    </ListView>
+        android:transcriptMode="normal" />
 
 </RelativeLayout>

@@ -29,9 +29,11 @@ import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 import com.google.gson.Gson;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
+import com.nuowei.smarthome.activity.AddDeviceActivity;
 import com.nuowei.smarthome.activity.Diary2Activity;
 import com.nuowei.smarthome.activity.DiaryActivity;
 import com.nuowei.smarthome.activity.MainActivity;
+import com.nuowei.smarthome.activity.SceneActivity;
 import com.nuowei.smarthome.activity.SceneAddActivity;
 import com.nuowei.smarthome.activity.ScrollingActivity;
 import com.nuowei.smarthome.activity.SecurityActivity;
@@ -132,6 +134,11 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
         initEven();
     }
 
+    @OnClick(R.id.image_add)
+    void addDevice() {
+        startActivity(new Intent(getActivity(), AddDeviceActivity.class));
+    }
+
     @OnClick(R.id.image_menu)
     void openDrawers() {
         ((MainActivity) getActivity()).openDrawers();
@@ -219,6 +226,7 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
                     case 5:
                         break;
                     case 6:
+                        startActivity(new Intent(getActivity(), SceneActivity.class));
                         break;
                     case 7:
                         break;
@@ -228,7 +236,6 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
                         break;
                 }
 
-                Toast.makeText(getActivity(), item.get("Main").getMainsort() + " " + item.get("Main").getMainString(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -304,7 +311,7 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
             itemHashMap5.put("Main", new MainDatas(getResources().getString(R.string.Floor_heating), 5, 5));
             dataSourceList.add(itemHashMap5);
             HashMap<String, MainDatas> itemHashMap6 = new HashMap<String, MainDatas>();
-            itemHashMap6.put("Main", new MainDatas(getResources().getString(R.string.Service), 6, 6));
+            itemHashMap6.put("Main", new MainDatas(getResources().getString(R.string.Scene), 6, 6));
             dataSourceList.add(itemHashMap6);
             HashMap<String, MainDatas> itemHashMap7 = new HashMap<String, MainDatas>();
             itemHashMap7.put("Main", new MainDatas(getResources().getString(R.string.Equipment), 7, 7));

@@ -8,6 +8,7 @@
     android:orientation="vertical">
     <!--
      android:elevation="1dip"-->
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="78dp"
@@ -36,7 +37,7 @@
             android:src="@drawable/home_device" />
     </RelativeLayout>
 
-    <com.nuowei.smarthome.view.textview.AvenirTextView
+    <com.nuowei.smarthome.view.textview.DinProTextView
         android:id="@+id/tv_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

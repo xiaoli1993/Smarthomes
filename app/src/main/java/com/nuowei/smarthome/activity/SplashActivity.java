@@ -9,9 +9,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 
+import com.google.gson.Gson;
 import com.nuowei.smarthome.Constants;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
+import com.nuowei.smarthome.modle.UserInfo;
 import com.nuowei.smarthome.smarthomesdk.http.HttpManage;
 import com.orhanobut.hawk.Hawk;
 
@@ -109,10 +111,12 @@ public class SplashActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(int code, String response) {
                             MyApplication.getLogger().json(response);
+                            Gson gson = new Gson();
+                            MyApplication.getMyApplication().setUserInfo(gson.fromJson(response, UserInfo.class));
+                            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                            finish();
                         }
                     });
-                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                    finish();
                     break;
             }
             super.handleMessage(msg);
