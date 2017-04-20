@@ -86,6 +86,8 @@
         <activity android:name=".activity.DiaryActivity" />
         <activity android:name=".activity.Diary2Activity" />
         <activity android:name=".activity.AddDeviceActivity" />
+        <activity android:name=".activity.PersonalActivity" />
+
         <!--
         <activity android:name=".calendar.activity.AddEventSetActivity" />
         <activity android:name=".calendar.activity.MainActivity" />
@@ -96,6 +98,14 @@
             android:name=".activity.ScrollingActivity"
             android:label="@string/title_activity_scrolling"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".activity.SettingActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nuowei.smarthome.activity.SettingActivity" />
+        </activity>
     </application>
 
 </manifest>

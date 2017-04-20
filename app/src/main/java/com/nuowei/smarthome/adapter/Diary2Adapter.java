@@ -61,7 +61,7 @@ public class Diary2Adapter extends BaseAdapter {
         String sAgeFormatString = MyApplication.getMyApplication().getResources().getString(MyUtil.getBodyString(dataDevice.getBodyLocKey()));
         holder.imageIcon.setImageResource(MyUtil.getImageDiary(context, sAgeFormatString));
         String Content = String.format(sAgeFormatString, "");
-        MyApplication.getLogger().i("Content:" + Content);
+        MyApplication.getLogger().i("Content:" + Content + "原来:" + dataDevice.getBodyLocKey());
         holder.tvTxt.setText(Content);
         holder.tvTimer.setText(dataDevice.getHH() + ":" + dataDevice.getMm());
         holder.tvState.setText("Here is the message content");

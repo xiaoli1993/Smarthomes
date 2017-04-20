@@ -57,7 +57,13 @@ public class AddDeviceActivity extends BaseActivity {
         tvTitle.setText(getResources().getString(R.string.choice_add_device));
         btnRight.setVisibility(View.GONE);
         tvRight.setVisibility(View.GONE);
-        boolean isLists = Hawk.get(Constants.ISLIST);
+        boolean isLists = Hawk.contains(Constants.ISLIST);
+        if (isLists) {
+            isLists = Hawk.get(Constants.ISLIST);
+        } else {
+            isLists = false;
+//            setSelect(1);
+        }
         if (isLists) {
             mAdater = new ChoiceAddDeviceAdapter(AddDeviceActivity.this, getZigbeeData());
             mListview.setVisibility(View.VISIBLE);

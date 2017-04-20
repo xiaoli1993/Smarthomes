@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.activity.AddDeviceActivity;
+import com.nuowei.smarthome.activity.DiaryActivity;
 import com.nuowei.smarthome.activity.MainActivity;
 import com.nuowei.smarthome.adapter.MainListTAdapter;
 import com.nuowei.smarthome.helper.MyItemTouchCallback;
@@ -126,6 +127,15 @@ public class MainListTFragment extends Fragment implements MyItemTouchCallback.O
         initToobar();
         initData();
         initEven();
+    }
+
+    @OnClick(R.id.image_news)
+    void openNews() {
+        Intent intent = new Intent(getActivity(), DiaryActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("isGw", 2);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     @OnClick(R.id.image_add)

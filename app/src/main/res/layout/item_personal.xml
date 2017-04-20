@@ -3,16 +3,16 @@
     android:id="@+id/rl_device"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/list_selector">
+    android:background="@drawable/item_pass">
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="80dp">
+        android:layout_height="60dp">
 
         <ImageView
             android:id="@+id/device_icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
@@ -25,8 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="30dp"
-            android:layout_marginStart="30dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
             android:layout_toEndOf="@+id/device_icon"
             android:layout_toRightOf="@+id/device_icon"
             android:text=""
@@ -37,10 +37,9 @@
             android:id="@+id/tv_state"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/image_right"
-            android:layout_toStartOf="@+id/image_right"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="35dp"
             android:text="" />
 
         <ImageView

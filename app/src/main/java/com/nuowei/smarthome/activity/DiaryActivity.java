@@ -108,8 +108,8 @@ public class DiaryActivity extends AppCompatActivity {
             SubDevice subDevice = SubDeviceManage.getInstance().getDevice(gwMac, zigbeeMac);
             dataDeviceList = DataSupport.where("deviceMac = ? and subMac = ? and year = ? and month = ? and day = ?", gwMac, zigbeeMac, data[0] + "", new DecimalFormat("00").format(data[1]) + "", new DecimalFormat("00").format(data[2]) + "").find(DataDevice.class);
             tvTitle.setText(subDevice.getDeviceName());
-        } else if (isgw == 1) {
-            dataDeviceList = DataSupport.where("dyear = ? and month = ? and day = ?", data[0] + "", new DecimalFormat("00").format(data[1]) + "", new DecimalFormat("00").format(data[2]) + "").find(DataDevice.class);
+        } else if (isgw == 2) {
+            dataDeviceList = DataSupport.where("alertName = ? and year = ? and month = ? and day = ?","gcm notification" ,data[0] + "", new DecimalFormat("00").format(data[1]) + "", new DecimalFormat("00").format(data[2]) + "").find(DataDevice.class);
             tvTitle.setText(getResources().getString(R.string.message));
         } else {
             XlinkDevice xlinkDevice = DeviceManage.getInstance().getDevice(gwMac);
@@ -152,7 +152,7 @@ public class DiaryActivity extends AppCompatActivity {
                 if (isgw == 1) {
                     dataDeviceList = DataSupport.where("deviceMac = ? and subMac = ? and year = ? and month = ? and day = ?", gwMac, zigbeeMac, bean.year + "", getDisPlayNumber(bean.moth), getDisPlayNumber(bean.day)).find(DataDevice.class);
                 } else if (isgw == 2) {
-                    dataDeviceList = DataSupport.where("year = ? and month = ? and day = ?", bean.year + "", getDisPlayNumber(bean.moth), getDisPlayNumber(bean.day)).find(DataDevice.class);
+                    dataDeviceList = DataSupport.where("alertName = ? and year = ? and month = ? and day = ?","gcm notification" , bean.year + "", getDisPlayNumber(bean.moth), getDisPlayNumber(bean.day)).find(DataDevice.class);
                 }
                 mDiary2Adapter = new Diary2Adapter(DiaryActivity.this, dataDeviceList);
                 mlist.setAdapter(mDiary2Adapter);

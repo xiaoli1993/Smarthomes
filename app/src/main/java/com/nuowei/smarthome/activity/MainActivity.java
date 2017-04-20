@@ -26,6 +26,7 @@ import com.avos.avoscloud.feedback.Comment;
 import com.avos.avoscloud.feedback.FeedbackAgent;
 import com.avos.avoscloud.feedback.FeedbackThread;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -41,7 +42,6 @@ import com.nuowei.smarthome.fragment.MainListFragment;
 import com.nuowei.smarthome.fragment.MainListTFragment;
 import com.nuowei.smarthome.manage.DeviceManage;
 import com.nuowei.smarthome.modle.DataDevice;
-import com.nuowei.smarthome.modle.IpMac;
 import com.nuowei.smarthome.modle.LeftMain;
 import com.nuowei.smarthome.modle.Messages;
 import com.nuowei.smarthome.modle.MessagesContent;
@@ -49,19 +49,11 @@ import com.nuowei.smarthome.modle.XlinkDevice;
 import com.nuowei.smarthome.smarthomesdk.Json.ZigbeeGW;
 import com.nuowei.smarthome.smarthomesdk.http.HttpManage;
 import com.nuowei.smarthome.util.GlideCircleTransform;
-import com.nuowei.smarthome.util.GlideRoundTransform;
 import com.nuowei.smarthome.util.MyUtil;
 import com.nuowei.smarthome.util.Time;
-import com.nuowei.smarthome.view.imageview.CircularImageView;
-import com.nuowei.smarthome.yahoo.WeatherInfo;
-import com.nuowei.smarthome.yahoo.YahooWeather;
-import com.nuowei.smarthome.yahoo.YahooWeatherExceptionListener;
-import com.nuowei.smarthome.yahoo.YahooWeatherInfoListener;
 import com.orhanobut.hawk.Hawk;
 import com.p2p.core.network.LoginResult;
 import com.p2p.core.network.NetManager;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -146,6 +138,11 @@ public class MainActivity extends AppCompatActivity {
         startCustomService();
         MyApplication.getMyApplication().setCurrentActivity(this);
         initFeedBack();
+    }
+
+    @OnClick(R.id.iv_Avatar)
+    void openNews() {
+        startActivity(new Intent(MainActivity.this, PersonalActivity.class));
     }
 
     private void initFeedBack() {
@@ -260,8 +257,10 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
+                        startActivity(new Intent(MainActivity.this, DeviceListActivity.class));
                         break;
                     case 1:
+
                         break;
                     case 2:
                         feedbackeAgent.startDefaultThreadActivity();
@@ -269,6 +268,7 @@ public class MainActivity extends AppCompatActivity {
                     case 3:
                         break;
                     case 4:
+                        startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                         break;
                 }
             }
@@ -277,6 +277,7 @@ public class MainActivity extends AppCompatActivity {
             Glide.with(this).load(MyApplication.getMyApplication().getUserInfo().getAvatar())
                     .centerCrop()
                     .dontAnimate()
+                    .priority(Priority.NORMAL)
                     .placeholder(R.drawable.log_icon)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .transform(new GlideCircleTransform(this))
@@ -335,9 +336,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void initFragment(boolean isList) {
+    Fragment fragment = null;
 
-        Fragment fragment = null;
+    private void initFragment(boolean isList) {
         if (isList) {
             fragment = new MainListTFragment();
             imageList.setImageResource(R.drawable.main_right_list_pressed);

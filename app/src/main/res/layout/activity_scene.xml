@@ -18,7 +18,7 @@
         android:layout_marginTop="7dp"
         android:scrollbars="vertical"
         app:frv_divider="@null"
-        app:frv_isEmptyViewKeepShowHeadOrFooter="true"
+        app:frv_isEmptyViewKeepShowHeadOrFooter="false"
         app:frv_layoutManager="linear"
         app:frv_layoutManagerOrientation="vertical" />
 </LinearLayout>

@@ -89,6 +89,7 @@
 
     </LinearLayout>
 
+
     <com.cooltechworks.views.shimmer.ShimmerRecyclerView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/shimmer_recycler_view"
         android:layout_width="match_parent"

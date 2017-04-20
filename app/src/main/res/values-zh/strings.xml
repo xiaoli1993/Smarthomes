@@ -222,4 +222,10 @@
     <string name="device_metering_Plug">Metering Plug</string>
     <string name="device_gateway">Gateway</string>
     <string name="message">message</string>
+    <string name="Personal">Personal</string>
+    <string name="Phone">Phone</string>
+    <string name="Email">Email</string>
+    <string name="Choice_Gateway">Choice Gateway</string>
+    <string name="Modify_password">Modify password</string>
+    <string name="Age">Age</string>
 </resources>

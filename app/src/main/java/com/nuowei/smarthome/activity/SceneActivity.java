@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.nuowei.smarthome.Constants;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.adapter.SceneAdapter;
+import com.nuowei.smarthome.adapter.SceneListAdapter;
 import com.nuowei.smarthome.manage.DeviceManage;
 import com.nuowei.smarthome.modle.Scene;
 import com.nuowei.smarthome.modle.XlinkDevice;
@@ -20,6 +22,9 @@ import com.nuowei.smarthome.smarthomesdk.Json.ZigbeeGW;
 import com.nuowei.smarthome.util.MyUtil;
 import com.nuowei.smarthome.view.textview.AvenirTextView;
 
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -56,14 +61,16 @@ public class SceneActivity extends BaseActivity {
     private FamiliarRecyclerView mFamiliarRecyclerView;
     private static ConcurrentHashMap<String, Scene> frdMap = new ConcurrentHashMap<String, Scene>();
     private boolean isRegisterBroadcast = false;
-    private SceneAdapter mAdapter;
+    //    private SceneAdapter mAdapter;
+    private SceneListAdapter mAdapters;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scene);
-        initData();
         initEven();
+        initData();
+
         isRegisterBroadcast = true;
         registerReceiver(mBroadcastReceiver, MyUtil.regFilter());
     }
@@ -97,11 +104,20 @@ public class SceneActivity extends BaseActivity {
     };
 
     private void addScene(String macs, String data) {
-        Gson gson = new Gson();
-        Scene scene = gson.fromJson(data, Scene.class);
-        scene.setGwMac(macs);
-        MyApplication.getLogger().json(data);
-//        addScene(scene);
+        try {
+            JSONObject jsonObject = new JSONObject(data);
+            JSONObject PLjson = jsonObject.getJSONObject("PL");
+            JSONArray add = PLjson.getJSONArray("2.1.1.3.3.250");
+            Gson gson = new Gson();
+            Scene scene = gson.fromJson(add.get(0).toString(), Scene.class);
+            scene.setGwMac(macs);
+            addScene(scene);
+            listDev = getScene();
+//            mAdapter.notifyDataSetChanged();
+            mAdapters.notifyDataSetChanged();
+        } catch (Exception e) {
+
+        }
     }
 
     @Override
@@ -141,9 +157,9 @@ public class SceneActivity extends BaseActivity {
         tvTitle.setText(getResources().getString(R.string.Scene));
         tvRight.setVisibility(View.GONE);
         btnRight.setVisibility(View.VISIBLE);
-
-        mAdapter = new SceneAdapter(getScene());
-
+        listDev = getScene();
+//        mAdapter = new SceneAdapter(SceneActivity.this,listDev);
+        mAdapters = new SceneListAdapter(R.layout.item_scene, getScene());
 
         refreshListRecyclerView.setLoadMoreEnabled(false);
         mFamiliarRecyclerView = refreshListRecyclerView.getFamiliarRecyclerView();
@@ -152,7 +168,6 @@ public class SceneActivity extends BaseActivity {
             @Override
             public void onItemClick(FamiliarRecyclerView familiarRecyclerView, View view, int position) {
 
-//                Scene.PLBean.SceneBean scenes = item.getPL().getScene().get(0);
 //                Bundle b = new Bundle();
 //                b.putSerializable(Constants.DEVICE_MAC, item.getGwMac());
 //                b.putSerializable(Constants.Scene_sceneID, scenes.getSceneID());
@@ -174,7 +189,7 @@ public class SceneActivity extends BaseActivity {
                 }, 2000);
             }
         });
-//        refreshListRecyclerView.setAdapter(mAdapter);
+        refreshListRecyclerView.setAdapter(mAdapters);
     }
 
     @OnClick(R.id.image_btn_backs)
@@ -186,7 +201,7 @@ public class SceneActivity extends BaseActivity {
 
     @OnClick(R.id.btn_right)
     public void onViewClicked() {
-
+        startActivity(new Intent(SceneActivity.this, SceneAddActivity.class));
     }
 
     public static ArrayList<Scene> listDev = new ArrayList<Scene>();
@@ -202,9 +217,9 @@ public class SceneActivity extends BaseActivity {
 //
 //            @Override
 //            public int compare(Scene lhs, Scene rhs) {
-//                int type1 = lhs.getPL().getScene().get(0).getSceneID();
-//                int type2 = rhs.getPL().getScene().get(0).getSceneID();
-//                if (!lhs.getPL().getScene().get(0).getGW_name().equals(rhs.getGW_name())) {
+//                int type1 = lhs.getSceneID();
+//                int type2 = rhs.getSceneID();
+//                if (!lhs.getGW_name().equals(rhs.getGW_name())) {
 //                    return lhs.getGW_name().compareTo(rhs.getGW_name());
 //                } else if (type1 != type2) {
 //                    return type1 - type2;
@@ -219,7 +234,7 @@ public class SceneActivity extends BaseActivity {
     public static Scene getScene(String scenst) {
         Scene dev = null;
         for (Scene device : getScene()) {
-            String sd = device.getGwMac() + device.getPL().getScene().get(0).getSceneID();
+            String sd = device.getGwMac() + device.getSceneID();
             if (sd.equals(scenst)) {
                 dev = device;
                 break;
@@ -229,12 +244,12 @@ public class SceneActivity extends BaseActivity {
     }
 
     public static void addScene(Scene dev) {
-        Scene device = frdMap.get(dev.getGwMac() + dev.getPL().getScene().get(0).getSceneID());
+        Scene device = frdMap.get(dev.getGwMac() + dev.getSceneID());
         if (device != null) { // 如果已经保存过设备，就不add
-            frdMap.put(device.getGwMac() + device.getPL().getScene().get(0).getSceneID(), dev);
+            frdMap.put(dev.getGwMac() + dev.getSceneID(), dev);
             return;
         }
-        frdMap.put(device.getGwMac() + device.getPL().getScene().get(0).getSceneID(), dev);
+        frdMap.put(dev.getGwMac() + dev.getSceneID(), dev);
     }
 
     public static void removeScene(String Mac, int SceneId) {

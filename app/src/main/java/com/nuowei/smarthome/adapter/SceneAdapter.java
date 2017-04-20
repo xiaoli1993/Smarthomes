@@ -8,80 +8,96 @@ package com.nuowei.smarthome.adapter;
  */
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
+import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.modle.Scene;
 import com.nuowei.smarthome.util.MyUtil;
 import com.nuowei.smarthome.view.textview.DinProTextView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-public class SceneAdapter extends RecyclerView.Adapter<SceneAdapter.MyViewHolder> {
+
+public class SceneAdapter extends BaseAdapter {
 
     private ArrayList<Scene> scene;
+
     private Context context;
+    private LayoutInflater layoutInflater;
 
-    public SceneAdapter(ArrayList<Scene> scene) {
+    public SceneAdapter(Context context, ArrayList<Scene> scene) {
+        this.context = context;
         this.scene = scene;
-    }
-
-
-    private void initializeViews(Scene scene, MyViewHolder holder) {
-        //TODO implement
-        Scene.PLBean.SceneBean scenes = scene.getPL().getScene().get(0);
-        holder.tvSceneName.setText(scenes.getName());
-        if (scenes.getTimeEnable() == 0 && scenes.getCountTime() == 0) {
-            holder.tvScene.setText(context.getResources().getString(R.string.time_onoff));
-        } else if (scenes.getTime().getMonth() == 255 && scenes.getTime().getDay() == 255 && scenes.getTime().getHour() == 255 && scenes.getTime().getMin() == 255 && scenes.getTime().getType() == 255) {
-            holder.tvScene.setText(context.getResources().getString(R.string.no_set_time));
-        } else {
-            if (scenes.getCountTime() == 0) {
-                holder.tvScene.setText(context.getResources().getString(R.string.action_time) + scenes.getTime().getHour() + ":" + scenes.getTime().getMin() + "    " + context.getResources().getString(R.string.open_period) + ":    " + MyUtil.getWkString(context, scenes.getTime().getWkflag()));
-            } else {
-                holder.tvScene.setText(context.getResources().getString(R.string.action_time) + scenes.getTime().getHour() + ":" + scenes.getTime().getMin() + "    " + context.getResources().getString(R.string.open_period) + ":    " + MyUtil.getWkString(context, scenes.getTime().getWkflag()));
-            }
-        }
-
+        this.layoutInflater = LayoutInflater.from(context);
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        this.context = parent.getContext();
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_scene, parent, false);
-        return new MyViewHolder(itemView);
-    }
-
-    @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        Scene scenes = scene.get(position);
-        initializeViews(scenes, holder);
-//        initEvenViews(scenes, holder);
-    }
-
-    @Override
-    public int getItemCount() {
+    public int getCount() {
         return scene.size();
     }
 
-    static class MyViewHolder extends RecyclerView.ViewHolder {
-        public DinProTextView tvSceneName;
-        public DinProTextView tvScene;
-        public Button btnExecute;
-        public ImageView imageMore;
+    @Override
+    public Scene getItem(int position) {
+        return scene.get(position);
+    }
 
-        public MyViewHolder(View itemView) {
-            super(itemView);
-            tvSceneName = (DinProTextView) itemView.findViewById(R.id.tv_SceneName);
-            tvScene = (DinProTextView) itemView.findViewById(R.id.tv_Scene);
-            imageMore = (ImageView) itemView.findViewById(R.id.image_more);
-            btnExecute = (Button) itemView.findViewById(R.id.btn_execute);
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if (convertView == null) {
+            convertView = layoutInflater.inflate(R.layout.item_scene, null);
+            convertView.setTag(new ViewHolder(convertView));
+        }
+        initializeViews((Scene) getItem(position), (ViewHolder) convertView.getTag());
+        return convertView;
+    }
+
+    private void initializeViews(Scene scene, ViewHolder holder) {
+        //TODO implement
+        MyApplication.getLogger().i("场景：" + scene.getName());
+        holder.tvSceneName.setText(scene.getName());
+        if (scene.getTimeEnable() == 0 && scene.getCountTime() == 0) {
+            holder.tvScene.setText(context.getResources().getString(R.string.time_onoff));
+        } else if (scene.getTime().getMonth() == 255 && scene.getTime().getDay() == 255 && scene.getTime().getHour() == 255 && scene.getTime().getMin() == 255 && scene.getTime().getType() == 255) {
+            holder.tvScene.setText(context.getResources().getString(R.string.no_set_time));
+        } else {
+            if (scene.getCountTime() == 0) {
+                holder.tvScene.setText(context.getResources().getString(R.string.action_time) + scene.getTime().getHour() + ":" + scene.getTime().getMin() + "    " + context.getResources().getString(R.string.open_period) + ":    " + MyUtil.getWkString(context, scene.getTime().getWkflag()));
+            } else {
+                holder.tvScene.setText(context.getResources().getString(R.string.action_time) + scene.getTime().getHour() + ":" + scene.getTime().getMin() + "    " + context.getResources().getString(R.string.open_period) + ":    " + MyUtil.getWkString(context, scene.getTime().getWkflag()));
+            }
+        }
+    }
+
+    static class ViewHolder {
+        @BindView(R.id.open_time_set)
+        RelativeLayout openTimeSet;
+        @BindView(R.id.tv_SceneName)
+        DinProTextView tvSceneName;
+        @BindView(R.id.tv_Scene)
+        DinProTextView tvScene;
+        @BindView(R.id.btn_execute)
+        Button btnExecute;
+        @BindView(R.id.image_more)
+        ImageView imageMore;
+
+        ViewHolder(View view) {
+            ButterKnife.bind(this, view);
         }
     }
 }

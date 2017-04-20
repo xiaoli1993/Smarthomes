@@ -13,12 +13,13 @@ public class ListMain {
     private int deviceType;
     private boolean isSub;
 
-    public ListMain(String deviceMac, String deviceMac1, boolean issub,int deviceType) {
+    public ListMain(String deviceMac, String deviceMac1, boolean issub, int deviceType) {
         this.deviceMac = deviceMac1;
         this.subMac = deviceMac;
         this.isSub = issub;
         this.deviceType = deviceType;
     }
+
 
     public int getDeviceType() {
         return deviceType;

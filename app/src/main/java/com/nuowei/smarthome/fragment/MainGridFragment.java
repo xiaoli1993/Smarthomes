@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 import com.google.gson.Gson;
+import com.nuowei.smarthome.Constants;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.activity.AddDeviceActivity;
@@ -132,6 +133,15 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
         initToobar();
         initData();
         initEven();
+    }
+
+    @OnClick(R.id.image_news)
+    void openNews() {
+        Intent intent = new Intent(getActivity(), DiaryActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("isGw", 2);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     @OnClick(R.id.image_add)
