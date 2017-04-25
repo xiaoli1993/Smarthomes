@@ -1133,4 +1133,16 @@ public class Constants {
 
     public static String HawkPass = "52113149";                                  //Hawk保存中的密码.
 
+    public static final String DEVICE_GW = "device-gw";
+    public static final String CHANGE_URL = "ChangeUrl";
+    /**
+     * 我的头像保存目录
+     */
+    public static String MyAvatarDir = "/sdcard/nuowei/avatar/";
+    /**
+     * 拍照回调
+     */
+    public static final int REQUESTCODE_UPLOADAVATAR_CAMERA = 1;// 拍照修改头像
+    public static final int REQUESTCODE_UPLOADAVATAR_LOCATION = 2;// 本地相册修改头像
+    public static final int REQUESTCODE_UPLOADAVATAR_CROP = 3;// 系统裁剪头像
 }

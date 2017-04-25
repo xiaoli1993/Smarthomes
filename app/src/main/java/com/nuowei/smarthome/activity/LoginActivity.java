@@ -160,14 +160,14 @@ public class LoginActivity extends AppCompatActivity {
         //TODO implement
 //        startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
 
-        CircularAnim.fullActivity(LoginActivity.this, view)
-                .colorOrImageRes(R.color.text_green)
-                .go(new CircularAnim.OnAnimationEndListener() {
-                    @Override
-                    public void onAnimationEnd() {
+//        CircularAnim.fullActivity(LoginActivity.this, view)
+//                .colorOrImageRes(R.color.text_green)
+//                .go(new CircularAnim.OnAnimationEndListener() {
+//                    @Override
+//                    public void onAnimationEnd() {
                         startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-                    }
-                });
+//                    }
+//                });
     }
 
     @Override

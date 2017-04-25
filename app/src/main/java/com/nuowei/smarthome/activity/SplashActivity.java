@@ -85,7 +85,7 @@ public class SplashActivity extends AppCompatActivity {
                 MyApplication.getMyApplication().setAuthKey(authKey);
                 MyApplication.getMyApplication().setRefresh_token(refresh_token);
 
-                MyApplication.getLogger().i("Auth", "accessToken:" + accessToken + "appid:" + appid + "authKey:" + authKey + "refresh_token:" + refresh_token);
+                MyApplication.getLogger().i("Auth",  appid + "authKey:" + authKey + "refresh_token:" + refresh_token);
                 Hawk.put(Constants.SAVE_appId, appid);
                 Hawk.put(Constants.SAVE_authKey, authKey);
                 Message message = new Message();

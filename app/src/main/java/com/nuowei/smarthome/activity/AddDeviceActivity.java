@@ -2,6 +2,7 @@ package com.nuowei.smarthome.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -69,12 +70,28 @@ public class AddDeviceActivity extends BaseActivity {
             mListview.setVisibility(View.VISIBLE);
             mGridview.setVisibility(View.GONE);
             mListview.setAdapter(mAdater);
+            mListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    ChoiceAddDevice choiceAddDevice = chioseAddDevices.get(position);
+                    
+                }
+            });
         } else {
             mGidwAdapter = new ChoiceAddDeviceGidwAdapter(AddDeviceActivity.this, getZigbeeData());
             mListview.setVisibility(View.GONE);
             mGridview.setVisibility(View.VISIBLE);
             mGridview.setAdapter(mGidwAdapter);
+            mGridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    ChoiceAddDevice choiceAddDevice = chioseAddDevices.get(position);
+
+                }
+            });
         }
+
+
     }
 
     /**
@@ -112,7 +129,7 @@ public class AddDeviceActivity extends BaseActivity {
         chioseAddDevices.add(new ChoiceAddDevice(Constants.DEVICE_TYPE.DEVICE_WIFI_GATEWAY, getResources().getString(R.string.device_gateway), true));
         chioseAddDevices.add(new ChoiceAddDevice(Constants.DEVICE_TYPE.DEVICE_WIFI_PLUGIN, getResources().getString(R.string.device_smart_plug), true));
         chioseAddDevices.add(new ChoiceAddDevice(Constants.DEVICE_TYPE.DEVICE_WIFI_METRTING_PLUGIN, getResources().getString(R.string.device_metering_Plug), true));
-        chioseAddDevices.add(new ChoiceAddDevice(Constants.DEVICE_TYPE.DEVICE_WIFI_AIR, getResources().getString(R.string.Air), true));
+//        chioseAddDevices.add(new ChoiceAddDevice(Constants.DEVICE_TYPE.DEVICE_WIFI_AIR, getResources().getString(R.string.Air), true));
 //        chioseAddDevices.add(new ChoiceAddDevice(Constants.DEVICE_TYPE.DEVICE_WIFI_RC, getResources().getString(R.string.device_remote), true));
 //        chioseAddDevices.add(new ChoiceAddDevice(Constants.DEVICE_TYPE.DEVICE_WIFI_GAS, getResources().getString(R.string.device_wifi_gas), true));
         return chioseAddDevices;

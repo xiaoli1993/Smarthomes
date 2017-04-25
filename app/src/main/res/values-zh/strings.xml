@@ -228,4 +228,28 @@
     <string name="Choice_Gateway">Choice Gateway</string>
     <string name="Modify_password">Modify password</string>
     <string name="Age">Age</string>
+
+
+    <string name="title_default">this is a CBDialog</string>
+    <string name="dialog_default_title">Here\'s a message!</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="LOADING">Loading...</string>
+    <string name="default_progressbar">Default Progressbar:</string>
+    <string name="progress_dialog_outtime_msg">I don\'t know what\'s wrong</string>
+    <string name="ModifyPassword">Modify Password</string>
+    <string name="OldPsssword">Old Psssword</string>
+    <string name="NewPsssword">New Psssword</string>
+    <string name="Adddevice">Add device</string>
+    <string name="SDavailable">SD is not available</string>
+    <string name="Photoaccessfailed">Photo access failed</string>
+    <string name="preservation">Preservation</string>
+    <string name="not_gateway">You have not added a gateway!</string>
+    <string name="visibility">Visibility</string>
+    <string name="km">km</string>
+    <string name="pressure">Pressure</string>
+    <string name="low">(Low)</string>
+    <string name="humidity">Humidity</string>
+    <string name="h">%</string>
+    <string name="millibars">millibars</string>
 </resources>

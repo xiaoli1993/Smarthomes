@@ -35,7 +35,7 @@ import cn.iwgang.familiarrecyclerview.FamiliarRefreshRecyclerView;
  * @Time :  2017/2/24 08:31
  * @Description :
  */
-public class DeviceListActivity extends SwipeBackActivity {
+public class DeviceListActivity extends BaseActivity {
     @BindView(R.id.tb_toolbar)
     RelativeLayout tbToolbar;
     @BindView(R.id.tv_title)

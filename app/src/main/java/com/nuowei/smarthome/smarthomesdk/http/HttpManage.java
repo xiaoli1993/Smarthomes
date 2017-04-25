@@ -1003,6 +1003,8 @@ public class HttpManage {
         return headersdata;
     }
 
+
+
     public static abstract class ResultCallback<T> extends TextHttpResponseHandler {
         Type mType;
         private Gson mGson;

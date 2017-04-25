@@ -238,18 +238,23 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
             holder.textView.setText(xlinkDevice.getDeviceName());
             switch (xlinkDevice.getDeviceType()) {
                 case Constants.DEVICE_TYPE.DEVICE_WIFI_RC:
+                    holder.textState.setText("");
                     holder.imageView.setImageResource(R.drawable.home_security);
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_WIFI_GATEWAY:
+                    holder.textState.setText("");
                     holder.imageView.setImageResource(R.drawable.device_gw);
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_WIFI_PLUGIN:
+                    holder.textState.setText("");
                     holder.imageView.setImageResource(R.drawable.device_plug);
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_WIFI_METRTING_PLUGIN:
+                    holder.textState.setText("");
                     holder.imageView.setImageResource(R.drawable.home_electric);
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_WIFI_AIR:
+                    holder.textState.setText("");
                     holder.imageView.setImageResource(R.drawable.home_light);
                     break;
             }

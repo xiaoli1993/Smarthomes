@@ -1,33 +1,76 @@
 package com.nuowei.smarthome.activity;
 
+import android.Manifest;
+import android.app.Dialog;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.StrictMode;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bigkoo.alertview.AlertView;
+import com.bigkoo.alertview.OnItemClickListener;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.loopj.android.http.TextHttpResponseHandler;
+import com.nuowei.smarthome.Constants;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.adapter.PersonalAdapter;
+import com.nuowei.smarthome.manage.DeviceManage;
 import com.nuowei.smarthome.modle.Personal;
+import com.nuowei.smarthome.modle.XlinkDevice;
+import com.nuowei.smarthome.smarthomesdk.http.HttpManage;
+import com.nuowei.smarthome.smarthomesdk.utils.XlinkUtils;
 import com.nuowei.smarthome.util.MyUtil;
+import com.nuowei.smarthome.util.PhotoUtil;
+import com.nuowei.smarthome.util.SDPathUtils;
+import com.nuowei.smarthome.view.cbdialog.CBDialogBuilder;
 import com.nuowei.smarthome.view.scrollview.PullScrollView;
 import com.nuowei.smarthome.view.textview.AvenirTextView;
 import com.nuowei.smarthome.view.textview.DinProTextView;
+import com.orhanobut.hawk.Hawk;
+import com.umeng.analytics.MobclickAgent;
 
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
+import io.xlink.wifi.sdk.XlinkAgent;
+
+import static com.nuowei.smarthome.util.PhotoUtil.toRoundBitmap;
 
 /**
  * @Author : 肖力
@@ -69,8 +112,14 @@ public class PersonalActivity extends BaseActivity implements PullScrollView.OnT
     @BindView(R.id.tb_toolbar)
     RelativeLayout tbToolbar;
 
+
     private List<Personal> personalList = new ArrayList<Personal>();
     private PersonalAdapter mAdapter;
+
+    //    List<String> gwString = new ArrayList<String>();
+    private List<XlinkDevice> gwList = new ArrayList<XlinkDevice>();
+    private boolean isChoice = false;
+    private XlinkDevice xlinkDevice;
 
 
     @Override
@@ -100,23 +149,90 @@ public class PersonalActivity extends BaseActivity implements PullScrollView.OnT
 
                         break;
                     case 1:
-
+                        try {
+                            new CBDialogBuilder(PersonalActivity.this)
+                                    .setTouchOutSideCancelable(false)
+                                    .showConfirmButton(false)
+                                    .setTitle(getString(R.string.Choice_Gateway))
+//                                .setConfirmButtonText("ok")
+//                                .setCancelButtonText("cancel")
+                                    .setDialogAnimation(CBDialogBuilder.DIALOG_ANIM_SLID_BOTTOM)
+                                    .setItems(gwList, new CBDialogBuilder.onDialogItemXlinkClickListener() {
+                                        @Override
+                                        public void onDialogItemClick(CBDialogBuilder.DialogItemXlinkAdapter adapter, Context context, CBDialogBuilder cbDialogBuilder, Dialog dialog, int position) {
+                                            MyApplication.getLogger().i("点击：" + gwList.get(position).getDeviceName());
+                                            xlinkDevice = gwList.get(position);
+                                            Hawk.put(Constants.DEVICE_GW, gwList.get(position));
+                                            MainActivity.setChoiceGwDevice(gwList.get(position));
+                                            personalList.remove(1);
+                                            personalList.add(1, new Personal(R.drawable.personal_gw, getString(R.string.Choice_Gateway), gwList.get(position).getDeviceName()));
+                                            mAdapter.notifyDataSetChanged();
+                                            dialog.dismiss();
+                                        }
+                                    }, xlinkDevice.getDeviceMac()).create().show();
+                        } catch (Exception e) {
+                            new CBDialogBuilder(PersonalActivity.this)
+                                    .setTouchOutSideCancelable(true)
+                                    .showCancelButton(true)
+                                    .setTitle(getString(R.string.not_gateway))
+                                    .setMessage("")
+                                    .setCustomIcon(R.drawable.alerter_ic_notifications)
+                                    .setConfirmButtonText(getString(R.string.Adddevice))
+                                    .setCancelButtonText(getResources().getString(R.string.dialog_cancel))
+                                    .setDialogAnimation(CBDialogBuilder.DIALOG_ANIM_SLID_BOTTOM)
+                                    .setButtonClickListener(true, new CBDialogBuilder.onDialogbtnClickListener() {
+                                        @Override
+                                        public void onDialogbtnClick(Context context, Dialog dialog, int whichBtn) {
+                                            switch (whichBtn) {
+                                                case BUTTON_CONFIRM:
+//                                                    Toast.makeText(context, "点击了确认按钮", Toast.LENGTH_SHORT).show();
+                                                    break;
+                                                case BUTTON_CANCEL:
+//                                                    Toast.makeText(context, "点击了取消按钮", Toast.LENGTH_SHORT).show();
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
+                                        }
+                                    }).create().show();
+                        }
                         break;
                     case 2:
-
+                        startActivity(new Intent(PersonalActivity.this, ModifyPasswordActivity.class));
                         break;
                 }
             }
         });
     }
 
+
     private void initData() {
+
+        isChoice = Hawk.contains(Constants.DEVICE_GW);
+        List<XlinkDevice> xlinkDeviceList = DeviceManage.getInstance().getDevices();
+        for (int i = 0; i < xlinkDeviceList.size(); i++) {
+            if (xlinkDeviceList.get(i).getDeviceType() == Constants.DEVICE_TYPE.DEVICE_WIFI_GATEWAY) {
+//                gwString.add(xlinkDeviceList.get(i).getDeviceName());
+                gwList.add(xlinkDeviceList.get(i));
+            }
+        }
         if (MyUtil.isEmptyString(MyApplication.getMyApplication().getUserInfo().getEmail())) {
             personalList.add(new Personal(R.drawable.personal_phone, getString(R.string.Phone), MyApplication.getMyApplication().getUserInfo().getPhone()));
         } else {
             personalList.add(new Personal(R.drawable.personal_email, getString(R.string.Email), MyApplication.getMyApplication().getUserInfo().getEmail()));
         }
-        personalList.add(new Personal(R.drawable.personal_gw, getString(R.string.Choice_Gateway), ""));
+        if (isChoice) {
+            xlinkDevice = Hawk.get(Constants.DEVICE_GW);
+            personalList.add(new Personal(R.drawable.personal_gw, getString(R.string.Choice_Gateway), xlinkDevice.getDeviceName()));
+        } else {
+            try {
+                personalList.add(new Personal(R.drawable.personal_gw, getString(R.string.Choice_Gateway), gwList.get(0).getDeviceName()));
+                xlinkDevice = gwList.get(0);
+            } catch (Exception e) {
+                personalList.add(new Personal(R.drawable.personal_gw, getString(R.string.Choice_Gateway), ""));
+            }
+        }
+
         personalList.add(new Personal(R.drawable.personal_pawd, getString(R.string.Modify_password), ""));
 
         if (!MyUtil.isEmptyString(MyApplication.getMyApplication().getUserInfo().getAvatar())) {
@@ -133,14 +249,206 @@ public class PersonalActivity extends BaseActivity implements PullScrollView.OnT
         if (!MyUtil.isEmptyString(MyApplication.getMyApplication().getUserInfo().getNickname())) {
             tvUserName.setText(MyApplication.getMyApplication().getUserInfo().getNickname());
         }
-        tvAge.setText(MyApplication.getMyApplication().getUserInfo().getAge() + "  " + getString(R.string.Age));
+        tvAge.setText(MyApplication.getMyApplication().
+
+                getUserInfo().
+
+                getAge() + "  " +
+
+                getString(R.string.Age));
         if (!MyUtil.isEmptyString(MyApplication.getMyApplication().getUserInfo().getAddress())) {
             tvAddress.setText(MyApplication.getMyApplication().getUserInfo().getAddress());
         }
+
     }
 
     @Override
     public void onTurn() {
+
+    }
+
+    @OnClick(R.id.btn_logout)
+    void onLogout() {
+        XlinkAgent.getInstance().stop();
+        MobclickAgent.onProfileSignOff();
+        Hawk.delete("MY_PASSWORD");
+        Intent intent = new Intent(PersonalActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        MainActivity.instance.finish();
+    }
+
+
+    @OnClick(R.id.user_avatar)
+    void onAvatar() {
+        new AlertView("上传头像", null, "取消", null,
+                new String[]{"拍照", "从相册中选择"},
+                this, AlertView.Style.ActionSheet, new OnItemClickListener() {
+            public void onItemClick(Object o, int position) {
+                switch (position) {
+                    case 0:
+                        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, 222);
+                            return;
+                        } else if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 222);
+                            return;
+                        } else if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 222);
+                            return;
+                        } else {
+                            Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                                openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(SDPathUtils.getCachePath(), "temp.jpg")));
+                                startActivityForResult(openCameraIntent, 2);
+                            } else {
+                                Uri imageUri = FileProvider.getUriForFile(PersonalActivity.this, "com.nuowei.smarthome.fileprovider", new File(SDPathUtils.getCachePath(), "nuoweia.jpg"));
+                                openCameraIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                                startActivityForResult(openCameraIntent, 2);
+                            }
+                        }
+                        break;
+                    case 1:
+                        Intent intent = new Intent(Intent.ACTION_PICK, null);
+                        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                        startActivityForResult(intent, 1);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }).show();
+    }
+
+    private PersonalActivity getActivity() {
+        return this;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && data != null) {
+            startPhotoZoom(data.getData());
+        } else if (requestCode == 2) {
+            File temp = new File(SDPathUtils.getCachePath(), "nuoweia.jpg");
+            startPhotoZoom(Uri.fromFile(temp));
+        } else if (requestCode == 3) {
+            if (data != null) {
+                setPicToView(data);
+            }
+        }
+    }
+
+    private String localImg;
+
+    /**
+     * 保存裁剪之后的图片数据
+     *
+     * @param picdata
+     */
+    private void setPicToView(Intent picdata) {
+        Bitmap bitmap = null;
+        byte[] bis = picdata.getByteArrayExtra("bitmap");
+        bitmap = BitmapFactory.decodeByteArray(bis, 0, bis.length);
+        localImg = System.currentTimeMillis() + ".JPEG";
+
+        if (bitmap != null) {
+
+            SDPathUtils.saveBitmap(bitmap, localImg);
+            Log.e("本地图片绑定", SDPathUtils.getCachePath() + localImg);
+//            setImageUrl(ivHeadLogo, "file:/" + SDPathUtils.getCachePath() + localImg, R.mipmap.head_logo);
+            bitmap = PhotoUtil.toRoundCorner(bitmap, 10);
+            HttpManage.getInstance().uploadHeadportrait(MyApplication.getMyApplication(), bitmap, new HttpManage.ResultCallback<String>() {
+
+                @Override
+                public void onError(Header[] headers, HttpManage.Error error) {
+                    Toasty.error(MyApplication.getMyApplication(), error.getMsg() + error.getCode(), Toast.LENGTH_SHORT, true).show();
+                }
+
+                @Override
+                public void onSuccess(int code, String response) {
+                    try {
+                        MyApplication.getLogger().json(response);
+                        JSONObject jsonObject = new JSONObject(response);
+                        String Url = jsonObject.getString("url");
+                        MyApplication.getLogger().i(Url);
+                        MyApplication.getMyApplication().getUserInfo().setAvatar(Url);
+                        Glide.with(PersonalActivity.this).load(MyApplication.getMyApplication().getUserInfo().getAvatar())
+                                .centerCrop()
+                                .dontAnimate()
+                                .priority(Priority.NORMAL)
+                                .placeholder(R.drawable.log_icon)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .into(userAvatar);
+                        MyApplication.getMyApplication().sendBroad(Constants.CHANGE_URL, Url);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+    }
+
+    /**
+     * 裁剪图片方法实现
+     *
+     * @param uri
+     */
+    public void startPhotoZoom(Uri uri) {
+        Intent intent = new Intent(getActivity(), PreviewActivity.class);
+        intent.setDataAndType(uri, "image/*");
+        startActivityForResult(intent, 3);
+    }
+
+    /**
+     * 保存裁剪的头像
+     *
+     * @param data
+     */
+    private void saveCropAvator(Intent data) {
+//        Bundle extras = data.getExtras();
+//        if (extras != null) {
+//            Bitmap bitmap = extras.getParcelable("data");
+//            Log.i("life", "avatar - bitmap = " + bitmap);
+//            if (bitmap != null) {
+//                bitmap = PhotoUtil.toRoundCorner(bitmap, 10);
+//                if (isFromCamera && degree != 0) {
+//                    bitmap = PhotoUtil.rotaingImageView(degree, bitmap);
+//                }
+//                HttpManage.getInstance().uploadHeadportrait(MyApplication.getMyApplication(), bitmap, new HttpManage.ResultCallback<String>() {
+//
+//                    @Override
+//                    public void onError(Header[] headers, HttpManage.Error error) {
+//                        Toasty.error(MyApplication.getMyApplication(), error.getMsg() + error.getCode(), Toast.LENGTH_SHORT, true).show();
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(int code, String response) {
+//                        try {
+//                            JSONObject jsonObject = new JSONObject(response);
+//                            String Url = jsonObject.getString("url");
+//                            MyApplication.getMyApplication().getUserInfo().setAvatar(Url);
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
+//
+//                // 保存图片
+//                String filename = new SimpleDateFormat("yyMMddHHmmss")
+//                        .format(new Date()) + ".png";
+//                String path = Constants.MyAvatarDir + filename;
+//                PhotoUtil.saveBitmap(Constants.MyAvatarDir, filename,
+//                        bitmap, true);
+//                // 上传头像
+//                if (bitmap != null && bitmap.isRecycled()) {
+//                    bitmap.recycle();
+//
+//                }
+//            }
+//        }
 
     }
 

@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -54,6 +55,7 @@ import com.nuowei.smarthome.util.Time;
 import com.orhanobut.hawk.Hawk;
 import com.p2p.core.network.LoginResult;
 import com.p2p.core.network.NetManager;
+import com.wooplr.spotlight.SpotlightView;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -123,12 +125,16 @@ public class MainActivity extends AppCompatActivity {
     private Fragment mTab02;
     private FeedbackAgent feedbackeAgent;
 
+    public static XlinkDevice choiceGwDevice;
+    public static MainActivity instance = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         LoginResult loginResult = NetManager.getInstance(this).createLoginResult(NetManager.getInstance(this).login("554674787@qq.com", "8888"));
         MyApplication.getLogger().i(loginResult.contactId + "\n" + loginResult.error_code);
+        instance = this;
         initXlink();
         initData();
         initEven();
@@ -183,6 +189,14 @@ public class MainActivity extends AppCompatActivity {
 
             } else if (action.equals(Constants.BROADCAST_SEND_SUCCESS)) {
 
+            } else if (action.equals(Constants.CHANGE_URL)) {
+                Glide.with(MainActivity.this).load(MyApplication.getMyApplication().getUserInfo().getAvatar())
+                        .centerCrop()
+                        .dontAnimate()
+                        .priority(Priority.NORMAL)
+                        .placeholder(R.drawable.log_icon)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(ivAvatar);
             }
         }
     };
@@ -195,10 +209,10 @@ public class MainActivity extends AppCompatActivity {
         boolean isLists = Hawk.contains(Constants.ISLIST);
         if (isLists) {
             isList = Hawk.get(Constants.ISLIST);
-            initFragment(isList);
+            initFragments(isList);
 //            setSelect(0);
         } else {
-            initFragment(false);
+            initFragments(false);
 //            setSelect(1);
         }
         if (!XlinkAgent.getInstance().isConnectedLocal()) {
@@ -227,7 +241,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.ll_list:
                 isList = true;
                 Hawk.put(Constants.ISLIST, isList);
-                initFragment(isList);
+                setIndexSelected(0);
+//                initFragment(isList);
                 drawerLayout.closeDrawer(left);
                 imageList.setImageResource(R.drawable.main_right_list_pressed);
                 imageGrid.setImageResource(R.drawable.main_right_lattice_normal);
@@ -238,7 +253,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.ll_Grid:
                 isList = false;
                 Hawk.put(Constants.ISLIST, isList);
-                initFragment(isList);
+                setIndexSelected(1);
+//                initFragment(isList);
                 drawerLayout.closeDrawer(left);
                 imageList.setImageResource(R.drawable.main_right_list_normal);
                 imageGrid.setImageResource(R.drawable.main_right_lattice_pressed);
@@ -250,6 +266,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initEven() {
+
         adapter = new MainLeftAdapter(this, list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -298,65 +315,87 @@ public class MainActivity extends AppCompatActivity {
         list.add(new LeftMain(R.drawable.main_right_feeback, getResources().getString(R.string.Feedback)));
         list.add(new LeftMain(R.drawable.main_right_about, getResources().getString(R.string.About)));
         list.add(new LeftMain(R.drawable.main_right_setting, getResources().getString(R.string.Setting)));
+
     }
 
-    private void setSelect(int i) {
-        setTab(i);
-    }
+    private Fragment[] mFragments;
 
-    private void hideFragment(FragmentTransaction transaction) {
-        if (mTab01 != null) {
-            transaction.hide(mTab01);
-        }
-        if (mTab02 != null) {
-            transaction.hide(mTab02);
-        }
-    }
+    private int mIndex = 2;
 
-    private void setTab(int i) {
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction transaction = fm.beginTransaction();
-        hideFragment(transaction);
-        // 切换内容区域
-        switch (i) {
-            case 0:
-                if (mTab01 == null) {
-                    mTab01 = new MainListTFragment();
-                    transaction.add(R.id.fragment_layout, mTab01);
-                } else {
-                    transaction.show(mTab01);
-                }
-            case 1:
-                if (mTab02 == null) {
-                    mTab02 = new MainGridFragment();
-                    transaction.add(R.id.fragment_layout, mTab02);
-                } else {
-                    transaction.show(mTab02);
-                }
-        }
-    }
-
-    Fragment fragment = null;
-
-    private void initFragment(boolean isList) {
+    private void initFragments(boolean isList) {
+        MainListTFragment homeFragment = new MainListTFragment();
+        MainListTFragment homeFragment1 = new MainListTFragment();
+        MainGridFragment shopcartFragment = new MainGridFragment();
+        //添加到数组
+        mFragments = new Fragment[]{homeFragment, shopcartFragment, homeFragment1};
+        //开启事务
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.fragment_layout, homeFragment1).commit();
+//        ft.add(R.id.fragment_layout, shopcartFragment).commit();
+        setIndexSelected(2);
         if (isList) {
-            fragment = new MainListTFragment();
+            //默认设置为第0个
+            setIndexSelected(0);
             imageList.setImageResource(R.drawable.main_right_list_pressed);
             imageGrid.setImageResource(R.drawable.main_right_lattice_normal);
             tvList.setTextColor(getResources().getColor(R.color.text_o));
             tvGrid.setTextColor(getResources().getColor(R.color.text_title));
         } else {
-            fragment = new MainGridFragment();
+//            ft.add(R.id.fragment_layout, shopcartFragment).commit();
+            //默认设置为第0个
+            setIndexSelected(1);
             imageList.setImageResource(R.drawable.main_right_list_normal);
             imageGrid.setImageResource(R.drawable.main_right_lattice_pressed);
             tvGrid.setTextColor(getResources().getColor(R.color.text_o));
             tvList.setTextColor(getResources().getColor(R.color.text_title));
         }
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_layout, fragment)
-                .addToBackStack(null)
-                .commit();
+
     }
+
+
+    private void setIndexSelected(int index) {
+
+        if (mIndex == index) {
+            return;
+        }
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        //隐藏
+        ft.hide(mFragments[mIndex]);
+        //判断是否添加
+        if (!mFragments[index].isAdded()) {
+            ft.add(R.id.fragment_layout, mFragments[index]).show(mFragments[index]);
+        } else {
+            ft.show(mFragments[index]);
+        }
+        ft.commit();
+        //再次赋值
+        mIndex = index;
+
+    }
+
+
+//    Fragment fragment = null;
+//
+//    private void initFragment(boolean isList) {
+//        if (isList) {
+//            fragment = new MainListTFragment();
+//            imageList.setImageResource(R.drawable.main_right_list_pressed);
+//            imageGrid.setImageResource(R.drawable.main_right_lattice_normal);
+//            tvList.setTextColor(getResources().getColor(R.color.text_o));
+//            tvGrid.setTextColor(getResources().getColor(R.color.text_title));
+//        } else {
+//            fragment = new MainGridFragment();
+//            imageList.setImageResource(R.drawable.main_right_list_normal);
+//            imageGrid.setImageResource(R.drawable.main_right_lattice_pressed);
+//            tvGrid.setTextColor(getResources().getColor(R.color.text_o));
+//            tvList.setTextColor(getResources().getColor(R.color.text_title));
+//        }
+//        getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.fragment_layout, fragment)
+//                .addToBackStack(null)
+//                .commit();
+//    }
 
 
     private boolean isRegisterBroadcast = false;
@@ -381,8 +420,10 @@ public class MainActivity extends AppCompatActivity {
             switch (msg.what) {
                 case 1:
                     final List<XlinkDevice> xlinkDeviceList = DeviceManage.getInstance().getDevices();
+                    List<XlinkDevice> gwXlink = new ArrayList<XlinkDevice>();
                     for (int i = 0; i < xlinkDeviceList.size(); i++) {
                         if (xlinkDeviceList.get(i).getDeviceType() == Constants.DEVICE_TYPE.DEVICE_WIFI_GATEWAY) {
+                            gwXlink.add(xlinkDeviceList.get(i));
                             final String getSub = ZigbeeGW.GetSubDevice(userName);
                             if (xlinkDeviceList.get(i).getDeviceState() == 0) {
                                 XlinkAgent.getInstance().connectDevice(xlinkDeviceList.get(i).getxDevice(), xlinkDeviceList.get(i).getAccessKey(), new ConnectDeviceListener() {
@@ -413,6 +454,17 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     timer.schedule(task, 500, 1000 * 10);
+                    boolean isChoice = Hawk.contains(Constants.DEVICE_GW);
+                    if (isChoice) {
+                        XlinkDevice xlinkDevices = Hawk.get(Constants.DEVICE_GW);
+                        setChoiceGwDevice(xlinkDevices);
+                    } else {
+                        try {
+                            setChoiceGwDevice(gwXlink.get(0));
+                        } catch (Exception e) {
+                        }
+                    }
+
                     break;
                 case GET_MESSAGE_TIMER:
                     boolean isFirstAdd = Hawk.contains(userName + "_isFirstAdd");
@@ -478,192 +530,202 @@ public class MainActivity extends AppCompatActivity {
     private void getMessage(final String CreateDate, final boolean isStart, String queryCreate) {
         MyApplication.getLogger().i("进入MAX_LIMIT:" + MAX_LIMIT + "\t" + "MAX_Refresh:" + MAX_Refresh + "\t" + "CreateDate:" + CreateDate + "\tisStart:" + isStart);
         try {
-            HttpManage.getInstance().GetMessagesID(MyApplication.getMyApplication(), MAX_LIMIT + "", MAX_Refresh + "", MyUtil.getdeviceid(), queryCreate, CreateDate, new HttpManage.ResultCallback<String>() {
-                @Override
-                public void onError(Header[] headers, HttpManage.Error error) {
-                    MyApplication.getLogger().e("获取消息失败:" + error.getMsg() + "\t" + error.getCode());
-                    DataSupport.saveAll(datalist);
-                    isRefreshMessage = true;
-                }
+            JSONArray deviceid = MyUtil.getdeviceid();
 
-                @Override
-                public void onSuccess(int code, String response) {
-                    final Gson gaon = new Gson();
-                    Messages messages = gaon.fromJson(response, Messages.class);
-                    if (isStart) {
-                        MAX_LIMIT += MAX_Refresh;
-                        MAX_Refresh = 30;
-                    } else {
-                        MAX_LIMIT += MAX_Refresh;
-                        if (messages.getCount() > 10000) {
-                            MAX_Refresh = 10000;
-                        } else {
-                            MAX_Refresh = messages.getCount();
-                        }
-                    }
-                    final List<Messages.ListBean> listsize = messages.getList();
-                    final int iSize = listsize.size();
-                    if (iSize == 0) {
+            if (deviceid.length() > 0) {
+                HttpManage.getInstance().GetMessagesID(MyApplication.getMyApplication(), MAX_LIMIT + "", MAX_Refresh + "", deviceid, queryCreate, CreateDate, new HttpManage.ResultCallback<String>() {
+                    @Override
+                    public void onError(Header[] headers, HttpManage.Error error) {
+                        MyApplication.getLogger().e("获取消息失败:" + error.getMsg() + "\t" + error.getCode());
+                        DataSupport.saveAll(datalist);
                         isRefreshMessage = true;
-                        Hawk.put(userName + "_isFirstAdd", true);
-                        return;
                     }
-                    final Thread thread = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            for (int i = 0; i < iSize; i++) {
-                                DataDevice datadevice = new DataDevice();
-                                datadevice.setMessageID(listsize.get(i).getId());
-                                datadevice.setMessageType(listsize.get(i).getType());
-                                datadevice.setNotifyType(listsize.get(i).getNotify_type());
-                                datadevice.setPush(listsize.get(i).isIs_push());
-                                datadevice.setRead(listsize.get(i).isIs_read());
-                                datadevice.setAlertName(listsize.get(i).getAlert_name());
-                                datadevice.setAlertValue(listsize.get(i).getAlert_value());
-                                datadevice.setCreateDate(listsize.get(i).getCreate_date());
-                                datadevice.setUserid(MyApplication.getMyApplication().getAppid() + "");
-                                datadevice.setUserName(userName);
-                                try {
-                                    MessagesContent messagesconte = gaon.fromJson(listsize.get(i).getContent(), MessagesContent.class);
-                                    XlinkDevice xlinkDevice = DeviceManage.getInstance().getDevice(listsize.get(i).getFrom());
-                                    datadevice.setXlinkDevice(xlinkDevice);
-                                    datadevice.setDeviceId(listsize.get(i).getFrom() + "");
-                                    datadevice.setDeviceMac(xlinkDevice.getDeviceMac());
-                                    if (MyUtil.isEmptyString(messagesconte.getPlugMac())) {
+
+                    @Override
+                    public void onSuccess(int code, String response) {
+                        final Gson gaon = new Gson();
+                        Messages messages = gaon.fromJson(response, Messages.class);
+                        if (isStart) {
+                            MAX_LIMIT += MAX_Refresh;
+                            MAX_Refresh = 30;
+                        } else {
+                            MAX_LIMIT += MAX_Refresh;
+                            if (messages.getCount() > 10000) {
+                                MAX_Refresh = 10000;
+                            } else {
+                                MAX_Refresh = messages.getCount();
+                            }
+                        }
+                        final List<Messages.ListBean> listsize = messages.getList();
+                        final int iSize = listsize.size();
+                        if (iSize == 0) {
+                            isRefreshMessage = true;
+                            Hawk.put(userName + "_isFirstAdd", true);
+                            return;
+                        }
+                        final Thread thread = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                for (int i = 0; i < iSize; i++) {
+                                    DataDevice datadevice = new DataDevice();
+                                    datadevice.setMessageID(listsize.get(i).getId());
+                                    datadevice.setMessageType(listsize.get(i).getType());
+                                    datadevice.setNotifyType(listsize.get(i).getNotify_type());
+                                    datadevice.setPush(listsize.get(i).isIs_push());
+                                    datadevice.setRead(listsize.get(i).isIs_read());
+                                    datadevice.setAlertName(listsize.get(i).getAlert_name());
+                                    datadevice.setAlertValue(listsize.get(i).getAlert_value());
+                                    datadevice.setCreateDate(listsize.get(i).getCreate_date());
+                                    datadevice.setUserid(MyApplication.getMyApplication().getAppid() + "");
+                                    datadevice.setUserName(userName);
+                                    try {
+                                        MessagesContent messagesconte = gaon.fromJson(listsize.get(i).getContent(), MessagesContent.class);
+                                        XlinkDevice xlinkDevice = DeviceManage.getInstance().getDevice(listsize.get(i).getFrom());
+                                        datadevice.setXlinkDevice(xlinkDevice);
+                                        datadevice.setDeviceId(listsize.get(i).getFrom() + "");
+                                        datadevice.setDeviceMac(xlinkDevice.getDeviceMac());
+                                        if (MyUtil.isEmptyString(messagesconte.getPlugMac())) {
 //                                SubDevice subDevice = SubDeviceManage.getInstance().getDevice(xlinkDevice.getDeviceMac(), messagesconte.getZigbeeMac());
 //                                datadevice.setSubID(subDevice.getIndex() + "");
 //                                datadevice.setSubDevice(subDevice);
-                                        String timer = messagesconte.getNotification().getBody_loc_args().get(0);
-                                        datadevice.setActionName(messagesconte.getNotification().getTitle());
+                                            String timer = messagesconte.getNotification().getBody_loc_args().get(0);
+                                            datadevice.setActionName(messagesconte.getNotification().getTitle());
 
-                                        try {
-                                            Date date = Time.stringToDate(timer, "yyyy-MM-dd HH:mm:ss");
-                                            datadevice.setDate(date);
-                                            datadevice.setYear(Time.dateToString(date, "yyyy"));
-                                            datadevice.setMonth(Time.dateToString(date, "MM"));
-                                            datadevice.setDay(Time.dateToString(date, "dd"));
-                                            datadevice.setHH(Time.dateToString(date, "HH"));
-                                            datadevice.setMm(Time.dateToString(date, "mm"));
-                                            datadevice.setSs(Time.dateToString(date, "ss"));
-                                        } catch (ParseException e) {
-                                            e.printStackTrace();
-                                        }
-                                        String loc_key = messagesconte.getNotification().getBody_loc_key();
-                                        datadevice.setBodyLocKey(loc_key);
-                                        datadevice.setSubType(MyUtil.Gettype(loc_key) + "");
-                                        if (!MyUtil.isEmptyString(messagesconte.getZigbeeMac())) {
-                                            datadevice.setSubMac(messagesconte.getZigbeeMac());
-                                        }
-                                        if (MyUtil.Gettype(loc_key) == Constants.DEVICE_TYPE.DEVICE_ZIGBEE_THP) {
                                             try {
-                                                datadevice.setHumidity(messagesconte.getNotification().getBody_loc_args().get(1));
-                                            } catch (Exception e) {
+                                                Date date = Time.stringToDate(timer, "yyyy-MM-dd HH:mm:ss");
+                                                datadevice.setDate(date);
+                                                datadevice.setYear(Time.dateToString(date, "yyyy"));
+                                                datadevice.setMonth(Time.dateToString(date, "MM"));
+                                                datadevice.setDay(Time.dateToString(date, "dd"));
+                                                datadevice.setHH(Time.dateToString(date, "HH"));
+                                                datadevice.setMm(Time.dateToString(date, "mm"));
+                                                datadevice.setSs(Time.dateToString(date, "ss"));
+                                            } catch (ParseException e) {
+                                                e.printStackTrace();
                                             }
-                                            try {
-                                                datadevice.setTemp(messagesconte.getNotification().getBody_loc_args().get(2));
-                                            } catch (Exception e) {
+                                            String loc_key = messagesconte.getNotification().getBody_loc_key();
+                                            datadevice.setBodyLocKey(loc_key);
+                                            datadevice.setSubType(MyUtil.Gettype(loc_key) + "");
+                                            if (!MyUtil.isEmptyString(messagesconte.getZigbeeMac())) {
+                                                datadevice.setSubMac(messagesconte.getZigbeeMac());
                                             }
-                                        } else if (MyUtil.Gettype(loc_key) == Constants.DEVICE_TYPE.DEVICE_WIFI_METRTING_PLUGIN) {
-                                            try {
-                                                datadevice.setHumidity(messagesconte.getNotification().getBody_loc_args().get(1));
-                                            } catch (Exception e) {
-                                            }
-                                            try {
-                                                if (messagesconte.getNotification().getBody_loc_args().get(2).equals("NA")) {
-                                                    datadevice.setHumidity(messagesconte.getNotification().getBody_loc_args().get(1) + "NA");
+                                            if (MyUtil.Gettype(loc_key) == Constants.DEVICE_TYPE.DEVICE_ZIGBEE_THP) {
+                                                try {
+                                                    datadevice.setHumidity(messagesconte.getNotification().getBody_loc_args().get(1));
+                                                } catch (Exception e) {
                                                 }
-                                            } catch (Exception e) {
-                                            }
-                                            try {
-                                                datadevice.setTemp(messagesconte.getNotification().getBody_loc_args().get(3));
-                                            } catch (Exception e) {
-                                            }
-                                        } else if (MyUtil.Gettype(loc_key) == Constants.DEVICE_TYPE.DEVICE_WIFI_AIR) {
-                                            try {
-                                                datadevice.setTemp(messagesconte.getNotification().getBody_loc_args().get(1).replaceAll(" ", ""));
-                                            } catch (Exception e) {
-                                            }
-                                        } else if (MyUtil.Gettype(loc_key) == Constants.DEVICE_TYPE.DEVICE_WIFI_GAS) {
-                                            try {
+                                                try {
+                                                    datadevice.setTemp(messagesconte.getNotification().getBody_loc_args().get(2));
+                                                } catch (Exception e) {
+                                                }
+                                            } else if (MyUtil.Gettype(loc_key) == Constants.DEVICE_TYPE.DEVICE_WIFI_METRTING_PLUGIN) {
+                                                try {
+                                                    datadevice.setHumidity(messagesconte.getNotification().getBody_loc_args().get(1));
+                                                } catch (Exception e) {
+                                                }
+                                                try {
+                                                    if (messagesconte.getNotification().getBody_loc_args().get(2).equals("NA")) {
+                                                        datadevice.setHumidity(messagesconte.getNotification().getBody_loc_args().get(1) + "NA");
+                                                    }
+                                                } catch (Exception e) {
+                                                }
+                                                try {
+                                                    datadevice.setTemp(messagesconte.getNotification().getBody_loc_args().get(3));
+                                                } catch (Exception e) {
+                                                }
+                                            } else if (MyUtil.Gettype(loc_key) == Constants.DEVICE_TYPE.DEVICE_WIFI_AIR) {
+                                                try {
+                                                    datadevice.setTemp(messagesconte.getNotification().getBody_loc_args().get(1).replaceAll(" ", ""));
+                                                } catch (Exception e) {
+                                                }
+                                            } else if (MyUtil.Gettype(loc_key) == Constants.DEVICE_TYPE.DEVICE_WIFI_GAS) {
+                                                try {
+                                                    datadevice.setTemp(messagesconte.getNotification().getBody_loc_args().get(1));
+                                                } catch (Exception e) {
+                                                }
+                                            } else if (MyUtil.Gettype(loc_key) == Constants.DEVICE_TYPE.DEVICE_WIFI_RC) {
                                                 datadevice.setTemp(messagesconte.getNotification().getBody_loc_args().get(1));
-                                            } catch (Exception e) {
+
                                             }
-                                        } else if (MyUtil.Gettype(loc_key) == Constants.DEVICE_TYPE.DEVICE_WIFI_RC) {
-                                            datadevice.setTemp(messagesconte.getNotification().getBody_loc_args().get(1));
 
-                                        }
-
-                                    } else {
-                                        if (!MyUtil.isEmptyString(messagesconte.getMessage().getElectricity())) {
-                                            datadevice.setElectricity(messagesconte.getMessage().getElectricity());
-                                            datadevice.setActionName("electricity_1042");
                                         } else {
-                                            datadevice.setActionName("onoff__1042");
-
-                                            if (!MyUtil.isEmptyString(messagesconte.getMessage().getSID())) {
-
-                                                if (messagesconte.getMessage().isOnoff()) {
-                                                    datadevice.setBodyLocKey(messagesconte.getMessage().getSID() + "_true");
-                                                } else {
-                                                    datadevice.setBodyLocKey(messagesconte.getMessage().getSID() + "_false");
-                                                }
+                                            if (!MyUtil.isEmptyString(messagesconte.getMessage().getElectricity())) {
+                                                datadevice.setElectricity(messagesconte.getMessage().getElectricity());
+                                                datadevice.setActionName("electricity_1042");
                                             } else {
-                                                if (messagesconte.getMessage().isOnoff()) {
-                                                    datadevice.setBodyLocKey("true");
+                                                datadevice.setActionName("onoff__1042");
+
+                                                if (!MyUtil.isEmptyString(messagesconte.getMessage().getSID())) {
+
+                                                    if (messagesconte.getMessage().isOnoff()) {
+                                                        datadevice.setBodyLocKey(messagesconte.getMessage().getSID() + "_true");
+                                                    } else {
+                                                        datadevice.setBodyLocKey(messagesconte.getMessage().getSID() + "_false");
+                                                    }
                                                 } else {
-                                                    datadevice.setBodyLocKey("false");
+                                                    if (messagesconte.getMessage().isOnoff()) {
+                                                        datadevice.setBodyLocKey("true");
+                                                    } else {
+                                                        datadevice.setBodyLocKey("false");
+                                                    }
                                                 }
                                             }
-                                        }
-                                        String timer = messagesconte.getMessage().getTime();
+                                            String timer = messagesconte.getMessage().getTime();
 //                                        MyApplication.getLogger().i(timer);
-                                        try {
-                                            Date date = Time.stringToDate(timer, "yyyy-MM-dd HH:mm:ss");
-                                            datadevice.setDate(date);
-                                            datadevice.setYear(Time.dateToString(date, "yyyy"));
-                                            datadevice.setMonth(Time.dateToString(date, "MM"));
-                                            datadevice.setDay(Time.dateToString(date, "dd"));
-                                            datadevice.setHH(Time.dateToString(date, "HH"));
-                                            datadevice.setMm(Time.dateToString(date, "mm"));
-                                            datadevice.setSs(Time.dateToString(date, "ss"));
-                                        } catch (ParseException e) {
-                                            e.printStackTrace();
-                                        }
-
-                                    }
-                                } catch (Exception e) {
-                                }
-                                boolean isFirst = Hawk.contains(userName + "_isFirstAdd");
-                                if (isFirst) {
-                                    if (!MyUtil.isEmptyString(CreateDate)) {
-                                        if (CreateDate.equals(listsize.get(i).getCreate_date())) {
-                                            isRefreshMessage = true;
-                                            if (!MyUtil.isEmptyList(datalist)) {
-                                                DataSupport.saveAllAsync(datalist);
+                                            try {
+                                                Date date = Time.stringToDate(timer, "yyyy-MM-dd HH:mm:ss");
+                                                datadevice.setDate(date);
+                                                datadevice.setYear(Time.dateToString(date, "yyyy"));
+                                                datadevice.setMonth(Time.dateToString(date, "MM"));
+                                                datadevice.setDay(Time.dateToString(date, "dd"));
+                                                datadevice.setHH(Time.dateToString(date, "HH"));
+                                                datadevice.setMm(Time.dateToString(date, "mm"));
+                                                datadevice.setSs(Time.dateToString(date, "ss"));
+                                            } catch (ParseException e) {
+                                                e.printStackTrace();
                                             }
-                                            return;
-                                        } else {
-                                            isRefreshMessage = false;
-                                            datalist.add(datadevice);
+
                                         }
+                                    } catch (Exception e) {
                                     }
-                                } else {
-                                    isRefreshMessage = false;
-                                    datalist.add(datadevice);
+                                    boolean isFirst = Hawk.contains(userName + "_isFirstAdd");
+                                    if (isFirst) {
+                                        if (!MyUtil.isEmptyString(CreateDate)) {
+                                            if (CreateDate.equals(listsize.get(i).getCreate_date())) {
+                                                isRefreshMessage = true;
+                                                if (!MyUtil.isEmptyList(datalist)) {
+                                                    DataSupport.saveAllAsync(datalist);
+                                                }
+                                                return;
+                                            } else {
+                                                isRefreshMessage = false;
+                                                datalist.add(datadevice);
+                                            }
+                                        }
+                                    } else {
+                                        isRefreshMessage = false;
+                                        datalist.add(datadevice);
+                                    }
+                                }
+                                if (!MyUtil.isEmptyList(datalist)) {
+                                    DataSupport.saveAllAsync(datalist);
                                 }
                             }
-                            if (!MyUtil.isEmptyList(datalist)) {
-                                DataSupport.saveAllAsync(datalist);
-                            }
-                        }
-                    });
-                    thread.start();
-                }
-            });
+                        });
+                        thread.start();
+                    }
+                });
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
+    public static XlinkDevice getChoiceGwDevice() {
+        return choiceGwDevice;
+    }
 
+    public static void setChoiceGwDevice(XlinkDevice choiceGwDevice) {
+        MainActivity.choiceGwDevice = choiceGwDevice;
+    }
 }

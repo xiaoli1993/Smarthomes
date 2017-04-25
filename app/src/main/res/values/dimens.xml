@@ -82,4 +82,9 @@
     <dimen name="small_week_bar_height">28dp</dimen>
     <dimen name="small_month_calendar_height">224dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="dialog_btn_single_LeftRightmargin">0dp</dimen>
+    <dimen name="alert_width">290dp</dimen>
+    <dimen name="common_circle_width">3dp</dimen>
+    <dimen name="item_rect_slected">1dp</dimen>
+    <dimen name="progress_circle_radius">34dp</dimen>
 </resources>

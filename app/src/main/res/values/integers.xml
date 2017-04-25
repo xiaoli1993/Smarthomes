@@ -2,4 +2,5 @@
 <resources>
 
   <integer name="animation_default_duration">300</integer>
+  <integer name="anim_duration_short">300</integer>
 </resources>

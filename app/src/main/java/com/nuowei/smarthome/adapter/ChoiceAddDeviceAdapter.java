@@ -129,32 +129,32 @@ public class ChoiceAddDeviceAdapter extends BaseAdapter {
                 break;
 
         }
-        if (devices.get(position) != null) {
-            convertView.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    Bundle b = new Bundle();
-                    b.putSerializable(Constants.DEVICE_TYPES, device.getDeviceid());
-                    if (device.iswifi()) {
-//                        Intent i = new Intent();
-//                        i.putExtras(b);
-//                        i.setClass(mContext, Nextactivity.class);
-//                        mContext.startActivity(i);
-//                        ChoiceAddDeviceActivity activity = (ChoiceAddDeviceActivity) mContext;
-//                        activity.finish();
-                    } else {
-//                        Intent i = new Intent();
-//                        i.putExtras(b);
-//                        i.setClass(mContext, Zigbee_Add.class);
-//                        mContext.startActivity(i);
-//                        ChoiceAddDeviceActivity activity = (ChoiceAddDeviceActivity) mContext;
-//                        activity.finish();
-                    }
-
-                }
-            });
-        }
+//        if (devices.get(position) != null) {
+//            convertView.setOnClickListener(new View.OnClickListener() {
+//
+//                @Override
+//                public void onClick(View v) {
+//                    Bundle b = new Bundle();
+//                    b.putSerializable(Constants.DEVICE_TYPES, device.getDeviceid());
+//                    if (device.iswifi()) {
+////                        Intent i = new Intent();
+////                        i.putExtras(b);
+////                        i.setClass(mContext, Nextactivity.class);
+////                        mContext.startActivity(i);
+////                        ChoiceAddDeviceActivity activity = (ChoiceAddDeviceActivity) mContext;
+////                        activity.finish();
+//                    } else {
+////                        Intent i = new Intent();
+////                        i.putExtras(b);
+////                        i.setClass(mContext, Zigbee_Add.class);
+////                        mContext.startActivity(i);
+////                        ChoiceAddDeviceActivity activity = (ChoiceAddDeviceActivity) mContext;
+////                        activity.finish();
+//                    }
+//
+//                }
+//            });
+//        }
         return convertView;
     }
 }

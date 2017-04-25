@@ -419,6 +419,8 @@ public class MyUtil {
         myIntentFilter.addAction(Constants.BROADCAST_CONNENCT_FAIL);
         myIntentFilter.addAction(Constants.BROADCAST_SEND_OVERTIME);
         myIntentFilter.addAction(Constants.BROADCAST_SEND_SUCCESS);
+        myIntentFilter.addAction(Constants.BROADCAST_SEND_SUCCESS);
+        myIntentFilter.addAction(Constants.CHANGE_URL);
         return myIntentFilter;
     }
 

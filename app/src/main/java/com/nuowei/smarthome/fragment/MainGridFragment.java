@@ -1,20 +1,18 @@
 package com.nuowei.smarthome.fragment;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ButtonBarLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -27,15 +25,13 @@ import android.widget.Toast;
 
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 import com.google.gson.Gson;
-import com.nuowei.smarthome.Constants;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.activity.AddDeviceActivity;
-import com.nuowei.smarthome.activity.Diary2Activity;
 import com.nuowei.smarthome.activity.DiaryActivity;
 import com.nuowei.smarthome.activity.MainActivity;
+import com.nuowei.smarthome.activity.PersonalActivity;
 import com.nuowei.smarthome.activity.SceneActivity;
-import com.nuowei.smarthome.activity.SceneAddActivity;
 import com.nuowei.smarthome.activity.ScrollingActivity;
 import com.nuowei.smarthome.activity.SecurityActivity;
 import com.nuowei.smarthome.adapter.MainGridAdapter;
@@ -45,8 +41,10 @@ import com.nuowei.smarthome.helper.OnRecyclerItemClickListener;
 import com.nuowei.smarthome.modle.CollapsingToolbarLayoutState;
 import com.nuowei.smarthome.modle.IpMac;
 import com.nuowei.smarthome.modle.MainDatas;
+import com.nuowei.smarthome.util.MyUtil;
 import com.nuowei.smarthome.util.SharePreferenceUtil;
 import com.nuowei.smarthome.util.VibratorUtil;
+import com.nuowei.smarthome.view.cbdialog.CBDialogBuilder;
 import com.nuowei.smarthome.view.scrollview.MyLinearLayoutManager;
 import com.nuowei.smarthome.view.textview.DinProTextView;
 import com.nuowei.smarthome.yahoo.WeatherInfo;
@@ -54,6 +52,7 @@ import com.nuowei.smarthome.yahoo.YahooWeather;
 import com.nuowei.smarthome.yahoo.YahooWeatherExceptionListener;
 import com.nuowei.smarthome.yahoo.YahooWeatherInfoListener;
 import com.orhanobut.hawk.Hawk;
+import com.wooplr.spotlight.SpotlightView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -111,6 +110,9 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
     DinProTextView tvDisarm;
     @BindView(R.id.image_weather)
     ImageView imageWeather;
+    @BindView(R.id.image_add)
+    ImageView imageAdd;
+
 
     Unbinder unbinder;
     private List<HashMap<String, MainDatas>> dataSourceList = new ArrayList<HashMap<String, MainDatas>>();
@@ -118,6 +120,8 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
     private MainGridAdapter mAdapter;
 
     private YahooWeather mYahooWeather = YahooWeather.getInstance(5000, 5000, true);
+
+    private boolean isChiose = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -134,6 +138,7 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
         initData();
         initEven();
     }
+
 
     @OnClick(R.id.image_news)
     void openNews() {
@@ -188,6 +193,29 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
 
 
     private void initEven() {
+
+        new SpotlightView.Builder(getActivity())
+                .introAnimationDuration(400)
+//                .enableRevealAnimation(true)
+                .performClick(true)
+                .fadeinTextDuration(400)
+                //.setTypeface(FontUtil.get(this, "RemachineScript_Personal_Use"))
+                .headingTvColor(Color.parseColor("#eb273f"))
+                .headingTvSize(32)
+                .headingTvText("Add Device")
+                .subHeadingTvColor(Color.parseColor("#ffffff"))
+                .subHeadingTvSize(16)
+                .subHeadingTvText("Click here to add device.")
+                .maskColor(Color.parseColor("#dc000000"))
+                .target(imageAdd)
+                .lineAnimDuration(400)
+                .lineAndArcColor(Color.parseColor("#eb273f"))
+                .dismissOnTouch(true)
+//                .dismissOnBackPress(true)
+//                .enableDismissAfterShown(true)
+                .usageId("") //UNIQUE ID
+                .show();
+
         shimmerRecyclerView.setLayoutManager(new MyLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, true));
         mAdapter = new MainGridAdapter(R.layout.item_main, dataSourceList);
         shimmerRecyclerView.setHasFixedSize(true);
@@ -236,7 +264,34 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
                     case 5:
                         break;
                     case 6:
-                        startActivity(new Intent(getActivity(), SceneActivity.class));
+                        if (isChiose) {
+                            startActivity(new Intent(getActivity(), SceneActivity.class));
+                        } else {
+                            new CBDialogBuilder(getActivity())
+                                    .setTouchOutSideCancelable(true)
+                                    .showCancelButton(true)
+                                    .setTitle(getString(R.string.not_gateway))
+                                    .setMessage("")
+                                    .setCustomIcon(R.drawable.alerter_ic_notifications)
+                                    .setConfirmButtonText(getString(R.string.Adddevice))
+                                    .setCancelButtonText(getResources().getString(R.string.dialog_cancel))
+                                    .setDialogAnimation(CBDialogBuilder.DIALOG_ANIM_SLID_BOTTOM)
+                                    .setButtonClickListener(true, new CBDialogBuilder.onDialogbtnClickListener() {
+                                        @Override
+                                        public void onDialogbtnClick(Context context, Dialog dialog, int whichBtn) {
+                                            switch (whichBtn) {
+                                                case BUTTON_CONFIRM:
+//                                                    Toast.makeText(context, "点击了确认按钮", Toast.LENGTH_SHORT).show();
+                                                    break;
+                                                case BUTTON_CANCEL:
+//                                                    Toast.makeText(context, "点击了取消按钮", Toast.LENGTH_SHORT).show();
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
+                                        }
+                                    }).create().show();
+                        }
                         break;
                     case 7:
                         break;
@@ -268,6 +323,12 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
 //    }
 
     private void initData() {
+        try {
+            MyUtil.isEmptyString(MainActivity.getChoiceGwDevice().getDeviceMac());
+            isChiose = true;
+        } catch (Exception e) {
+            isChiose = false;
+        }
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -415,6 +476,9 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
                     "Visibility: " + weatherInfo.getAtmosphereVisibility());
             tvNewTemp.setText(weatherInfo.getCurrentTemp() + "°");
             tvWeather.setText(weatherInfo.getCurrentText() + "");
+            tvPm25.setText(weatherInfo.getAtmosphereHumidity() + "");
+            tvTds.setText(weatherInfo.getAtmospherePressure() + "");
+            tvTemp.setText(weatherInfo.getAtmosphereVisibility() + "");
             Hawk.put("weater", weatherInfo);
             if (weatherInfo.getCurrentConditionIcon() != null) {
 //                Drawable imageIcon = new BitmapDrawable(weatherInfo.getCurrentConditionIcon());
@@ -469,21 +533,49 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
     }
 
     private void setDefence(int defence) {
-        initImage();
-        switch (defence) {
-            case 0:
-                imageAway.setImageResource(R.drawable.gw_away_pressed);
-                tvAway.setTextColor(getResources().getColor(R.color.text_title));
-                break;
-            case 1:
-                imageHome.setImageResource(R.drawable.gw_home_pressed);
-                tvHome.setTextColor(getResources().getColor(R.color.text_title));
-                break;
-            case 2:
-                imageDisarm.setImageResource(R.drawable.gw_disarm_pressed);
-                tvDisarm.setTextColor(getResources().getColor(R.color.text_title));
-                break;
+        if (isChiose) {
+            initImage();
+            switch (defence) {
+                case 0:
+                    imageAway.setImageResource(R.drawable.gw_away_pressed);
+                    tvAway.setTextColor(getResources().getColor(R.color.text_title));
+                    break;
+                case 1:
+                    imageHome.setImageResource(R.drawable.gw_home_pressed);
+                    tvHome.setTextColor(getResources().getColor(R.color.text_title));
+                    break;
+                case 2:
+                    imageDisarm.setImageResource(R.drawable.gw_disarm_pressed);
+                    tvDisarm.setTextColor(getResources().getColor(R.color.text_title));
+                    break;
+            }
+        } else {
+            new CBDialogBuilder(getActivity())
+                    .setTouchOutSideCancelable(true)
+                    .showCancelButton(true)
+                    .setTitle(getString(R.string.not_gateway))
+                    .setMessage("")
+                    .setCustomIcon(R.drawable.alerter_ic_notifications)
+                    .setConfirmButtonText(getString(R.string.Adddevice))
+                    .setCancelButtonText(getResources().getString(R.string.dialog_cancel))
+                    .setDialogAnimation(CBDialogBuilder.DIALOG_ANIM_SLID_BOTTOM)
+                    .setButtonClickListener(true, new CBDialogBuilder.onDialogbtnClickListener() {
+                        @Override
+                        public void onDialogbtnClick(Context context, Dialog dialog, int whichBtn) {
+                            switch (whichBtn) {
+                                case BUTTON_CONFIRM:
+//                                                    Toast.makeText(context, "点击了确认按钮", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case BUTTON_CANCEL:
+//                                                    Toast.makeText(context, "点击了取消按钮", Toast.LENGTH_SHORT).show();
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }).create().show();
         }
+
     }
 
     private void initImage() {

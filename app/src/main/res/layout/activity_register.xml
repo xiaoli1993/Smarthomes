@@ -89,6 +89,7 @@
     </ScrollView>
 
     <LinearLayout
+        android:id="@+id/ll_sign_in"
         android:layout_width="fill_parent"
         android:layout_height="56.7dp"
         android:layout_alignParentBottom="true"

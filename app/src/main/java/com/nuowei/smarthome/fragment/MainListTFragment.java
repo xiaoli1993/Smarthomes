@@ -58,6 +58,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import okhttp3.Call;
+import qiu.niorgai.StatusBarCompat;
 
 /**
  * @Author : 肖力
@@ -114,15 +115,13 @@ public class MainListTFragment extends Fragment implements MyItemTouchCallback.O
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main_list, null);
-        unbinder = ButterKnife.bind(this, view);
-        return view;
+        return inflater.inflate(R.layout.fragment_main_list, null);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         initWeather();
         initToobar();
         initData();
@@ -371,6 +370,9 @@ public class MainListTFragment extends Fragment implements MyItemTouchCallback.O
 
             tvNewTemp.setText(weatherInfo.getCurrentTemp() + "°");
             tvWeather.setText(weatherInfo.getCurrentText() + "");
+            tvPm25.setText(weatherInfo.getAtmosphereHumidity() + "");
+            tvTds.setText(weatherInfo.getAtmospherePressure() + "");
+            tvTemp.setText(weatherInfo.getAtmosphereVisibility() + "");
             Hawk.put("weater", weatherInfo);
             if (weatherInfo.getCurrentConditionIcon() != null) {
 //                Drawable imageIcon = new BitmapDrawable(weatherInfo.getCurrentConditionIcon());

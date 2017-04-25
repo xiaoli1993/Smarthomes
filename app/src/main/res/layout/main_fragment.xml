@@ -112,7 +112,7 @@
                     <com.nuowei.smarthome.view.textview.DinProTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/pm2_5"
+                        android:text="@string/h"
                         android:textColor="@color/white"
                         android:textSize="8dp" />
                 </LinearLayout>
@@ -120,7 +120,7 @@
                 <com.nuowei.smarthome.view.textview.DinProTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/excellent"
+                    android:text="@string/humidity"
                     android:textColor="@color/white_50"
                     android:textSize="10dp" />
             </LinearLayout>
@@ -148,7 +148,7 @@
                     <com.nuowei.smarthome.view.textview.DinProTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/tds"
+                        android:text="@string/millibars"
                         android:textColor="@color/white"
                         android:textSize="8dp" />
                 </LinearLayout>
@@ -156,7 +156,7 @@
                 <com.nuowei.smarthome.view.textview.DinProTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/water_quality"
+                    android:text="@string/pressure"
                     android:textColor="@color/white_50"
                     android:textSize="10dp" />
             </LinearLayout>
@@ -184,7 +184,7 @@
                     <com.nuowei.smarthome.view.textview.DinProTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/c"
+                        android:text="@string/km"
                         android:textColor="@color/white"
                         android:textSize="8dp" />
                 </LinearLayout>
@@ -193,7 +193,7 @@
                 <com.nuowei.smarthome.view.textview.DinProTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/temperature"
+                    android:text="@string/visibility"
                     android:textColor="@color/white_50"
                     android:textSize="10dp" />
             </LinearLayout>

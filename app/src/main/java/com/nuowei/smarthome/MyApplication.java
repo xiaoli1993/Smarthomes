@@ -3,6 +3,7 @@ package com.nuowei.smarthome;/**
  */
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
@@ -15,6 +16,10 @@ import com.jiongbull.jlog.Logger;
 import com.jiongbull.jlog.constant.LogLevel;
 import com.jiongbull.jlog.constant.LogSegment;
 import com.jiongbull.jlog.util.TimeUtils;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nuowei.smarthome.manage.DeviceManage;
 import com.nuowei.smarthome.modle.UserInfo;
 import com.nuowei.smarthome.modle.XlinkDevice;
@@ -92,8 +97,7 @@ public class MyApplication extends LitePalApplication implements XlinkNetListene
         XlinkAgent.getInstance().setPreInnerServiceMode(true);
         initHandler();
         //数据库加密保存
-        Hawk.init(this)
-                .setEncryption(new NoEncryption())
+        Hawk.init(this).setEncryption(new NoEncryption())
 //                .setLogInterceptor(new LogInterceptor() {
 //                    @Override
 //                    public void onLog(String message) {
@@ -113,7 +117,29 @@ public class MyApplication extends LitePalApplication implements XlinkNetListene
         if (isauthKey) {
             authKey = Hawk.get(Constants.SAVE_authKey);
         }
+        initImageLoader(getApplicationContext());
+    }
 
+    public static void initImageLoader(Context context) {
+        // This configuration tuning is custom. You can tune every option, you may tune some of them,
+        // or you can create default configuration by
+        //  ImageLoaderConfiguration.createDefault(this);
+        // method.
+        ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
+        config.threadPriority(Thread.NORM_PRIORITY - 2);
+        config.denyCacheImageMultipleSizesInMemory();
+        config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
+        config.diskCacheSize(50 * 1024 * 1024); // 50 MiB
+        config.tasksProcessingOrder(QueueProcessingType.LIFO);
+        config.writeDebugLogs(); // Remove for release app
+
+        // Initialize ImageLoader with configuration.
+        ImageLoader.getInstance().init(config.build());
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
     }
 
     public static void initHandler() {
@@ -369,6 +395,17 @@ public class MyApplication extends LitePalApplication implements XlinkNetListene
 //            // TimerManage.getInstance().parseByte(device,data);
             getData(Constants.BROADCAST_RECVPIPE_SYNC, device, data);
         }
+    }
+
+    /**
+     * 发送 ：start/login广播
+     */
+    public void sendBroad(String action, String data) {
+        Intent intent = new Intent(action);
+        if (data != null) {
+            intent.putExtra(Constants.USER_NAME, data);
+        }
+        MyApplication.this.sendBroadcast(intent);
     }
 
     /**

@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 
 import com.nuowei.smarthome.MyApplication;
+import com.nuowei.smarthome.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -359,6 +360,15 @@ public class XlinkUtils {
             k += 2;
         }
         return byteArray;
+    }
+
+    public static void shortTips(String tip) {
+        MyApplication.getLogger().e(tip);
+        try {
+            Toasty.normal(MyApplication.getMyApplication(), tip).show();
+        } catch (Exception e) {
+        }
+
     }
 
     public static void shortTips(String tip, int bgcolor, int tvcolor, int drawable, boolean isspin) {

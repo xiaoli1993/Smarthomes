@@ -5,17 +5,20 @@ package com.nuowei.smarthome.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.smarthomesdk.http.HttpManage;
 import com.nuowei.smarthome.smarthomesdk.utils.Utils;
+import com.nuowei.smarthome.smarthomesdk.utils.XlinkUtils;
 import com.nuowei.smarthome.util.MyUtil;
 import com.nuowei.smarthome.view.textview.AvenirTextView;
 import com.orhanobut.hawk.Hawk;
@@ -25,7 +28,9 @@ import org.apache.http.Header;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
 
 /**
  * @Author :    肖力
@@ -34,7 +39,7 @@ import butterknife.OnClick;
  * @Time :  2017/2/24 08:30
  * @Description :
  */
-public class RegisterActivity extends SwipeBackActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     @BindView(R.id.ll)
     LinearLayout ll;
@@ -103,12 +108,15 @@ public class RegisterActivity extends SwipeBackActivity {
                         @Override
                         public void onError(Header[] headers, HttpManage.Error error) {
                             MyApplication.getLogger().e("失败！：" + error.getCode());
+                            Toasty.error(MyApplication.getMyApplication(), "Register error.", Toast.LENGTH_SHORT, true).show();
                         }
 
                         @Override
                         public void onSuccess(int i, Map<String, String> stringStringMap) {
                             Hawk.put("MY_ACCOUNT", user);
                             MyApplication.getLogger().i("注册成功！");
+                            Toasty.success(MyApplication.getMyApplication(), "Register success.", Toast.LENGTH_SHORT, true).show();
+                            finish();
 //                            NetManager.getInstance(this).
                         }
                     });
@@ -135,6 +143,7 @@ public class RegisterActivity extends SwipeBackActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        ButterKnife.bind(this);
         initEven();
     }
 
