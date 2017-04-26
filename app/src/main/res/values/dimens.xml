@@ -87,4 +87,6 @@
     <dimen name="common_circle_width">3dp</dimen>
     <dimen name="item_rect_slected">1dp</dimen>
     <dimen name="progress_circle_radius">34dp</dimen>
+    <dimen name="text_default_size">14sp</dimen>
+
 </resources>

@@ -16,22 +16,31 @@ public class ChoiceAddDevice {
         this.deviceid = deviceid;
         this.devicename = devicename;
         this.iswifi = iswifi;
+        
     }
+
+
+
     public int getDeviceid() {
         return deviceid;
     }
+
     public void setDeviceid(int deviceid) {
         this.deviceid = deviceid;
     }
+
     public String getDevicename() {
         return devicename;
     }
+
     public void setDevicename(String devicename) {
         this.devicename = devicename;
     }
+
     public boolean iswifi() {
         return iswifi;
     }
+
     public void setIswifi(boolean iswifi) {
         this.iswifi = iswifi;
     }

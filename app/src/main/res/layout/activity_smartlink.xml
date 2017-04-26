@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:float="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/activity_title" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="7dp" />
+
+    <com.nuowei.smarthome.view.textview.DinProTextView
+        android:id="@+id/tv_wifiSSID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/space_20dp"
+        android:text="WifiSSID:"
+        android:textColor="@color/text_title"
+        android:textSize="18dp" />
+
+    <!-- add some padding -->
+    <com.wrapp.floatlabelededittext.FloatLabeledEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="@dimen/space_20dp"
+        float:fletPadding="10dp">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/forget_pass_bg"
+            android:drawableLeft="@drawable/pass"
+            android:drawablePadding="20dp"
+            android:hint="Wifi Pass"
+            android:paddingLeft="35dp"
+            android:textColorHint="@color/text_ash"
+            android:textSize="12sp" />
+    </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+    <com.nuowei.smarthome.view.button.LoadingsButton
+        android:id="@+id/first"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#BE6E46"
+        app:pbLoadingText="@string/default_loading"
+        app:pbProgressColor="#F9D8FB"
+        app:pbText="start"
+        app:pbTextColor="#8A4FFF"
+        app:pbTextSize="16sp" />
+</LinearLayout>

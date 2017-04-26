@@ -1,5 +1,6 @@
 package com.nuowei.smarthome.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -7,17 +8,21 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.SimpleAdapter;
 
 import com.nuowei.smarthome.Constants;
-import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.adapter.ChoiceAddDeviceAdapter;
 import com.nuowei.smarthome.adapter.ChoiceAddDeviceGidwAdapter;
 import com.nuowei.smarthome.modle.ChoiceAddDevice;
+import com.nuowei.smarthome.util.MyUtil;
 import com.nuowei.smarthome.view.textview.AvenirTextView;
 import com.orhanobut.hawk.Hawk;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -46,6 +51,8 @@ public class AddDeviceActivity extends BaseActivity {
     private ChoiceAddDeviceAdapter mAdater;
     private ChoiceAddDeviceGidwAdapter mGidwAdapter;
     private ArrayList<ChoiceAddDevice> chioseAddDevices;
+    private SimpleAdapter sim_adapter;
+    private List<Map<String, Object>> data_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,24 +81,45 @@ public class AddDeviceActivity extends BaseActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     ChoiceAddDevice choiceAddDevice = chioseAddDevices.get(position);
-                    
+                    startActivity(new Intent(AddDeviceActivity.this, SmartLinkActivity.class));
                 }
             });
         } else {
+//            data_list = new ArrayList<Map<String, Object>>();
+//            String[] from = {"image", "text", "iswifi"};
+//            int[] to = {R.id.image_icon, R.id.tv_txt};
+//            getZigbeeData();
+//            data_list = getData();
+//            sim_adapter = new SimpleAdapter(this, data_list, R.layout.item_main, from, to);
+
             mGidwAdapter = new ChoiceAddDeviceGidwAdapter(AddDeviceActivity.this, getZigbeeData());
             mListview.setVisibility(View.GONE);
             mGridview.setVisibility(View.VISIBLE);
             mGridview.setAdapter(mGidwAdapter);
+
             mGridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     ChoiceAddDevice choiceAddDevice = chioseAddDevices.get(position);
-
+                    startActivity(new Intent(AddDeviceActivity.this, SmartLinkActivity.class));
                 }
             });
         }
 
 
+    }
+
+    public List<Map<String, Object>> getData() {
+        //cion和iconName的长度是相同的，这里任选其一都可以
+        for (int i = 0; i < chioseAddDevices.size(); i++) {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("image", MyUtil.getIconImage(chioseAddDevices.get(i).getDeviceid()));
+            map.put("text", chioseAddDevices.get(i).getDevicename());
+            map.put("iswifi", chioseAddDevices.get(i).iswifi());
+            data_list.add(map);
+        }
+
+        return data_list;
     }
 
     /**

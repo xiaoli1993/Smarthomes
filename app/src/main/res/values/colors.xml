@@ -152,4 +152,7 @@
     <!-- 浅色字体颜色 -->
     <color name="text_color_light">#999999</color>
     <color name="text_color_light2">#acacac</color>
+    <color name="color_button_default">#FFA000</color>
+    <color name="black">#000</color>
+    <color name="green">#8BC34A</color>
 </resources>

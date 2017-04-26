@@ -12,22 +12,27 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.google.gson.Gson;
 import com.nuowei.smarthome.Constants;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
-import com.nuowei.smarthome.activity.LoginActivity;
 import com.nuowei.smarthome.activity.MainActivity;
 import com.nuowei.smarthome.manage.DeviceManage;
-import com.nuowei.smarthome.modle.DataDevice;
 import com.nuowei.smarthome.modle.EventIsOnline;
 import com.nuowei.smarthome.modle.EventNotifyData;
 import com.nuowei.smarthome.modle.Notifications;
@@ -51,21 +56,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import io.xlink.wifi.sdk.XDevice;
-import io.xlink.wifi.sdk.XlinkAgent;
 import io.xlink.wifi.sdk.bean.EventNotify;
-
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.StateListDrawable;
-import android.view.Gravity;
-import android.view.WindowManager;
 
 /**
  * @Author :    肖力
@@ -422,6 +413,51 @@ public class MyUtil {
         myIntentFilter.addAction(Constants.BROADCAST_SEND_SUCCESS);
         myIntentFilter.addAction(Constants.CHANGE_URL);
         return myIntentFilter;
+    }
+
+    public static int getIconImage(int deviceid) {
+        switch (deviceid) {
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_RGB:
+                return R.drawable.device_light;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_DOORS:
+                return R.drawable.device_door;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_WATER:
+                return R.drawable.device_water;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_PIR:
+                return R.drawable.device_pir;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_SMOKE:
+                return R.drawable.device_smoke;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_THP:
+                return R.drawable.device_thp;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_GAS:
+                return R.drawable.device_gas;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_CO:
+                return R.drawable.device_co;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_SOS:
+                return R.drawable.device_sos;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_SW:
+                return R.drawable.device_sw;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_PLUGIN:
+                return R.drawable.device_plug;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_METRTING_PLUGIN:
+                return R.drawable.device_plug;
+            case Constants.DEVICE_TYPE.DEVICE_WIFI_GATEWAY:
+                return R.drawable.device_gw;
+            case Constants.DEVICE_TYPE.DEVICE_WIFI_PLUGIN:
+                return R.drawable.device_plug;
+            case Constants.DEVICE_TYPE.DEVICE_WIFI_METRTING_PLUGIN:
+                return R.drawable.device_plug;
+            case Constants.DEVICE_TYPE.DEVICE_WIFI_AIR:
+                return R.drawable.device_ipc;
+            case Constants.DEVICE_TYPE.DEVICE_WIFI_IPC:
+                return R.drawable.device_ipc;
+            case Constants.DEVICE_TYPE.DEVICE_WIFI_RC:
+                return R.drawable.device_ipc;
+            case Constants.DEVICE_TYPE.DEVICE_WIFI_GAS:
+                return R.drawable.device_ipc;
+            default:
+                return R.drawable.device_ipc;
+        }
     }
 
     /**
@@ -974,6 +1010,7 @@ public class MyUtil {
 
     /**
      * 根据URL获取图片 Bitmap
+     *
      * @param url
      * @return
      */

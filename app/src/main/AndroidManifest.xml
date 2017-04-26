@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+
     package="com.nuowei.smarthome">
 
     <!-- 往sdcard中写入数据的权限 存储崩溃日志 -->
@@ -94,6 +95,7 @@
         <activity android:name=".activity.PersonalActivity" />
         <activity android:name=".activity.DeviceListActivity" />
         <activity android:name=".activity.ModifyPasswordActivity" />
+        <activity android:name=".activity.SmartLinkActivity" />
         <!--
         <activity android:name=".calendar.activity.AddEventSetActivity" />
         <activity android:name=".calendar.activity.MainActivity" />
@@ -112,6 +114,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nuowei.smarthome.activity.SettingActivity" />
         </activity>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.nuowei.smarthome.fileprovider"

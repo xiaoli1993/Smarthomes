@@ -430,4 +430,6 @@
     <string name="humidity">Humidity</string>
     <string name="h">%</string>
     <string name="millibars">millibars</string>
+    <string name="default_loading">Loading…</string>
+
 </resources>
