@@ -1,8 +1,9 @@
 package com.nuowei.smarthome.fragment;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -28,20 +29,26 @@ import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.activity.AddDeviceActivity;
 import com.nuowei.smarthome.activity.DiaryActivity;
 import com.nuowei.smarthome.activity.MainActivity;
+import com.nuowei.smarthome.activity.SceneActivity;
+import com.nuowei.smarthome.activity.SecurityActivity;
 import com.nuowei.smarthome.adapter.MainListTAdapter;
 import com.nuowei.smarthome.helper.MyItemTouchCallback;
 import com.nuowei.smarthome.helper.OnRecyclerItemClickListener;
 import com.nuowei.smarthome.modle.CollapsingToolbarLayoutState;
 import com.nuowei.smarthome.modle.IpMac;
 import com.nuowei.smarthome.modle.MainDatas;
+import com.nuowei.smarthome.smarthomesdk.Json.ZigbeeGW;
+import com.nuowei.smarthome.util.MyUtil;
 import com.nuowei.smarthome.util.SharePreferenceUtil;
 import com.nuowei.smarthome.util.VibratorUtil;
+import com.nuowei.smarthome.view.cbdialog.CBDialogBuilder;
 import com.nuowei.smarthome.view.textview.DinProTextView;
 import com.nuowei.smarthome.yahoo.WeatherInfo;
 import com.nuowei.smarthome.yahoo.YahooWeather;
 import com.nuowei.smarthome.yahoo.YahooWeatherExceptionListener;
 import com.nuowei.smarthome.yahoo.YahooWeatherInfoListener;
 import com.orhanobut.hawk.Hawk;
+import com.wooplr.spotlight.SpotlightView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -57,8 +64,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.xlink.wifi.sdk.XDevice;
+import io.xlink.wifi.sdk.XlinkAgent;
+import io.xlink.wifi.sdk.listener.ConnectDeviceListener;
+import io.xlink.wifi.sdk.listener.SendPipeListener;
 import okhttp3.Call;
-import qiu.niorgai.StatusBarCompat;
 
 /**
  * @Author : 肖力
@@ -104,13 +114,15 @@ public class MainListTFragment extends Fragment implements MyItemTouchCallback.O
     @BindView(R.id.image_weather)
     ImageView imageWeather;
     Unbinder unbinder;
-
+    @BindView(R.id.image_add)
+    ImageView imageAdd;
     private List<HashMap<String, MainDatas>> dataSourceList = new ArrayList<HashMap<String, MainDatas>>();
     private CollapsingToolbarLayoutState state;
 
     private MainListTAdapter mAdapter;
 
     private YahooWeather mYahooWeather = YahooWeather.getInstance(5000, 5000, true);
+    private boolean isChiose = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -248,6 +260,27 @@ public class MainListTFragment extends Fragment implements MyItemTouchCallback.O
     }
 
     private void initEven() {
+        new SpotlightView.Builder(getActivity())
+                .introAnimationDuration(400)
+//                .enableRevealAnimation(true)
+                .performClick(true)
+                .fadeinTextDuration(400)
+                //.setTypeface(FontUtil.get(this, "RemachineScript_Personal_Use"))
+                .headingTvColor(Color.parseColor("#eb273f"))
+                .headingTvSize(32)
+                .headingTvText(getString(R.string.adddevice))
+                .subHeadingTvColor(Color.parseColor("#ffffff"))
+                .subHeadingTvSize(16)
+                .subHeadingTvText(getString(R.string.Clickheretoadddevice))
+                .maskColor(Color.parseColor("#dc000000"))
+                .target(imageAdd)
+                .lineAnimDuration(400)
+                .lineAndArcColor(Color.parseColor("#eb273f"))
+                .dismissOnTouch(true)
+//                .dismissOnBackPress(true)
+//                .enableDismissAfterShown(true)
+                .usageId("") //UNIQUE ID
+                .show();
 //        shimmerRecyclerView.setLayoutManager(new MyLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, true));
         mAdapter = new MainListTAdapter(R.layout.item_list, dataSourceList);
         shimmerRecyclerView.setHasFixedSize(true);
@@ -272,6 +305,71 @@ public class MainListTFragment extends Fragment implements MyItemTouchCallback.O
                 if (vh.getLayoutPosition() != dataSourceList.size() - 1) {
                     itemTouchHelper.startDrag(vh);
                     VibratorUtil.Vibrate(getActivity(), 70);   //震动70ms
+                }
+            }
+
+            @Override
+            public void onItemClick(RecyclerView.ViewHolder vh) {
+                HashMap<String, MainDatas> item = dataSourceList.get(vh.getLayoutPosition());
+                switch (item.get("Main").getMainType()) {
+                    case 0:
+                        startActivity(new Intent(getActivity(), SecurityActivity.class));
+                        break;
+                    case 1:
+//                        startActivity(new Intent(getActivity(), ScrollingActivity.class));
+                        break;
+                    case 2:
+//                        startActivity(new Intent(getActivity(), DiaryActivity.class));
+                        break;
+                    case 3:
+//                        startActivity(new Intent(getActivity(), Diary2Activity.class));
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        try {
+                            MyUtil.isEmptyString(MainActivity.getChoiceGwDevice().getDeviceMac());
+                            isChiose = true;
+                        } catch (Exception e) {
+                            isChiose = false;
+                        }
+                        if (isChiose) {
+                            startActivity(new Intent(getActivity(), SceneActivity.class));
+                        } else {
+                            new CBDialogBuilder(getActivity())
+                                    .setTouchOutSideCancelable(true)
+                                    .showCancelButton(true)
+                                    .setTitle(getString(R.string.not_gateway))
+                                    .setMessage("")
+                                    .setCustomIcon(R.drawable.alerter_ic_notifications)
+                                    .setConfirmButtonText(getString(R.string.Adddevice))
+                                    .setCancelButtonText(getResources().getString(R.string.dialog_cancel))
+                                    .setDialogAnimation(CBDialogBuilder.DIALOG_ANIM_SLID_BOTTOM)
+                                    .setButtonClickListener(true, new CBDialogBuilder.onDialogbtnClickListener() {
+                                        @Override
+                                        public void onDialogbtnClick(Context context, Dialog dialog, int whichBtn) {
+                                            switch (whichBtn) {
+                                                case BUTTON_CONFIRM:
+//                                                    Toast.makeText(context, "点击了确认按钮", Toast.LENGTH_SHORT).show();
+                                                    break;
+                                                case BUTTON_CANCEL:
+//                                                    Toast.makeText(context, "点击了取消按钮", Toast.LENGTH_SHORT).show();
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
+                                        }
+                                    }).create().show();
+                        }
+                        break;
+                    case 7:
+                        break;
+                    case 8:
+                        break;
+                    default:
+                        break;
                 }
             }
         });
@@ -367,7 +465,6 @@ public class MainListTFragment extends Fragment implements MyItemTouchCallback.O
                     "Humidity: " + weatherInfo.getAtmosphereHumidity() + "\n" +
                     "Pressure: " + weatherInfo.getAtmospherePressure() + "\n" +
                     "Visibility: " + weatherInfo.getAtmosphereVisibility());
-
             tvNewTemp.setText(weatherInfo.getCurrentTemp() + "°");
             tvWeather.setText(weatherInfo.getCurrentText() + "");
             tvPm25.setText(weatherInfo.getAtmosphereHumidity() + "");
@@ -399,6 +496,9 @@ public class MainListTFragment extends Fragment implements MyItemTouchCallback.O
 
     }
 
+    /**
+     * 在家布防、外出布防、撤防
+     */
     @OnClick({R.id.btn_home, R.id.btn_away, R.id.btn_disarm, R.id.image_home, R.id.image_away, R.id.image_disarm})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -424,21 +524,79 @@ public class MainListTFragment extends Fragment implements MyItemTouchCallback.O
     }
 
     private void setDefence(int defence) {
-        initImage();
-        switch (defence) {
-            case 0:
-                imageAway.setImageResource(R.drawable.gw_away_pressed);
-                tvAway.setTextColor(getResources().getColor(R.color.text_title));
-                break;
-            case 1:
-                imageHome.setImageResource(R.drawable.gw_home_pressed);
-                tvHome.setTextColor(getResources().getColor(R.color.text_title));
-                break;
-            case 2:
-                imageDisarm.setImageResource(R.drawable.gw_disarm_pressed);
-                tvDisarm.setTextColor(getResources().getColor(R.color.text_title));
-                break;
+        try {
+            MyUtil.isEmptyString(MainActivity.getChoiceGwDevice().getDeviceMac());
+            isChiose = true;
+        } catch (Exception e) {
+            isChiose = false;
         }
+        if (isChiose) {
+            initImage();
+            final String json = ZigbeeGW.Setdefence(MyApplication.getMyApplication().getUserInfo().getNickname(), defence);
+            if (MainActivity.getChoiceGwDevice().getDeviceState() == 0) {
+                XlinkAgent.getInstance().connectDevice(MainActivity.getChoiceGwDevice().getxDevice(), MainActivity.getChoiceGwDevice().getxDevice().getAccessKey(), new ConnectDeviceListener() {
+                    @Override
+                    public void onConnectDevice(XDevice xDevice, int i) {
+                        XlinkAgent.getInstance().sendPipeData(MainActivity.getChoiceGwDevice().getxDevice(), json.getBytes(),
+                                new SendPipeListener() {
+                                    @Override
+                                    public void onSendLocalPipeData(XDevice xDevice, int i, int i1) {
+
+                                    }
+                                });
+                    }
+                });
+            } else {
+                XlinkAgent.getInstance().sendPipeData(MainActivity.getChoiceGwDevice().getxDevice(), json.getBytes(),
+                        new SendPipeListener() {
+                            @Override
+                            public void onSendLocalPipeData(XDevice xDevice, int i, int i1) {
+
+                            }
+                        });
+            }
+            MainActivity.setDefence(defence);
+            switch (defence) {
+                case 0:
+                    imageAway.setImageResource(R.drawable.gw_away_pressed);
+                    tvAway.setTextColor(getResources().getColor(R.color.text_title));
+                    break;
+                case 1:
+                    imageHome.setImageResource(R.drawable.gw_home_pressed);
+                    tvHome.setTextColor(getResources().getColor(R.color.text_title));
+                    break;
+                case 2:
+                    imageDisarm.setImageResource(R.drawable.gw_disarm_pressed);
+                    tvDisarm.setTextColor(getResources().getColor(R.color.text_title));
+                    break;
+            }
+        } else {
+            new CBDialogBuilder(getActivity())
+                    .setTouchOutSideCancelable(true)
+                    .showCancelButton(true)
+                    .setTitle(getString(R.string.not_gateway))
+                    .setMessage("")
+                    .setCustomIcon(R.drawable.alerter_ic_notifications)
+                    .setConfirmButtonText(getString(R.string.Adddevice))
+                    .setCancelButtonText(getResources().getString(R.string.dialog_cancel))
+                    .setDialogAnimation(CBDialogBuilder.DIALOG_ANIM_SLID_BOTTOM)
+                    .setButtonClickListener(true, new CBDialogBuilder.onDialogbtnClickListener() {
+                        @Override
+                        public void onDialogbtnClick(Context context, Dialog dialog, int whichBtn) {
+                            switch (whichBtn) {
+                                case BUTTON_CONFIRM:
+//                                                    Toast.makeText(context, "点击了确认按钮", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case BUTTON_CANCEL:
+//                                                    Toast.makeText(context, "点击了取消按钮", Toast.LENGTH_SHORT).show();
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }).create().show();
+        }
+
     }
 
     private void initImage() {

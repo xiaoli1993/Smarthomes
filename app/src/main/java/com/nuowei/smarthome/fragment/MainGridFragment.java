@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
@@ -13,10 +14,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.View;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
-import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -30,9 +30,7 @@ import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.activity.AddDeviceActivity;
 import com.nuowei.smarthome.activity.DiaryActivity;
 import com.nuowei.smarthome.activity.MainActivity;
-import com.nuowei.smarthome.activity.PersonalActivity;
 import com.nuowei.smarthome.activity.SceneActivity;
-import com.nuowei.smarthome.activity.ScrollingActivity;
 import com.nuowei.smarthome.activity.SecurityActivity;
 import com.nuowei.smarthome.adapter.MainGridAdapter;
 import com.nuowei.smarthome.common.DividerGridItemDecoration;
@@ -41,6 +39,7 @@ import com.nuowei.smarthome.helper.OnRecyclerItemClickListener;
 import com.nuowei.smarthome.modle.CollapsingToolbarLayoutState;
 import com.nuowei.smarthome.modle.IpMac;
 import com.nuowei.smarthome.modle.MainDatas;
+import com.nuowei.smarthome.smarthomesdk.Json.ZigbeeGW;
 import com.nuowei.smarthome.util.MyUtil;
 import com.nuowei.smarthome.util.SharePreferenceUtil;
 import com.nuowei.smarthome.util.VibratorUtil;
@@ -68,6 +67,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.xlink.wifi.sdk.XDevice;
+import io.xlink.wifi.sdk.XlinkAgent;
+import io.xlink.wifi.sdk.listener.ConnectDeviceListener;
+import io.xlink.wifi.sdk.listener.SendPipeListener;
 import okhttp3.Call;
 
 /**
@@ -202,10 +205,10 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
                 //.setTypeface(FontUtil.get(this, "RemachineScript_Personal_Use"))
                 .headingTvColor(Color.parseColor("#eb273f"))
                 .headingTvSize(32)
-                .headingTvText("Add Device")
+                .headingTvText(getString(R.string.adddevice))
                 .subHeadingTvColor(Color.parseColor("#ffffff"))
                 .subHeadingTvSize(16)
-                .subHeadingTvText("Click here to add device.")
+                .subHeadingTvText(getString(R.string.Clickheretoadddevice))
                 .maskColor(Color.parseColor("#dc000000"))
                 .target(imageAdd)
                 .lineAnimDuration(400)
@@ -251,7 +254,7 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
                         startActivity(new Intent(getActivity(), SecurityActivity.class));
                         break;
                     case 1:
-                        startActivity(new Intent(getActivity(), ScrollingActivity.class));
+//                        startActivity(new Intent(getActivity(), ScrollingActivity.class));
                         break;
                     case 2:
 //                        startActivity(new Intent(getActivity(), DiaryActivity.class));
@@ -264,6 +267,12 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
                     case 5:
                         break;
                     case 6:
+                        try {
+                            MyUtil.isEmptyString(MainActivity.getChoiceGwDevice().getDeviceMac());
+                            isChiose = true;
+                        } catch (Exception e) {
+                            isChiose = false;
+                        }
                         if (isChiose) {
                             startActivity(new Intent(getActivity(), SceneActivity.class));
                         } else {
@@ -328,6 +337,20 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
             isChiose = true;
         } catch (Exception e) {
             isChiose = false;
+        }
+        switch (MainActivity.getDefence()) {
+            case 0:
+                imageAway.setImageResource(R.drawable.gw_away_pressed);
+                tvAway.setTextColor(getResources().getColor(R.color.text_title));
+                break;
+            case 1:
+                imageHome.setImageResource(R.drawable.gw_home_pressed);
+                tvHome.setTextColor(getResources().getColor(R.color.text_title));
+                break;
+            case 2:
+                imageDisarm.setImageResource(R.drawable.gw_disarm_pressed);
+                tvDisarm.setTextColor(getResources().getColor(R.color.text_title));
+                break;
         }
         new Thread(new Runnable() {
             @Override
@@ -533,8 +556,38 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
     }
 
     private void setDefence(int defence) {
+        try {
+            MyUtil.isEmptyString(MainActivity.getChoiceGwDevice().getDeviceMac());
+            isChiose = true;
+        } catch (Exception e) {
+            isChiose = false;
+        }
         if (isChiose) {
             initImage();
+            final String json = ZigbeeGW.Setdefence(MyApplication.getMyApplication().getUserInfo().getNickname(), defence);
+            if (MainActivity.getChoiceGwDevice().getDeviceState() == 0) {
+                XlinkAgent.getInstance().connectDevice(MainActivity.getChoiceGwDevice().getxDevice(), MainActivity.getChoiceGwDevice().getxDevice().getAccessKey(), new ConnectDeviceListener() {
+                    @Override
+                    public void onConnectDevice(XDevice xDevice, int i) {
+                        XlinkAgent.getInstance().sendPipeData(MainActivity.getChoiceGwDevice().getxDevice(), json.getBytes(),
+                                new SendPipeListener() {
+                                    @Override
+                                    public void onSendLocalPipeData(XDevice xDevice, int i, int i1) {
+
+                                    }
+                                });
+                    }
+                });
+            } else {
+                XlinkAgent.getInstance().sendPipeData(MainActivity.getChoiceGwDevice().getxDevice(), json.getBytes(),
+                        new SendPipeListener() {
+                            @Override
+                            public void onSendLocalPipeData(XDevice xDevice, int i, int i1) {
+
+                            }
+                        });
+            }
+            MainActivity.setDefence(defence);
             switch (defence) {
                 case 0:
                     imageAway.setImageResource(R.drawable.gw_away_pressed);

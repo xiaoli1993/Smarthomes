@@ -37,6 +37,15 @@ public class XlinkDevice extends DataSupport {
     private long deviceId;//设备ID
     private String productId;//设备PID
     private String xDevice;//xDevice
+    private int defence;//网关布撤防状态
+
+    public int getDefence() {
+        return defence;
+    }
+
+    public void setDefence(int defence) {
+        this.defence = defence;
+    }
 
     public long getId() {
         return id;

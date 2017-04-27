@@ -1,33 +1,26 @@
 package com.nuowei.smarthome.activity;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
-import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 import com.nuowei.smarthome.Constants;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.adapter.MainListAdapter;
-import com.nuowei.smarthome.helper.MyItemTouchCallback;
-import com.nuowei.smarthome.helper.OnRecyclerItemClickListener;
 import com.nuowei.smarthome.manage.SubDeviceManage;
 import com.nuowei.smarthome.modle.ListMain;
 import com.nuowei.smarthome.modle.SubDevice;
 import com.nuowei.smarthome.smarthomesdk.Json.ZigbeeGW;
-import com.nuowei.smarthome.util.ACache;
-import com.nuowei.smarthome.util.VibratorUtil;
-import com.nuowei.smarthome.view.scrollview.CustomLoadMoreView;
+import com.nuowei.smarthome.util.MyUtil;
+import com.nuowei.smarthome.view.cbdialog.CBDialogBuilder;
 import com.nuowei.smarthome.view.textview.AvenirTextView;
 import com.nuowei.smarthome.view.textview.DinProTextView;
 
@@ -35,15 +28,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.iwgang.familiarrecyclerview.FamiliarRecyclerView;
 import cn.iwgang.familiarrecyclerview.FamiliarRefreshRecyclerView;
 import io.xlink.wifi.sdk.XDevice;
 import io.xlink.wifi.sdk.XlinkAgent;
+import io.xlink.wifi.sdk.listener.ConnectDeviceListener;
 import io.xlink.wifi.sdk.listener.SendPipeListener;
 
 public class SecurityActivity extends BaseActivity {//implements MyItemTouchCallback.OnDragListener {
@@ -79,7 +71,7 @@ public class SecurityActivity extends BaseActivity {//implements MyItemTouchCall
     private MainListAdapter mAdapter;
 
     private FamiliarRecyclerView mFamiliarRecyclerView;
-
+    private boolean isChiose = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +82,12 @@ public class SecurityActivity extends BaseActivity {//implements MyItemTouchCall
     }
 
     private void initData() {
-
+        try {
+            MyUtil.isEmptyString(MainActivity.getChoiceGwDevice().getDeviceMac());
+            isChiose = true;
+        } catch (Exception e) {
+            isChiose = false;
+        }
 //        List<XlinkDevice> xlinkDeviceList = DeviceManage.getInstance().getDevices();
 //        for (int x = 0; x < xlinkDeviceList.size(); x++) {
 //
@@ -99,10 +96,28 @@ public class SecurityActivity extends BaseActivity {//implements MyItemTouchCall
 //        }
         List<SubDevice> subDeviceList = SubDeviceManage.getInstance().getDevices();
         for (int i = 0; i < subDeviceList.size(); i++) {
-
             MyApplication.getLogger().w("List列表:" + subDeviceList.get(i).getZigbeeMac() + "\t" + subDeviceList.get(i).getDeviceMac());
-            dataSourceList.add(new ListMain(subDeviceList.get(i).getZigbeeMac(), subDeviceList.get(i).getDeviceMac(), true, subDeviceList.get(i).getDeviceType()));
+            if (isChiose) {
+                if (MainActivity.getChoiceGwDevice().getDeviceMac().equals(subDeviceList.get(i).getDeviceMac())) {
+                    dataSourceList.add(new ListMain(subDeviceList.get(i).getZigbeeMac(), subDeviceList.get(i).getDeviceMac(), true, subDeviceList.get(i).getDeviceType()));
+                }
+            }
         }
+        switch (MainActivity.getDefence()) {
+            case 0:
+                imageAway.setImageResource(R.drawable.gw_away_pressed);
+                tvAway.setTextColor(getResources().getColor(R.color.text_title));
+                break;
+            case 1:
+                imageHome.setImageResource(R.drawable.gw_home_pressed);
+                tvHome.setTextColor(getResources().getColor(R.color.text_title));
+                break;
+            case 2:
+                imageDisarm.setImageResource(R.drawable.gw_disarm_pressed);
+                tvDisarm.setTextColor(getResources().getColor(R.color.text_title));
+                break;
+        }
+
     }
 
     private void initEven() {
@@ -262,6 +277,42 @@ public class SecurityActivity extends BaseActivity {//implements MyItemTouchCall
 //                                MyApplication.getLogger().i("发送:" + i + "\n" + getSub);
 //                            }
 //                        });
+                        try {
+                            MyUtil.isEmptyString(MainActivity.getChoiceGwDevice().getDeviceMac());
+                            isChiose = true;
+                        } catch (Exception e) {
+                            isChiose = false;
+                        }
+                        if (isChiose) {
+                            final String getSub = ZigbeeGW.GetSubDevice(MyApplication.getMyApplication().getUserInfo().getNickname());
+                            if (MainActivity.getChoiceGwDevice().getDeviceState() == 0) {
+                                XlinkAgent.getInstance().connectDevice(MainActivity.getChoiceGwDevice().getxDevice(), MainActivity.getChoiceGwDevice().getAccessKey(), new ConnectDeviceListener() {
+                                    @Override
+                                    public void onConnectDevice(XDevice xDevice, int ret) {
+                                        if (ret < 0) {
+                                            MyApplication.getLogger().i("连接失败:" + ret);
+                                        } else {
+                                            MyApplication.getLogger().i("连接成功:" + ret);
+                                            XlinkAgent.getInstance().sendPipeData(xDevice, getSub.getBytes(), new SendPipeListener() {
+                                                @Override
+                                                public void onSendLocalPipeData(XDevice xDevice, int i, int i1) {
+                                                    JSONObject object = XlinkAgent.deviceToJson(xDevice);
+                                                    MyApplication.getLogger().i("发送:" + i + "\n" + getSub);
+                                                }
+                                            });
+                                        }
+                                    }
+                                });
+                            } else {
+                                XlinkAgent.getInstance().sendPipeData(MainActivity.getChoiceGwDevice().getxDevice(), getSub.getBytes(), new SendPipeListener() {
+                                    @Override
+                                    public void onSendLocalPipeData(XDevice xDevice, int i, int i1) {
+                                        JSONObject object = XlinkAgent.deviceToJson(xDevice);
+                                        MyApplication.getLogger().i("发送:" + i + "\n" + getSub);
+                                    }
+                                });
+                            }
+                        }
                         mAdapter.notifyDataSetChanged();
                         refreshListRecyclerView.pullRefreshComplete();
                     }
@@ -283,7 +334,7 @@ public class SecurityActivity extends BaseActivity {//implements MyItemTouchCall
         bundle.putString(Constants.GATEWAY_MAC, gwMac);
         bundle.putString(Constants.ZIGBEE_MAC, zigbeeMac);
         if (isgw) {
-            isGw2 =1;
+            isGw2 = 1;
         }
         bundle.putInt("isGw", isGw2);
         intent.putExtras(bundle);
@@ -338,20 +389,77 @@ public class SecurityActivity extends BaseActivity {//implements MyItemTouchCall
     }
 
     private void setDefence(int defence) {
-        initImage();
-        switch (defence) {
-            case 0:
-                imageAway.setImageResource(R.drawable.gw_away_pressed);
-                tvAway.setTextColor(getResources().getColor(R.color.text_title));
-                break;
-            case 1:
-                imageHome.setImageResource(R.drawable.gw_home_pressed);
-                tvHome.setTextColor(getResources().getColor(R.color.text_title));
-                break;
-            case 2:
-                imageDisarm.setImageResource(R.drawable.gw_disarm_pressed);
-                tvDisarm.setTextColor(getResources().getColor(R.color.text_title));
-                break;
+        try {
+            MyUtil.isEmptyString(MainActivity.getChoiceGwDevice().getDeviceMac());
+            isChiose = true;
+        } catch (Exception e) {
+            isChiose = false;
+        }
+        if (isChiose) {
+            initImage();
+            final String json = ZigbeeGW.Setdefence(MyApplication.getMyApplication().getUserInfo().getNickname(), defence);
+            if (MainActivity.getChoiceGwDevice().getDeviceState() == 0) {
+                XlinkAgent.getInstance().connectDevice(MainActivity.getChoiceGwDevice().getxDevice(), MainActivity.getChoiceGwDevice().getxDevice().getAccessKey(), new ConnectDeviceListener() {
+                    @Override
+                    public void onConnectDevice(XDevice xDevice, int i) {
+                        XlinkAgent.getInstance().sendPipeData(MainActivity.getChoiceGwDevice().getxDevice(), json.getBytes(),
+                                new SendPipeListener() {
+                                    @Override
+                                    public void onSendLocalPipeData(XDevice xDevice, int i, int i1) {
+
+                                    }
+                                });
+                    }
+                });
+            } else {
+                XlinkAgent.getInstance().sendPipeData(MainActivity.getChoiceGwDevice().getxDevice(), json.getBytes(),
+                        new SendPipeListener() {
+                            @Override
+                            public void onSendLocalPipeData(XDevice xDevice, int i, int i1) {
+
+                            }
+                        });
+            }
+            MainActivity.setDefence(defence);
+            switch (defence) {
+                case 0:
+                    imageAway.setImageResource(R.drawable.gw_away_pressed);
+                    tvAway.setTextColor(getResources().getColor(R.color.text_title));
+                    break;
+                case 1:
+                    imageHome.setImageResource(R.drawable.gw_home_pressed);
+                    tvHome.setTextColor(getResources().getColor(R.color.text_title));
+                    break;
+                case 2:
+                    imageDisarm.setImageResource(R.drawable.gw_disarm_pressed);
+                    tvDisarm.setTextColor(getResources().getColor(R.color.text_title));
+                    break;
+            }
+        } else {
+            new CBDialogBuilder(SecurityActivity.this)
+                    .setTouchOutSideCancelable(true)
+                    .showCancelButton(true)
+                    .setTitle(getString(R.string.not_gateway))
+                    .setMessage("")
+                    .setCustomIcon(R.drawable.alerter_ic_notifications)
+                    .setConfirmButtonText(getString(R.string.Adddevice))
+                    .setCancelButtonText(getResources().getString(R.string.dialog_cancel))
+                    .setDialogAnimation(CBDialogBuilder.DIALOG_ANIM_SLID_BOTTOM)
+                    .setButtonClickListener(true, new CBDialogBuilder.onDialogbtnClickListener() {
+                        @Override
+                        public void onDialogbtnClick(Context context, Dialog dialog, int whichBtn) {
+                            switch (whichBtn) {
+                                case BUTTON_CONFIRM:
+//                                                    Toast.makeText(context, "点击了确认按钮", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case BUTTON_CANCEL:
+//                                                    Toast.makeText(context, "点击了取消按钮", Toast.LENGTH_SHORT).show();
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }).create().show();
         }
     }
 

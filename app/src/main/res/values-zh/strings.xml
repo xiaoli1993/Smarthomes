@@ -253,5 +253,19 @@
     <string name="h">%</string>
     <string name="millibars">millibars</string>
     <string name="default_loading">Loading…</string>
+    <string name="Configurewifi">Configure wifi</string>
+    <string name="GWONE">1个网关最多添加6个场景!</string>
+
+    <string name="SceneName">场景名称</string>
+    <string name="Send">Send...</string>
+    <string name="deviceoffline">device offline</string>
+    <string name="Tips">Tips</string>
+    <string name="Deletethisscene">Delete this scene?</string>
+    <string name="Adderror">Add error!</string>
+    <string name="ClickheretoaddScene">Click here to add Scene.</string>
+    <string name="adddevice">Add Device</string>
+    <string name="Clickheretoadddevice">Click here to add device.</string>
+    <string name="WifiSSID">WifiSSID:</string>
+    <string name="Sharesuccess">Share success</string>
 
 </resources>

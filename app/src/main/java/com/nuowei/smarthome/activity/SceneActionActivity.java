@@ -7,17 +7,16 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
 import com.nuowei.smarthome.Constants;
+import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.adapter.ActionAdapter;
-import com.nuowei.smarthome.manage.DeviceManage;
 import com.nuowei.smarthome.manage.SubDeviceManage;
 import com.nuowei.smarthome.modle.Action;
 import com.nuowei.smarthome.modle.SubDevice;
-import com.nuowei.smarthome.modle.XlinkDevice;
 import com.nuowei.smarthome.view.textview.AvenirTextView;
+import com.nuowei.smarthome.view.textview.DinProTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,13 +41,14 @@ public class SceneActionActivity extends BaseActivity {
     @BindView(R.id.device_icon)
     ImageView deviceIcon;
     @BindView(R.id.device_name)
-    AvenirTextView deviceName;
+    DinProTextView deviceName;
     @BindView(R.id.rl_device)
     LinearLayout rlDevice;
 
     private ActionAdapter actionAdapter;
     private List<Action> list;
     public final static int SUB_DEVICE_CODE = 2;
+    private boolean isGw = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,13 +62,14 @@ public class SceneActionActivity extends BaseActivity {
         list = new ArrayList<Action>();
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        boolean isGw = bundle.getBoolean("isGw");
+        isGw = bundle.getBoolean("isGw");
+        MyApplication.getLogger().i("isGw" + isGw);
         if (isGw) {
             String mac = bundle.getString(Constants.GATEWAY_MAC);
-            XlinkDevice device = DeviceManage.getInstance().getDevice(mac);
-            list.add(new Action(getResources().getString(R.string.AtHome), mac, mac, device.getDeviceType(), false, false));
-            list.add(new Action(getResources().getString(R.string.OutAlert), mac, mac, device.getDeviceType(), false, false));
-            list.add(new Action(getResources().getString(R.string.Disarm), mac, mac, device.getDeviceType(), false, false));
+//            XlinkDevice device = DeviceManage.getInstance().getDevice(mac);
+            list.add(new Action(getResources().getString(R.string.AtHome), mac, mac, Constants.DEVICE_TYPE.DEVICE_WIFI_GATEWAY, true, false));
+            list.add(new Action(getResources().getString(R.string.OutAlert), mac, mac, Constants.DEVICE_TYPE.DEVICE_WIFI_GATEWAY, true, false));
+            list.add(new Action(getResources().getString(R.string.Disarm), mac, mac, Constants.DEVICE_TYPE.DEVICE_WIFI_GATEWAY, true, false));
         } else {
             String zigbeemac = bundle.getString(Constants.ZIGBEE_MAC);
             String mac = bundle.getString(Constants.GATEWAY_MAC);
@@ -118,7 +119,8 @@ public class SceneActionActivity extends BaseActivity {
                 intent.putExtra(Constants.GATEWAY_MAC, list.get(position).getGwMac());
                 intent.putExtra(Constants.ZIGBEE_MAC, list.get(position).getSubMac());
                 intent.putExtra("action", list.get(position).getAction());
-                intent.putExtra("isGw", list.get(position).isGw());
+                intent.putExtra("isGw", isGw);
+                MyApplication.getLogger().i("isGw" + isGw);
                 intent.putExtra(Constants.DEVICE_TYPES, list.get(position).getDeviceType());
                 setResult(SUB_DEVICE_CODE, intent);
                 finish();

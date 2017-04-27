@@ -96,6 +96,8 @@
         <activity android:name=".activity.DeviceListActivity" />
         <activity android:name=".activity.ModifyPasswordActivity" />
         <activity android:name=".activity.SmartLinkActivity" />
+        <activity android:name=".activity.ShareDeviceActivity" />
+        <activity android:name=".activity.AddSubDeviceActivity" />
         <!--
         <activity android:name=".calendar.activity.AddEventSetActivity" />
         <activity android:name=".calendar.activity.MainActivity" />

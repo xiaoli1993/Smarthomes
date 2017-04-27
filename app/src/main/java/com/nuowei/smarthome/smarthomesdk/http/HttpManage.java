@@ -5,7 +5,6 @@ package com.nuowei.smarthome.smarthomesdk.http;/**
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.internal.$Gson$Types;
@@ -79,6 +78,8 @@ public class HttpManage {
     private final String forgetUrl = host + "/v2/user/password/forgot";
     // 获取用户信息
     private final String getUserInfoUrl = host + "/v2/user/{user_id}";
+    // 注册设备信息
+    private final String registerDevice = host + "/v2/user/{user_id}/register_device";
     // 设置用户扩展属性
     private final String Property = "/v2/user/{user_id}/property";
     // 获取某个用户绑定的设备列表。
@@ -159,8 +160,8 @@ public class HttpManage {
 
     static {
         // 设置网络超时时间
-        client.setTimeout(5000);
-        client.setConnectTimeout(3000);
+        client.setTimeout(1000 * 10);
+        client.setConnectTimeout(1000 * 6);
     }
 
     /**
@@ -758,8 +759,9 @@ public class HttpManage {
         Map<String, String> headers = new HashMap<String, String>();
         headers.put("Access-Token", MyApplication.getMyApplication().getAccessToken());
         post(context, refreshUrl, params, headers, callback);
-        MyApplication.getLogger().i("refreshUrl:"+refreshUrl+"\t"+MyApplication.getMyApplication().getAccessToken()+"\t"+MyApplication.getMyApplication().getRefresh_token());
+        MyApplication.getLogger().i("refreshUrl:" + refreshUrl + "\t" + MyApplication.getMyApplication().getAccessToken() + "\t" + MyApplication.getMyApplication().getRefresh_token());
     }
+
     public void onRefreshs(Context context, final ResultCallback callback) throws JSONException {
         RequestParams params = new RequestParams();
         params.put("refresh_token", MyApplication.getMyApplication().getRefresh_token());
@@ -767,6 +769,7 @@ public class HttpManage {
         headers.put("Access-Token", MyApplication.getMyApplication().getAccessToken());
         post2(context, refreshUrl, params.getJsonEntity(), callback, headers);
     }
+
     /**
      * .用户查询设备固件最新版本
      *
@@ -918,6 +921,27 @@ public class HttpManage {
 
     }
 
+    /**
+     * 注册设备
+     *
+     * @param product_id
+     * @param mac
+     * @param name
+     * @param callback
+     */
+    public void registerDevice(Context context, String product_id, String mac, String name, final ResultCallback callback) {
+
+        String url = registerDevice.replace("{user_id}", MyApplication.getMyApplication().getAppid() + "");
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("product_id", product_id);
+        params.put("mac", mac);
+        params.put("name", name);
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put("Access-Token", MyApplication.getMyApplication().getAccessToken());
+        post(context, url, params, headers, callback);
+
+    }
+
     //    public void checkUpdate(String deviceId,final ResultCallback callback){
 //        String url = checkUpdateUrl;
 //        Map<String, String> map = new HashMap<String, String>();
@@ -1002,7 +1026,6 @@ public class HttpManage {
         }
         return headersdata;
     }
-
 
 
     public static abstract class ResultCallback<T> extends TextHttpResponseHandler {

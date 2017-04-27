@@ -81,7 +81,19 @@ public class AddDeviceActivity extends BaseActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     ChoiceAddDevice choiceAddDevice = chioseAddDevices.get(position);
-                    startActivity(new Intent(AddDeviceActivity.this, SmartLinkActivity.class));
+                    if (choiceAddDevice.iswifi()) {
+                        Intent intent = new Intent(AddDeviceActivity.this, SmartLinkActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(Constants.DEVICE_TYPES, choiceAddDevice.getDeviceid());
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(AddDeviceActivity.this, AddSubDeviceActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(Constants.DEVICE_TYPES, choiceAddDevice.getDeviceid());
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
                 }
             });
         } else {
@@ -101,7 +113,19 @@ public class AddDeviceActivity extends BaseActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     ChoiceAddDevice choiceAddDevice = chioseAddDevices.get(position);
-                    startActivity(new Intent(AddDeviceActivity.this, SmartLinkActivity.class));
+                    if (choiceAddDevice.iswifi()) {
+                        Intent intent = new Intent(AddDeviceActivity.this, SmartLinkActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(Constants.DEVICE_TYPES, choiceAddDevice.getDeviceid());
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(AddDeviceActivity.this, AddSubDeviceActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(Constants.DEVICE_TYPES, choiceAddDevice.getDeviceid());
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
                 }
             });
         }

@@ -32,26 +32,28 @@
         float:fletPadding="10dp">
 
         <EditText
+            android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/forget_pass_bg"
             android:drawableLeft="@drawable/pass"
             android:drawablePadding="20dp"
-            android:hint="Wifi Pass"
+            android:hint="Wifi Password"
             android:paddingLeft="35dp"
             android:textColorHint="@color/text_ash"
             android:textSize="12sp" />
     </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
-    <com.nuowei.smarthome.view.button.LoadingsButton
-        android:id="@+id/first"
+    <com.nuowei.smarthome.view.button.ButtonProgressBar
+        android:id="@+id/bpb_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#BE6E46"
-        app:pbLoadingText="@string/default_loading"
-        app:pbProgressColor="#F9D8FB"
-        app:pbText="start"
-        app:pbTextColor="#8A4FFF"
-        app:pbTextSize="16sp" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:padding="20dp"
+        android:textAllCaps="false"
+        app:text="Start"
+        app:textColor="@android:color/white"
+        app:type="indeterminate" />
 </LinearLayout>

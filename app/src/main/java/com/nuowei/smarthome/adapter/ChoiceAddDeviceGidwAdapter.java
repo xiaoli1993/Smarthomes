@@ -4,7 +4,6 @@ package com.nuowei.smarthome.adapter;/**
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +59,7 @@ public class ChoiceAddDeviceGidwAdapter extends BaseAdapter {
         final int index = position;
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.item_main,
+            convertView = inflater.inflate(R.layout.item_grid,
                     parent, false);
         }
         TextView device_name = (TextView) convertView.findViewById(R.id.tv_txt);

@@ -115,6 +115,9 @@ public class MainActivity extends AppCompatActivity {
     public static XlinkDevice choiceGwDevice;
     public static MainActivity instance = null;
 
+    public static int defence = 3;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -264,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(MainActivity.this, DeviceListActivity.class));
                         break;
                     case 1:
-
+                        startActivity(new Intent(MainActivity.this, ShareDeviceActivity.class));
                         break;
                     case 2:
                         feedbackeAgent.startDefaultThreadActivity();
@@ -297,11 +300,11 @@ public class MainActivity extends AppCompatActivity {
     private void initData() {
         list = new ArrayList<LeftMain>();
 
-        list.add(new LeftMain(R.drawable.main_right_device, getResources().getString(R.string.Device)));
-        list.add(new LeftMain(R.drawable.main_right_share, getResources().getString(R.string.Share_Device)));
-        list.add(new LeftMain(R.drawable.main_right_feeback, getResources().getString(R.string.Feedback)));
-        list.add(new LeftMain(R.drawable.main_right_about, getResources().getString(R.string.About)));
-        list.add(new LeftMain(R.drawable.main_right_setting, getResources().getString(R.string.Setting)));
+        list.add(new LeftMain(R.drawable.main_right_device, getResources().getString(R.string.Device), 0));
+        list.add(new LeftMain(R.drawable.main_right_share, getResources().getString(R.string.Share_Device), 0));
+        list.add(new LeftMain(R.drawable.main_right_feeback, getResources().getString(R.string.Feedback), 0));
+        list.add(new LeftMain(R.drawable.main_right_about, getResources().getString(R.string.About), 0));
+        list.add(new LeftMain(R.drawable.main_right_setting, getResources().getString(R.string.Setting), 0));
 
     }
 
@@ -714,5 +717,13 @@ public class MainActivity extends AppCompatActivity {
 
     public static void setChoiceGwDevice(XlinkDevice choiceGwDevice) {
         MainActivity.choiceGwDevice = choiceGwDevice;
+    }
+
+    public static int getDefence() {
+        return defence;
+    }
+
+    public static void setDefence(int defence) {
+        MainActivity.defence = defence;
     }
 }

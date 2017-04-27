@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
 import com.nuowei.smarthome.Constants;
 import com.nuowei.smarthome.MyApplication;
@@ -15,6 +14,7 @@ import com.nuowei.smarthome.adapter.SubDeviceAdapter;
 import com.nuowei.smarthome.manage.SubDeviceManage;
 import com.nuowei.smarthome.modle.SubDevice;
 import com.nuowei.smarthome.view.textview.AvenirTextView;
+import com.nuowei.smarthome.view.textview.DinProTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +39,7 @@ public class ScenenChoiceActivity extends BaseActivity {
     @BindView(R.id.device_icon)
     ImageView deviceIcon;
     @BindView(R.id.device_name)
-    AvenirTextView deviceName;
+    DinProTextView deviceName;
 
 
     private SubDeviceAdapter subDeviceAdapter;
@@ -64,14 +64,16 @@ public class ScenenChoiceActivity extends BaseActivity {
                     || deviceType == Constants.DEVICE_TYPE.DEVICE_ZIGBEE_METRTING_PLUGIN
                     || deviceType == Constants.DEVICE_TYPE.DEVICE_ZIGBEE_PLUGIN
                     || deviceType == Constants.DEVICE_TYPE.DEVICE_ZIGBEE_DOORS) {
-                list.add(sublist.get(i));
+                if (MainActivity.getChoiceGwDevice().getDeviceMac().equals(sublist.get(i).getDeviceMac())) {
+                    list.add(sublist.get(i));
+                }
             }
         }
     }
 
     private void initEven() {
         deviceIcon.setImageResource(R.drawable.device_gw);
-        deviceName.setText("智能网关");
+        deviceName.setText(MainActivity.getChoiceGwDevice().getDeviceName());
         tvTitle.setText(getResources().getString(R.string.Perform_tasks));
         tvRight.setVisibility(View.GONE);
         subDeviceAdapter = new SubDeviceAdapter(this, list);
@@ -100,7 +102,7 @@ public class ScenenChoiceActivity extends BaseActivity {
                     intent.putExtra(Constants.GATEWAY_MAC, bundle.getString(Constants.GATEWAY_MAC));
                     intent.putExtra(Constants.ZIGBEE_MAC, bundle.getString(Constants.ZIGBEE_MAC));
                     intent.putExtra("action", bundle.getString("action"));
-                    intent.putExtra("isGW", bundle.getString("isGw"));
+                    intent.putExtra("isGw", bundle.getBoolean("isGw"));
                     intent.putExtra(Constants.DEVICE_TYPES, bundle.getString(Constants.DEVICE_TYPES));
                     setResult(SUB_DEVICE_CODE, intent);
                     finish();
@@ -121,7 +123,7 @@ public class ScenenChoiceActivity extends BaseActivity {
         //TODO implement
         Intent intent = new Intent();
         intent.setClass(ScenenChoiceActivity.this, SceneActionActivity.class);
-        intent.putExtra(Constants.GATEWAY_MAC, "mac");
+        intent.putExtra(Constants.GATEWAY_MAC, MainActivity.getChoiceGwDevice().getDeviceMac());
 //        intent.putExtra(Constants.ZIGBEE_MAC, "mac");
         intent.putExtra("isGw", true);
         startActivityForResult(intent, SUB_DEVICE_CODE);
