@@ -12,13 +12,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
+import com.nuowei.smarthome.common.util.ToastUtils;
 import com.nuowei.smarthome.smarthomesdk.http.HttpManage;
 import com.nuowei.smarthome.smarthomesdk.utils.Utils;
-import com.nuowei.smarthome.smarthomesdk.utils.XlinkUtils;
 import com.nuowei.smarthome.util.MyUtil;
 import com.nuowei.smarthome.view.textview.AvenirTextView;
 import com.orhanobut.hawk.Hawk;
@@ -30,7 +29,6 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import es.dmoral.toasty.Toasty;
 
 /**
  * @Author :    肖力
@@ -108,14 +106,14 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onError(Header[] headers, HttpManage.Error error) {
                             MyApplication.getLogger().e("失败！：" + error.getCode());
-                            Toasty.error(MyApplication.getMyApplication(), "Register error.", Toast.LENGTH_SHORT, true).show();
+                            ToastUtils.showShortToast(MyApplication.getMyApplication(), "Register error.");
                         }
 
                         @Override
                         public void onSuccess(int i, Map<String, String> stringStringMap) {
                             Hawk.put("MY_ACCOUNT", user);
                             MyApplication.getLogger().i("注册成功！");
-                            Toasty.success(MyApplication.getMyApplication(), "Register success.", Toast.LENGTH_SHORT, true).show();
+                            ToastUtils.showShortToast(MyApplication.getMyApplication(), "Register success.");
                             finish();
 //                            NetManager.getInstance(this).
                         }

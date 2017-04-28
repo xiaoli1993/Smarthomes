@@ -90,9 +90,10 @@ dependencies {
     compile 'com.github.wooplr:Spotlight:1.0'
     compile 'com.bigkoo:alertview:1.0.3'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-    compile 'com.github.badoualy:stepper-indicator:1.0.0'
+//    compile 'com.github.badoualy:stepper-indicator:1.0.0'
     compile 'com.wrapp.floatlabelededittext:library:0.0.6'
     compile 'com.lai.weavey:dialog:2.0.1'
     compile 'com.kaopiz:kprogresshud:1.0.5'
+    compile 'com.github.badoualy:stepper-indicator:1.0.6'
 
 }

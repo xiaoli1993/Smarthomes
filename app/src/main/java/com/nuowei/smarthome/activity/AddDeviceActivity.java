@@ -156,6 +156,7 @@ public class AddDeviceActivity extends BaseActivity {
         chioseAddDevices.add(new ChoiceAddDevice(Constants.DEVICE_TYPE.DEVICE_WIFI_GATEWAY, getResources().getString(R.string.device_gateway), true));
         chioseAddDevices.add(new ChoiceAddDevice(Constants.DEVICE_TYPE.DEVICE_WIFI_PLUGIN, getResources().getString(R.string.device_smart_plug), true));
         chioseAddDevices.add(new ChoiceAddDevice(Constants.DEVICE_TYPE.DEVICE_WIFI_METRTING_PLUGIN, getResources().getString(R.string.device_metering_Plug), true));
+        chioseAddDevices.add(new ChoiceAddDevice(Constants.DEVICE_TYPE.DEVICE_WIFI_IPC, getResources().getString(R.string.device_ipc), true));
         chioseAddDevices.add(new ChoiceAddDevice(Constants.DEVICE_TYPE.DEVICE_ZIGBEE_RGB, getResources().getString(R.string.device_rgb), false));
         chioseAddDevices.add(new ChoiceAddDevice(Constants.DEVICE_TYPE.DEVICE_ZIGBEE_DOORS, getResources().getString(R.string.device_door_sensor), false));
         chioseAddDevices.add(new ChoiceAddDevice(Constants.DEVICE_TYPE.DEVICE_ZIGBEE_WATER, getResources().getString(R.string.device_water_sensor), false));

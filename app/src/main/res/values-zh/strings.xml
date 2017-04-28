@@ -267,5 +267,6 @@
     <string name="Clickheretoadddevice">Click here to add device.</string>
     <string name="WifiSSID">WifiSSID:</string>
     <string name="Sharesuccess">Share success</string>
+    <string name="device_ipc">IPC</string>
 
 </resources>

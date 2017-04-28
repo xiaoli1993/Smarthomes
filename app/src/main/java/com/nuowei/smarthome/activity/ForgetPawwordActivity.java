@@ -11,10 +11,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
+import com.nuowei.smarthome.common.util.ToastUtils;
 import com.nuowei.smarthome.smarthomesdk.http.HttpManage;
 import com.nuowei.smarthome.smarthomesdk.utils.Utils;
 import com.nuowei.smarthome.view.textview.AvenirTextView;
@@ -26,7 +26,6 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import es.dmoral.toasty.Toasty;
 
 /**
  * @Author :    肖力
@@ -89,13 +88,13 @@ public class ForgetPawwordActivity extends AppCompatActivity {
             @Override
             public void onError(Header[] headers, HttpManage.Error error) {
                 MyApplication.getLogger().e("失败！：" + error.getCode());
-                Toasty.error(MyApplication.getMyApplication(), "Error.", Toast.LENGTH_SHORT, true).show();
+                ToastUtils.showShortToast(MyApplication.getMyApplication(), "Error.");
             }
 
             @Override
             public void onSuccess(int i, Map<String, String> stringStringMap) {
                 MyApplication.getLogger().i("找回密码成功！");
-                Toasty.success(MyApplication.getMyApplication(), "Success.", Toast.LENGTH_SHORT, true).show();
+                ToastUtils.showShortToast(MyApplication.getMyApplication(),"Success.");
                 finish();
 //                            NetManager.getInstance(this).
             }

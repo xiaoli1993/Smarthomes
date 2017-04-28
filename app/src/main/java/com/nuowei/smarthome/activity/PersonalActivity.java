@@ -2,7 +2,6 @@ package com.nuowei.smarthome.activity;
 
 import android.Manifest;
 import android.app.Dialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,8 +10,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -24,26 +21,23 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.loopj.android.http.TextHttpResponseHandler;
 import com.nuowei.smarthome.Constants;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.adapter.PersonalAdapter;
+import com.nuowei.smarthome.common.util.ToastUtils;
 import com.nuowei.smarthome.manage.DeviceManage;
 import com.nuowei.smarthome.modle.Personal;
 import com.nuowei.smarthome.modle.XlinkDevice;
 import com.nuowei.smarthome.smarthomesdk.http.HttpManage;
-import com.nuowei.smarthome.smarthomesdk.utils.XlinkUtils;
 import com.nuowei.smarthome.util.MyUtil;
 import com.nuowei.smarthome.util.PhotoUtil;
 import com.nuowei.smarthome.util.SDPathUtils;
@@ -59,18 +53,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import es.dmoral.toasty.Toasty;
 import io.xlink.wifi.sdk.XlinkAgent;
-
-import static com.nuowei.smarthome.util.PhotoUtil.toRoundBitmap;
 
 /**
  * @Author : 肖力
@@ -364,7 +352,7 @@ public class PersonalActivity extends BaseActivity implements PullScrollView.OnT
 
                 @Override
                 public void onError(Header[] headers, HttpManage.Error error) {
-                    Toasty.error(MyApplication.getMyApplication(), error.getMsg() + error.getCode(), Toast.LENGTH_SHORT, true).show();
+                    ToastUtils.showShortToast(MyApplication.getMyApplication(), error.getMsg() + error.getCode());
                 }
 
                 @Override

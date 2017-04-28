@@ -16,6 +16,7 @@ import com.nuowei.smarthome.Constants;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.adapter.MainLeftAdapter;
+import com.nuowei.smarthome.common.util.ToastUtils;
 import com.nuowei.smarthome.manage.DeviceManage;
 import com.nuowei.smarthome.manage.SubDeviceManage;
 import com.nuowei.smarthome.modle.LeftMain;
@@ -43,7 +44,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import es.dmoral.toasty.Toasty;
 import io.xlink.wifi.sdk.XDevice;
 import io.xlink.wifi.sdk.XlinkAgent;
 import io.xlink.wifi.sdk.listener.ConnectDeviceListener;
@@ -335,7 +335,7 @@ public class SceneAddActivity extends BaseActivity {
                                         if (i > 0) {
                                             finish();
                                         } else {
-                                            Toasty.error(MyApplication.getMyApplication(), getString(R.string.Adderror));
+                                            ToastUtils.showShortToast(MyApplication.getMyApplication(), getString(R.string.Adderror));
                                         }
                                     }
                                 }
@@ -350,7 +350,7 @@ public class SceneAddActivity extends BaseActivity {
                             if (i > 0) {
                                 finish();
                             } else {
-                                Toasty.error(MyApplication.getMyApplication(), getString(R.string.Adderror));
+                                ToastUtils.showShortToast(MyApplication.getMyApplication(), getString(R.string.Adderror));
                             }
                         }
                     }

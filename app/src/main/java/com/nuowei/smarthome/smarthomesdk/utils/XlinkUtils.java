@@ -10,11 +10,9 @@ import android.net.ConnectivityManager;
 import android.util.Base64;
 import android.util.SparseArray;
 import android.view.View;
-import android.widget.Toast;
-
 
 import com.nuowei.smarthome.MyApplication;
-import com.nuowei.smarthome.R;
+import com.nuowei.smarthome.common.util.ToastUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,8 +26,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import es.dmoral.toasty.Toasty;
 
 public class XlinkUtils {
     /**
@@ -365,7 +361,7 @@ public class XlinkUtils {
     public static void shortTips(String tip) {
         MyApplication.getLogger().e(tip);
         try {
-            Toasty.normal(MyApplication.getMyApplication(), tip).show();
+            ToastUtils.showShortToast(MyApplication.getMyApplication(), tip);
         } catch (Exception e) {
         }
 
@@ -373,12 +369,12 @@ public class XlinkUtils {
 
     public static void shortTips(String tip, int bgcolor, int tvcolor, int drawable, boolean isspin) {
         MyApplication.getLogger().e(tip);
-        Toasty.info(MyApplication.getMyApplication(), "Here is some info for you.", Toast.LENGTH_SHORT, true).show();
+        ToastUtils.showShortToast(MyApplication.getMyApplication(), "Here is some info for you.");
 
     }
 
     public static void longTips(String tip) {
-        Toasty.info(MyApplication.getMyApplication(), "Here is some info for you.", Toast.LENGTH_LONG, true).show();
+        ToastUtils.showShortToast(MyApplication.getMyApplication(), "Here is some info for you.");
     }
 
     public static boolean isWeixinAvilible(Context context) {

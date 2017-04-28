@@ -8,21 +8,17 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.nuowei.smarthome.Constants;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
-import com.nuowei.smarthome.manage.DeviceManage;
-import com.nuowei.smarthome.modle.XlinkDevice;
+import com.nuowei.smarthome.common.util.ToastUtils;
 import com.nuowei.smarthome.smarthomesdk.http.HttpManage;
 import com.nuowei.smarthome.view.button.StateButton;
 import com.nuowei.smarthome.view.textview.AvenirTextView;
 
 import org.apache.http.Header;
-import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import es.dmoral.toasty.Toasty;
 
 /**
  * @Author : 肖力
@@ -53,7 +49,7 @@ public class ShareDeviceActivity extends BaseActivity {
     EditText etShare;
     @BindView(R.id.btn_share)
     StateButton btnShare;
-    XlinkDevice xlinkDevice;
+//    XlinkDevice xlinkDevice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,28 +66,24 @@ public class ShareDeviceActivity extends BaseActivity {
 
     private void initData() {
         Bundle b = this.getIntent().getExtras();
-        String mac = b.getString(Constants.DEVICE_MAC);
-        xlinkDevice = DeviceManage.getInstance().getDevice(mac);
+//        String mac = b.getString(Constants.DEVICE_MAC);
+//        xlinkDevice = DeviceManage.getInstance().getDevice(MainActivity.getChoiceGwDevice().getDeviceMac());
     }
 
     private void setsharedevice(final String User, int deviceID) {
         HttpManage.getInstance().shareDevice(MyApplication.getMyApplication(), User, deviceID, "app", new HttpManage.ResultCallback<String>() {
             @Override
             public void onError(Header[] headers, HttpManage.Error error) {
-
+                MyApplication.getLogger().e(error.getMsg() + "\t" + error.getCode());
             }
 
             @Override
             public void onSuccess(int code, String response) {
-                try {
-                    JSONObject json = new JSONObject(response);
-                    String invite_code = json.getString("invite_code");
-                    Toasty.success(MyApplication.getMyApplication(), getString(R.string.Sharesuccess));
-                    finish();
-                } catch (Exception e) {
-                }
+//                Toasty.success(ShareDeviceActivity.this, getString(R.string.Sharesuccess));
+                ToastUtils.showShortToast(MyApplication.getMyApplication(), getString(R.string.Sharesuccess));
+//                Toasty.success(MyApplication.getMyApplication(), "Success.", Toast.LENGTH_SHORT, true).show();
+                finish();
             }
-
         });
     }
 
@@ -103,7 +95,7 @@ public class ShareDeviceActivity extends BaseActivity {
                 this.finish();
                 break;
             case R.id.btn_share:
-                setsharedevice(etShare.getText().toString(), xlinkDevice.getxDevice().getDeviceId());
+                setsharedevice(etShare.getText().toString(), MainActivity.getChoiceGwDevice().getxDevice().getDeviceId());
                 break;
         }
     }

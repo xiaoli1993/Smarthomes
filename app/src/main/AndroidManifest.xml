@@ -98,6 +98,7 @@
         <activity android:name=".activity.SmartLinkActivity" />
         <activity android:name=".activity.ShareDeviceActivity" />
         <activity android:name=".activity.AddSubDeviceActivity" />
+        <activity android:name=".activity.GuideWifiDeviceActivity" />
         <!--
         <activity android:name=".calendar.activity.AddEventSetActivity" />
         <activity android:name=".calendar.activity.MainActivity" />
