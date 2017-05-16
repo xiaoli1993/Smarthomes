@@ -861,6 +861,7 @@ public class MyUtil {
     }
 
     public static int getImageDiary(Context mContext, String Alarm) {
+        MyApplication.getLogger().i("输出字符:"+Alarm);
         int image = 0;
         if (Alarm.equals(mContext.getString(R.string.ALRM_RESUME_17))) {
             image = R.drawable.device_state_close;
@@ -946,6 +947,12 @@ public class MyUtil {
             image = R.drawable.device_state_open;
         } else if (Alarm.equals(mContext.getString(R.string.USB_ON_67))) {
             image = R.drawable.device_state_open;
+        }else if (Alarm.equals(mContext.getString(R.string.ARM_0))) {
+            image = R.drawable.gw_away_pressed;
+        } else if (Alarm.equals(mContext.getString(R.string.DISARM_0))) {
+            image = R.drawable.gw_disarm_pressed;
+        } else if (Alarm.equals(mContext.getString(R.string.HOME_ARM_0))) {
+            image = R.drawable.gw_home_pressed;
         }
         return image;
     }

@@ -5,7 +5,8 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
@@ -21,7 +22,7 @@ import com.nuowei.smarthome.modle.CollapsingToolbarLayoutState;
 import com.nuowei.smarthome.modle.DataDevice;
 import com.nuowei.smarthome.modle.SubDevice;
 import com.nuowei.smarthome.view.calendars.CalendarUtil;
-import com.nuowei.smarthome.view.scrollview.CustomLoadMoreView;
+import com.nuowei.smarthome.view.recyclerview.IRecyclerView;
 import com.nuowei.smarthome.view.textview.AvenirTextView;
 import com.nuowei.smarthome.view.textview.DinProTextView;
 
@@ -35,8 +36,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
-import cn.iwgang.familiarrecyclerview.FamiliarRecyclerView;
-import cn.iwgang.familiarrecyclerview.FamiliarRefreshRecyclerView;
 
 public class THPActivity extends BaseActivity {
     @BindView(R.id.app_bar)
@@ -62,13 +61,19 @@ public class THPActivity extends BaseActivity {
     DinProTextView tvTemp;
     @BindView(R.id.tv_hum)
     DinProTextView tvHum;
-    @BindView(R.id.refreshListRecyclerView)
-    FamiliarRefreshRecyclerView refreshListRecyclerView;
+    //    @BindView(R.id.refreshListRecyclerView)
+//    FamiliarRefreshRecyclerView refreshListRecyclerView;
+    @BindView(R.id.cardView)
+    CardView cardView;
+
+    @BindView(R.id.recyclerview)
+    IRecyclerView iRecyclerView;
+
     private String gwMac;
     private String zigbeeMac;
     private int limit = 10;
     private int offset = 0;
-    private FamiliarRecyclerView mFamiliarRecyclerView;
+    //    private FamiliarRecyclerView mFamiliarRecyclerView;
     private THPAdapter mAdapter;
     private List<DataDevice> dataDeviceList;
     private String nowTemp;
@@ -96,50 +101,107 @@ public class THPActivity extends BaseActivity {
         tvHum.setText(getString(R.string.new_hum) + nowHum + getString(R.string.hump));
         tvRight.setVisibility(View.GONE);
         mAdapter = new THPAdapter(R.layout.item_lists, dataDeviceList);
-        refreshListRecyclerView.setLoadMoreEnabled(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        mFamiliarRecyclerView = refreshListRecyclerView.getFamiliarRecyclerView();
-        // ItemAnimator
-        mFamiliarRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        refreshListRecyclerView.setLoadMoreView(new CustomLoadMoreView(this));
-
-        refreshListRecyclerView.setOnLoadMoreListener(new FamiliarRefreshRecyclerView.OnLoadMoreListener() {
+//        iRecyclerView = (IRecyclerView) this.findViewById(R.id.recyclerview);
+        iRecyclerView.setLayoutManager(layoutManager);
+        iRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
+        iRecyclerView.setLoadingListener(new IRecyclerView.LoadingListener() {
             @Override
-            public void onLoadMore() {
-                offset += 10;
-                DataSupport.where("deviceMac = ? and subMac = ? ", gwMac, zigbeeMac)
-                        .order("date desc")
-                        .limit(limit).offset(offset)
-                        .findAsync(DataDevice.class).listen(new FindMultiCallback() {
-                    @Override
-                    public <T> void onFinish(List<T> t) {
-                        List<DataDevice> listDev = (List<DataDevice>) t;
-                        for (int i = 0; i < listDev.size(); i++) {
-                            dataDeviceList.add(listDev.get(i));
-                        }
-                        mAdapter.notifyDataSetChanged();
-                        refreshListRecyclerView.loadMoreComplete();
-                    }
-                });
-            }
-        });
-
-        refreshListRecyclerView.setOnPullRefreshListener(new FamiliarRefreshRecyclerView.OnPullRefreshListener() {
-            @Override
-            public void onPullRefresh() {
-
+            public void onRefresh() {
                 new android.os.Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
 
                         mAdapter.notifyDataSetChanged();
-                        refreshListRecyclerView.pullRefreshComplete();
+                        iRecyclerView.refreshComplete();
                     }
                 }, 1000);
             }
+
+
+            @Override
+            public void onLoadMore() {
+                new android.os.Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        offset += 10;
+                        DataSupport.where("deviceMac = ? and subMac = ? ", gwMac, zigbeeMac)
+                                .order("date desc")
+                                .limit(limit).offset(offset)
+                                .findAsync(DataDevice.class).listen(new FindMultiCallback() {
+                            @Override
+                            public <T> void onFinish(List<T> t) {
+                                List<DataDevice> listDev = (List<DataDevice>) t;
+                                for (int i = 0; i < listDev.size(); i++) {
+                                    dataDeviceList.add(listDev.get(i));
+                                }
+                                mAdapter.notifyDataSetChanged();
+                                iRecyclerView.loadMoreComplete();
+                            }
+                        });
+                    }
+                }, 1000);
+
+            }
         });
-        refreshListRecyclerView.setAdapter(mAdapter);
+        iRecyclerView.setAdapter(mAdapter);
+
+//        refreshListRecyclerView.setLoadMoreEnabled(true);
+//
+//
+//        mFamiliarRecyclerView = refreshListRecyclerView.getFamiliarRecyclerView();
+//        // ItemAnimator
+//        mFamiliarRecyclerView.setItemAnimator(new DefaultItemAnimator());
+//        mFamiliarRecyclerView.addHeaderView(HeaderAndFooterViewUtil.getHeadView(this, true, 0xFFFF5000, "Head View 1"));
+//
+////        refreshListRecyclerView.setLoadMoreView(new CustomLoadMoreView(this));
+//
+//        refreshListRecyclerView.setOnLoadMoreListener(new FamiliarRefreshRecyclerView.OnLoadMoreListener() {
+//            @Override
+//            public void onLoadMore() {
+////                new android.os.Handler().postDelayed(new Runnable() {
+////                    @Override
+////                    public void run() {
+////
+////                        mAdapter.notifyDataSetChanged();
+////                        refreshListRecyclerView.pullRefreshComplete();
+////                    }
+////                }, 1000);
+//                MyApplication.getLogger().i("上拉刷新！！！！");
+//                offset += 10;
+//                DataSupport.where("deviceMac = ? and subMac = ? ", gwMac, zigbeeMac)
+//                        .order("date desc")
+//                        .limit(limit).offset(offset)
+//                        .findAsync(DataDevice.class).listen(new FindMultiCallback() {
+//                    @Override
+//                    public <T> void onFinish(List<T> t) {
+//                        List<DataDevice> listDev = (List<DataDevice>) t;
+//                        for (int i = 0; i < listDev.size(); i++) {
+//                            dataDeviceList.add(listDev.get(i));
+//                        }
+//                        mAdapter.notifyDataSetChanged();
+//                        refreshListRecyclerView.loadMoreComplete();
+//                    }
+//                });
+//            }
+//        });
+//        refreshListRecyclerView.setOnPullRefreshListener(new FamiliarRefreshRecyclerView.OnPullRefreshListener() {
+//            @Override
+//            public void onPullRefresh() {
+//
+//                new android.os.Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//                        mAdapter.notifyDataSetChanged();
+//                        refreshListRecyclerView.pullRefreshComplete();
+//                    }
+//                }, 1000);
+//            }
+//        });
+//        refreshListRecyclerView.setAdapter(mAdapter);
 
         appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
@@ -149,6 +211,7 @@ public class THPActivity extends BaseActivity {
                         state = CollapsingToolbarLayoutState.EXPANDED;//修改状态标记为展开
                         imageBtnBacks.setBackgroundResource(R.drawable.avoscloud_feedback_thread_actionbar_back);
                         tvTitle.setTextColor(getResources().getColor(R.color.white));
+                        cardView.setVisibility(View.VISIBLE);
                     }
 
                 } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
@@ -156,12 +219,14 @@ public class THPActivity extends BaseActivity {
                         state = CollapsingToolbarLayoutState.COLLAPSED;//修改状态标记为折叠
                         imageBtnBacks.setBackgroundResource(R.drawable.back);
                         tvTitle.setTextColor(getResources().getColor(R.color.text_title));
+                        cardView.setVisibility(View.GONE);
                     }
                 } else {
                     if (state != CollapsingToolbarLayoutState.INTERNEDIATE) {
                         if (state == CollapsingToolbarLayoutState.COLLAPSED) {
                             imageBtnBacks.setBackgroundResource(R.drawable.back);
                             tvTitle.setTextColor(getResources().getColor(R.color.text_title));
+                            cardView.setVisibility(View.GONE);
                         }
                         state = CollapsingToolbarLayoutState.INTERNEDIATE;//修改状态标记为中间
                     }
@@ -185,10 +250,9 @@ public class THPActivity extends BaseActivity {
         SubDevice subDevice = SubDeviceManage.getInstance().getDevice(gwMac, zigbeeMac);
         dataDeviceList = DataSupport.where("deviceMac = ? and subMac = ? ", gwMac, zigbeeMac).order("date desc").limit(limit).offset(offset).find(DataDevice.class);
 
-        for (int i=0;i<dataDeviceList.size();i++){
-            MyApplication.getLogger().i(dataDeviceList.get(i).getMessageID()+"\t时间："+dataDeviceList.get(i).getDate()+"\t温度:"+dataDeviceList.get(i).getTemp()+"\t湿度："+dataDeviceList.get(i).getHumidity()+"");
+        for (int i = 0; i < dataDeviceList.size(); i++) {
+            MyApplication.getLogger().i(dataDeviceList.get(i).getMessageID() + "\t时间：" + dataDeviceList.get(i).getDate() + "\t温度:" + dataDeviceList.get(i).getTemp() + "\t湿度：" + dataDeviceList.get(i).getHumidity() + "");
         }
-
         tvTitle.setText(subDevice.getDeviceName());
 
     }

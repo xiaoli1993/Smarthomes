@@ -106,7 +106,7 @@ public class SecurityActivity extends BaseActivity {//implements MyItemTouchCall
             }
         }
         switch (MainActivity.getDefence()) {
-            case 0:
+            case 2:
                 imageAway.setImageResource(R.drawable.gw_away_pressed);
                 tvAway.setTextColor(getResources().getColor(R.color.text_title));
                 break;
@@ -114,7 +114,7 @@ public class SecurityActivity extends BaseActivity {//implements MyItemTouchCall
                 imageHome.setImageResource(R.drawable.gw_home_pressed);
                 tvHome.setTextColor(getResources().getColor(R.color.text_title));
                 break;
-            case 2:
+            case 0:
                 imageDisarm.setImageResource(R.drawable.gw_disarm_pressed);
                 tvDisarm.setTextColor(getResources().getColor(R.color.text_title));
                 break;
@@ -373,19 +373,19 @@ public class SecurityActivity extends BaseActivity {//implements MyItemTouchCall
                 setDefence(1);
                 break;
             case R.id.btn_away:
-                setDefence(0);
+                setDefence(2);
                 break;
             case R.id.btn_disarm:
-                setDefence(2);
+                setDefence(0);
                 break;
             case R.id.image_home:
                 setDefence(1);
                 break;
             case R.id.image_away:
-                setDefence(0);
+                setDefence(2);
                 break;
             case R.id.image_disarm:
-                setDefence(2);
+                setDefence(0);
                 break;
         }
     }
@@ -424,7 +424,7 @@ public class SecurityActivity extends BaseActivity {//implements MyItemTouchCall
             }
             MainActivity.setDefence(defence);
             switch (defence) {
-                case 0:
+                case 2:
                     imageAway.setImageResource(R.drawable.gw_away_pressed);
                     tvAway.setTextColor(getResources().getColor(R.color.text_title));
                     break;
@@ -432,7 +432,7 @@ public class SecurityActivity extends BaseActivity {//implements MyItemTouchCall
                     imageHome.setImageResource(R.drawable.gw_home_pressed);
                     tvHome.setTextColor(getResources().getColor(R.color.text_title));
                     break;
-                case 2:
+                case 0:
                     imageDisarm.setImageResource(R.drawable.gw_disarm_pressed);
                     tvDisarm.setTextColor(getResources().getColor(R.color.text_title));
                     break;

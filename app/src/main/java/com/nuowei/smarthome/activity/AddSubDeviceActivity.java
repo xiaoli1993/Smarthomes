@@ -1,7 +1,6 @@
 package com.nuowei.smarthome.activity;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -67,14 +66,14 @@ public class AddSubDeviceActivity extends BaseActivity {
                     }
                 });
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                randomTextView.addKeyWord("彭丽媛");
-                randomTextView.addKeyWord("习近平");
-                randomTextView.show();
-            }
-        }, 2 * 1000);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                randomTextView.addKeyWord("彭丽媛");
+//                randomTextView.addKeyWord("习近平");
+//                randomTextView.show();
+//            }
+//        }, 2 * 1000);
     }
 
     private void isAddSub(boolean isEnable) {

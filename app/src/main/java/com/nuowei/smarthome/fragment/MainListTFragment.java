@@ -33,7 +33,7 @@ import com.nuowei.smarthome.activity.ElectricityActivity;
 import com.nuowei.smarthome.activity.MainActivity;
 import com.nuowei.smarthome.activity.SceneActivity;
 import com.nuowei.smarthome.activity.SecurityActivity;
-import com.nuowei.smarthome.activity.SettingsActivity;
+import com.nuowei.smarthome.activity.SettingActivity;
 import com.nuowei.smarthome.adapter.MainListTAdapter;
 import com.nuowei.smarthome.helper.MyItemTouchCallback;
 import com.nuowei.smarthome.helper.OnRecyclerItemClickListener;
@@ -284,6 +284,22 @@ public class MainListTFragment extends Fragment implements MyItemTouchCallback.O
 //                .usageId("") //UNIQUE ID
 //                .show();
 //        shimmerRecyclerView.setLayoutManager(new MyLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, true));
+
+        switch (MainActivity.getDefence()) {
+            case 2:
+                imageAway.setImageResource(R.drawable.gw_away_pressed);
+                tvAway.setTextColor(getResources().getColor(R.color.text_title));
+                break;
+            case 1:
+                imageHome.setImageResource(R.drawable.gw_home_pressed);
+                tvHome.setTextColor(getResources().getColor(R.color.text_title));
+                break;
+            case 0:
+                imageDisarm.setImageResource(R.drawable.gw_disarm_pressed);
+                tvDisarm.setTextColor(getResources().getColor(R.color.text_title));
+                break;
+        }
+
         mAdapter = new MainListTAdapter(R.layout.item_list, dataSourceList);
         shimmerRecyclerView.setHasFixedSize(true);
         shimmerRecyclerView.setAdapter(mAdapter);
@@ -371,7 +387,7 @@ public class MainListTFragment extends Fragment implements MyItemTouchCallback.O
                         startActivity(new Intent(getActivity(), DeviceListActivity.class));
                         break;
                     case 8:
-                        startActivity(new Intent(getActivity(), SettingsActivity.class));
+                        startActivity(new Intent(getActivity(), SettingActivity.class));
                         break;
                     default:
                         break;
@@ -382,6 +398,27 @@ public class MainListTFragment extends Fragment implements MyItemTouchCallback.O
 
     private void loadCards() {
         shimmerRecyclerView.hideShimmerAdapter();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MyApplication.getLogger().i("----------LonResume---------");
+        initImage();
+        switch (MainActivity.getDefence()) {
+            case 2:
+                imageAway.setImageResource(R.drawable.gw_away_pressed);
+                tvAway.setTextColor(getResources().getColor(R.color.text_title));
+                break;
+            case 1:
+                imageHome.setImageResource(R.drawable.gw_home_pressed);
+                tvHome.setTextColor(getResources().getColor(R.color.text_title));
+                break;
+            case 0:
+                imageDisarm.setImageResource(R.drawable.gw_disarm_pressed);
+                tvDisarm.setTextColor(getResources().getColor(R.color.text_title));
+                break;
+        }
     }
 
     @Override
@@ -511,19 +548,19 @@ public class MainListTFragment extends Fragment implements MyItemTouchCallback.O
                 setDefence(1);
                 break;
             case R.id.btn_away:
-                setDefence(0);
+                setDefence(2);
                 break;
             case R.id.btn_disarm:
-                setDefence(2);
+                setDefence(0);
                 break;
             case R.id.image_home:
                 setDefence(1);
                 break;
             case R.id.image_away:
-                setDefence(0);
+                setDefence(2);
                 break;
             case R.id.image_disarm:
-                setDefence(2);
+                setDefence(0);
                 break;
         }
     }
@@ -562,7 +599,7 @@ public class MainListTFragment extends Fragment implements MyItemTouchCallback.O
             }
             MainActivity.setDefence(defence);
             switch (defence) {
-                case 0:
+                case 2:
                     imageAway.setImageResource(R.drawable.gw_away_pressed);
                     tvAway.setTextColor(getResources().getColor(R.color.text_title));
                     break;
@@ -570,7 +607,7 @@ public class MainListTFragment extends Fragment implements MyItemTouchCallback.O
                     imageHome.setImageResource(R.drawable.gw_home_pressed);
                     tvHome.setTextColor(getResources().getColor(R.color.text_title));
                     break;
-                case 2:
+                case 0:
                     imageDisarm.setImageResource(R.drawable.gw_disarm_pressed);
                     tvDisarm.setTextColor(getResources().getColor(R.color.text_title));
                     break;

@@ -83,6 +83,11 @@
     <string name="TEMP_HUM_ALARM_21">  %1$s    温湿度报警</string>
     <string name="USB_OFF_67">  %1$s    USB关闭</string>
     <string name="USB_ON_67">  %1$s    USB打开</string>
+    <string name="ARM_0">  %1$s    外出布防</string>
+    <string name="DISARM_0">  %1$s    撤防</string>
+    <string name="HOME_ARM_0">  %1$s    在家布防</string>
+
+
     <string name="add_scene">添加场景</string>
     <string name="Save">提交</string>
     <string name="add_execution_tack">添加执行条件</string>
@@ -277,5 +282,12 @@
     <string name="is_logout">是否退出当前账号？</string>
     <string name="Logout">退出登录</string>
     <string name="NoGongNeng">该功能正在开发</string>
-
+    <string name="listview_header_hint_normal">下拉刷新</string>
+    <string name="listview_header_hint_release">释放立即刷新</string>
+    <string name="listview_loading">正在加载...</string>
+    <string name="nomore_loading">没有了</string>
+    <string name="refreshing">正在刷新...</string>
+    <string name="refresh_done">刷新完成</string>
+    <string name="loading_done">加载完成</string>
+    <string name="listview_header_last_time">上次更新时间：</string>
 </resources>

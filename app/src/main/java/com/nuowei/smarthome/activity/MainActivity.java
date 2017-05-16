@@ -281,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(MainActivity.this, AboutActivity.class));
                         break;
                     case 4:
-                        startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                        startActivity(new Intent(MainActivity.this, SettingActivity.class));
                         break;
                 }
             }
@@ -454,9 +454,11 @@ public class MainActivity extends AppCompatActivity {
                     if (isChoice) {
                         XlinkDevice xlinkDevices = Hawk.get(Constants.DEVICE_GW);
                         setChoiceGwDevice(xlinkDevices);
+                        setDefence(xlinkDevices.getDefence());
                     } else {
                         try {
                             setChoiceGwDevice(gwXlink.get(0));
+                            setDefence(gwXlink.get(0).getDefence());
                         } catch (Exception e) {
                         }
                     }
@@ -737,5 +739,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static void setDefence(int defence) {
         MainActivity.defence = defence;
+        XlinkDevice xlinkDevice=getChoiceGwDevice();
+        xlinkDevice.setDefence(defence);
+        DeviceManage.getInstance().addDevice(xlinkDevice);
     }
 }

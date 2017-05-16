@@ -35,7 +35,7 @@ import com.nuowei.smarthome.activity.ElectricityActivity;
 import com.nuowei.smarthome.activity.MainActivity;
 import com.nuowei.smarthome.activity.SceneActivity;
 import com.nuowei.smarthome.activity.SecurityActivity;
-import com.nuowei.smarthome.activity.SettingsActivity;
+import com.nuowei.smarthome.activity.SettingActivity;
 import com.nuowei.smarthome.adapter.MainGridAdapter;
 import com.nuowei.smarthome.common.DividerGridItemDecoration;
 import com.nuowei.smarthome.helper.MyItemTouchCallback;
@@ -201,6 +201,21 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
 
     private void initEven() {
 
+        switch (MainActivity.getDefence()) {
+            case 2:
+                imageAway.setImageResource(R.drawable.gw_away_pressed);
+                tvAway.setTextColor(getResources().getColor(R.color.text_title));
+                break;
+            case 1:
+                imageHome.setImageResource(R.drawable.gw_home_pressed);
+                tvHome.setTextColor(getResources().getColor(R.color.text_title));
+                break;
+            case 0:
+                imageDisarm.setImageResource(R.drawable.gw_disarm_pressed);
+                tvDisarm.setTextColor(getResources().getColor(R.color.text_title));
+                break;
+        }
+
         new SpotlightView.Builder(getActivity())
                 .introAnimationDuration(400)
 //                .enableRevealAnimation(true)
@@ -311,7 +326,7 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
                         startActivity(new Intent(getActivity(), DeviceListActivity.class));
                         break;
                     case 8:
-                        startActivity(new Intent(getActivity(), SettingsActivity.class));
+                        startActivity(new Intent(getActivity(), SettingActivity.class));
                         break;
                     default:
                         break;
@@ -323,6 +338,28 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
 
     private void loadCards() {
         shimmerRecyclerView.hideShimmerAdapter();
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MyApplication.getLogger().i("----------GonResume---------");
+        initImage();
+        switch (MainActivity.getDefence()) {
+            case 2:
+                imageAway.setImageResource(R.drawable.gw_away_pressed);
+                tvAway.setTextColor(getResources().getColor(R.color.text_title));
+                break;
+            case 1:
+                imageHome.setImageResource(R.drawable.gw_home_pressed);
+                tvHome.setTextColor(getResources().getColor(R.color.text_title));
+                break;
+            case 0:
+                imageDisarm.setImageResource(R.drawable.gw_disarm_pressed);
+                tvDisarm.setTextColor(getResources().getColor(R.color.text_title));
+                break;
+        }
     }
 
     @Override
@@ -346,7 +383,7 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
             isChiose = false;
         }
         switch (MainActivity.getDefence()) {
-            case 0:
+            case 2:
                 imageAway.setImageResource(R.drawable.gw_away_pressed);
                 tvAway.setTextColor(getResources().getColor(R.color.text_title));
                 break;
@@ -354,7 +391,7 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
                 imageHome.setImageResource(R.drawable.gw_home_pressed);
                 tvHome.setTextColor(getResources().getColor(R.color.text_title));
                 break;
-            case 2:
+            case 0:
                 imageDisarm.setImageResource(R.drawable.gw_disarm_pressed);
                 tvDisarm.setTextColor(getResources().getColor(R.color.text_title));
                 break;
@@ -545,19 +582,19 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
                 setDefence(1);
                 break;
             case R.id.btn_away:
-                setDefence(0);
+                setDefence(2);
                 break;
             case R.id.btn_disarm:
-                setDefence(2);
+                setDefence(0);
                 break;
             case R.id.image_home:
                 setDefence(1);
                 break;
             case R.id.image_away:
-                setDefence(0);
+                setDefence(2);
                 break;
             case R.id.image_disarm:
-                setDefence(2);
+                setDefence(0);
                 break;
         }
     }
@@ -596,7 +633,7 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
             }
             MainActivity.setDefence(defence);
             switch (defence) {
-                case 0:
+                case 2:
                     imageAway.setImageResource(R.drawable.gw_away_pressed);
                     tvAway.setTextColor(getResources().getColor(R.color.text_title));
                     break;
@@ -604,7 +641,7 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
                     imageHome.setImageResource(R.drawable.gw_home_pressed);
                     tvHome.setTextColor(getResources().getColor(R.color.text_title));
                     break;
-                case 2:
+                case 0:
                     imageDisarm.setImageResource(R.drawable.gw_disarm_pressed);
                     tvDisarm.setTextColor(getResources().getColor(R.color.text_title));
                     break;
