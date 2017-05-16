@@ -28,10 +28,14 @@ import com.google.gson.Gson;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.activity.AddDeviceActivity;
+import com.nuowei.smarthome.activity.AirActivity;
+import com.nuowei.smarthome.activity.DeviceListActivity;
 import com.nuowei.smarthome.activity.DiaryActivity;
+import com.nuowei.smarthome.activity.ElectricityActivity;
 import com.nuowei.smarthome.activity.MainActivity;
 import com.nuowei.smarthome.activity.SceneActivity;
 import com.nuowei.smarthome.activity.SecurityActivity;
+import com.nuowei.smarthome.activity.SettingsActivity;
 import com.nuowei.smarthome.adapter.MainGridAdapter;
 import com.nuowei.smarthome.common.DividerGridItemDecoration;
 import com.nuowei.smarthome.helper.MyItemTouchCallback;
@@ -234,7 +238,6 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
             }
         }, 2000);
 
-        shimmerRecyclerView.showShimmerAdapter();
         final ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new MyItemTouchCallback(mAdapter).setOnDragListener(this));
         itemTouchHelper.attachToRecyclerView(shimmerRecyclerView);
         shimmerRecyclerView.addOnItemTouchListener(new OnRecyclerItemClickListener(shimmerRecyclerView) {
@@ -254,17 +257,19 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
                         startActivity(new Intent(getActivity(), SecurityActivity.class));
                         break;
                     case 1:
-//                        startActivity(new Intent(getActivity(), ScrollingActivity.class));
+                        startActivity(new Intent(getActivity(), AirActivity.class));
                         break;
                     case 2:
-//                        startActivity(new Intent(getActivity(), DiaryActivity.class));
+                        MyUtil.showNoDialog(getActivity());
                         break;
                     case 3:
-//                        startActivity(new Intent(getActivity(), Diary2Activity.class));
+                        startActivity(new Intent(getActivity(), ElectricityActivity.class));
                         break;
                     case 4:
+                        MyUtil.showNoDialog(getActivity());
                         break;
                     case 5:
+                        MyUtil.showNoDialog(getActivity());
                         break;
                     case 6:
                         try {
@@ -303,8 +308,10 @@ public class MainGridFragment extends Fragment implements MyItemTouchCallback.On
                         }
                         break;
                     case 7:
+                        startActivity(new Intent(getActivity(), DeviceListActivity.class));
                         break;
                     case 8:
+                        startActivity(new Intent(getActivity(), SettingsActivity.class));
                         break;
                     default:
                         break;

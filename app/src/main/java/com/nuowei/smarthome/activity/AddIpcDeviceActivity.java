@@ -8,4 +8,6 @@ package com.nuowei.smarthome.activity;
  */
 
 public class AddIpcDeviceActivity {
+
+
 }

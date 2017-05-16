@@ -3,10 +3,11 @@ package com.nuowei.smarthome.activity;
  * Copyright ©深圳市海曼科技有限公司
  */
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,7 +18,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.nuowei.smarthome.Constants;
@@ -25,12 +25,16 @@ import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.modle.UserInfo;
 import com.nuowei.smarthome.smarthomesdk.http.HttpManage;
-import com.nuowei.smarthome.view.circularanim.CircularAnim;
+import com.nuowei.smarthome.util.MyUtil;
 import com.nuowei.smarthome.view.imageview.CircleImageView;
 import com.nuowei.smarthome.view.textview.AvenirTextView;
 import com.orhanobut.hawk.Hawk;
+import com.p2p.core.network.LoginResult;
+import com.p2p.core.network.NetManager;
+import com.p2p.core.network.RegisterResult;
 
 import org.apache.http.Header;
+import org.json.JSONObject;
 
 import java.util.Map;
 
@@ -67,6 +71,9 @@ public class LoginActivity extends AppCompatActivity {
     RelativeLayout tableLinear;
     @BindView(R.id.title_name)
     AvenirTextView titleName;
+    public static Context mContext;
+    private String ClientName;
+    private String Password;
 
     @OnClick(R.id.tv_sign_in)
     void onSignin(View view) {
@@ -91,9 +98,10 @@ public class LoginActivity extends AppCompatActivity {
         onLogin();
     }
 
+
     private void onLogin() {
-        final String ClientName = etName.getText().toString().trim();// .toUpperCase();
-        final String Password = etPassword.getText().toString().trim();
+        ClientName = etName.getText().toString().trim();// .toUpperCase();
+        Password = etPassword.getText().toString().trim();
 
         HttpManage.getInstance().doLogin(MyApplication.getMyApplication(), ClientName, Password, new HttpManage.ResultCallback<Map<String, String>>() {
             @Override
@@ -130,6 +138,9 @@ public class LoginActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
+//                    LoginResult loginResult = NetManager.getInstance(LoginActivity.this).createLoginResult(NetManager.getInstance(LoginActivity.this).login(ClientName, Constants.BEIMAPASS));
+//                    MyApplication.getLogger().i(loginResult.contactId + "\n" + loginResult.error_code);
+                    new LoginTask(MyUtil.clientNameToEmail(ClientName), Constants.BEIMAPASS).execute();
                     HttpManage.getInstance().getUserInfo(MyApplication.getMyApplication(), new HttpManage.ResultCallback<String>() {
                         @Override
                         public void onError(Header[] headers, HttpManage.Error error) {
@@ -149,6 +160,155 @@ public class LoginActivity extends AppCompatActivity {
         }
     };
 
+    class LoginTask extends AsyncTask {
+        String username;
+        String password;
+
+        public LoginTask(String username, String password) {
+            this.username = username;
+            this.password = password;
+
+        }
+
+        @Override
+        protected Object doInBackground(Object... params) {
+            // TODO Auto-generated method stub
+            // Utils.sleepThread(100);
+            return NetManager.getInstance(mContext).login(username, password);
+        }
+
+        @Override
+        protected void onPostExecute(Object object) {
+            // TODO Auto-generated method stub
+            LoginResult result = NetManager
+                    .createLoginResult((JSONObject) object);
+            switch (Integer.parseInt(result.error_code)) {
+                case NetManager.SESSION_ID_ERROR:
+                    Intent i = new Intent();
+                    i.setAction(Constants.Action.SESSION_ID_ERROR);
+                    MyApplication.getMyApplication().sendBroadcast(i);
+                    break;
+                case NetManager.CONNECT_CHANGE:
+                    new LoginTask(username, password).execute();
+                    return;
+                case NetManager.LOGIN_SUCCESS:
+                    MyApplication.getLogger().i("登录成功");
+//                    SharedPreferencesManager.getInstance().putData(mContext,
+//                            SharedPreferencesManager.SP_FILE_GWELL,
+//                            SharedPreferencesManager.KEY_RECENTNAME_EMAIL,
+//                            ClientName);
+//                    SharedPreferencesManager.getInstance().putData(mContext,
+//                            SharedPreferencesManager.SP_FILE_GWELL,
+//                            SharedPreferencesManager.KEY_RECENTPASS_EMAIL,
+//                            Password);
+//                    SharedPreferencesManager.getInstance().putRecentLoginType(mContext, Constants.LoginType.EMAIL);
+//                    String codeStr1 = String.valueOf(Long.parseLong(result.rCode1));
+//                    String codeStr2 = String.valueOf(Long.parseLong(result.rCode2));
+//                    Account account = AccountPersist.getInstance().getActiveAccountInfo(mContext);
+//                    if (null == account) {
+//                        account = new Account();
+//                    }
+//                    account.three_number = result.contactId;
+//                    account.phone = result.phone;
+//                    account.email = result.email;
+//                    account.sessionId = result.sessionId;
+//                    account.rCode1 = codeStr1;
+//                    account.rCode2 = codeStr2;
+//                    account.countryCode = result.countryCode;
+//                    AccountPersist.getInstance().setActiveAccount(mContext, account);
+//                    NpcCommon.mThreeNum = AccountPersist.getInstance().getActiveAccountInfo(mContext).three_number;
+                    break;
+                case NetManager.LOGIN_USER_UNEXIST:
+//                    T.showShort(mContext, R.string.account_no_exist);
+                    new RegisterTask("1", username, "", "", password, password, "", "1").execute();
+                    MyApplication.getLogger().e("正在注册" + username + "pass:" + password);
+                    break;
+                case NetManager.LOGIN_PWD_ERROR:
+                    new RegisterTask("1", username, "", "", password, password, "", "1").execute();
+                    MyApplication.getLogger().e("正在注册" + username + "pass:" + password);
+                    break;
+                default:
+//                    T.showShort(mContext, R.string.loginfail);
+                    break;
+            }
+        }
+    }
+
+    class RegisterTask extends AsyncTask {
+        String VersionFlag;
+        String Email;
+        String CountryCode;
+        String PhoneNO;
+        String Pwd;
+        String RePwd;
+        String VerifyCode;
+        String IgnoreSafeWarning;
+
+        public RegisterTask(String VersionFlag, String Email,
+                            String CountryCode, String PhoneNO, String Pwd, String RePwd,
+                            String VerifyCode, String IgnoreSafeWarning) {
+            this.VersionFlag = VersionFlag;
+            this.Email = Email;
+            this.CountryCode = CountryCode;
+            this.PhoneNO = PhoneNO;
+            this.Pwd = Pwd;
+            this.RePwd = RePwd;
+            this.VerifyCode = VerifyCode;
+            this.IgnoreSafeWarning = IgnoreSafeWarning;
+        }
+
+        @Override
+        protected Object doInBackground(Object... params) {
+            // TODO Auto-generated method stub
+            // Utils.sleepThread(100);
+            return NetManager.getInstance(mContext).register(VersionFlag,
+                    Email, CountryCode, PhoneNO, Pwd, RePwd, VerifyCode,
+                    IgnoreSafeWarning);
+        }
+
+        @Override
+        protected void onPostExecute(Object object) {
+            // TODO Auto-generated method stub
+            RegisterResult result = NetManager
+                    .createRegisterResult((JSONObject) object);
+            switch (Integer.parseInt(result.error_code)) {
+                case NetManager.SESSION_ID_ERROR:
+                    Intent relogin = new Intent();
+                    relogin.setAction(Constants.Action.SESSION_ID_ERROR);
+                    MyApplication.getMyApplication().sendBroadcast(relogin);
+                    new LoginTask(Email, Pwd).execute();
+                    break;
+                case NetManager.CONNECT_CHANGE:
+                    new RegisterTask(VersionFlag, Email, CountryCode, PhoneNO, Pwd,
+                            RePwd, VerifyCode, IgnoreSafeWarning).execute();
+                    return;
+                case NetManager.REGISTER_SUCCESS:
+                    Intent i = new Intent();
+                    i.setAction(Constants.Action.REPLACE_EMAIL_LOGIN);
+                    i.putExtra("username", Email);
+                    i.putExtra("password", Pwd);
+                    mContext.sendBroadcast(i);
+                    new LoginTask(Email, Pwd).execute();
+                    finish();
+                    break;
+                case NetManager.REGISTER_EMAIL_USED:
+//                    T.showShort(mContext, R.string.email_used);
+                    new LoginTask(Email, Pwd).execute();
+                    break;
+                case NetManager.REGISTER_EMAIL_FORMAT_ERROR:
+//                    T.showShort(mContext, R.string.email_format_error);
+                    break;
+                case NetManager.REGISTER_PASSWORD_NO_MATCH:
+
+                    break;
+
+                default:
+//                    T.showShort(mContext, R.string.operator_error);
+                    break;
+            }
+        }
+    }
+
     @OnClick(R.id.tv_forget_password)
     void onForgetPassword() {
         //TODO implement
@@ -157,17 +317,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.tv_bottom_sign)
     void onBottonSign(View view) {
-        //TODO implement
-//        startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-
-//        CircularAnim.fullActivity(LoginActivity.this, view)
-//                .colorOrImageRes(R.color.text_green)
-//                .go(new CircularAnim.OnAnimationEndListener() {
-//                    @Override
-//                    public void onAnimationEnd() {
-                        startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-//                    }
-//                });
+        startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
     }
 
     @Override
@@ -175,6 +325,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        mContext = this;
         initEven();
     }
 

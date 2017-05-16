@@ -31,6 +31,7 @@ import com.nuowei.smarthome.view.calendars.CalendarDateView;
 import com.nuowei.smarthome.view.calendars.CalendarUtil;
 import com.nuowei.smarthome.view.calendars.CalendarView;
 import com.nuowei.smarthome.view.textview.AvenirTextView;
+import com.nuowei.smarthome.view.textview.DinProTextView;
 
 import org.litepal.crud.DataSupport;
 
@@ -69,9 +70,13 @@ public class DiaryActivity extends AppCompatActivity {
 //    FamiliarRefreshRecyclerView mCvRefreshListRecyclerView;
     @BindView(R.id.list)
     ListView mlist;
-
     @BindView(R.id.activity_main)
     LinearLayout activityMain;
+
+    @BindView(R.id.tv_date)
+    DinProTextView tvDate;
+
+
     private DiaryAdapter mDiaryAdapter;
     private Diary2Adapter mDiary2Adapter;
     private String gwMac;
@@ -95,7 +100,7 @@ public class DiaryActivity extends AppCompatActivity {
 
     private void initData() {
         int[] data = CalendarUtil.getYMD(new Date());
-//        tvTitle.setText(data[0] + "/" + data[1] + "/" + data[2]);
+        tvDate.setText(data[0] + "/" + data[1] + "/" + data[2]);
         dataDeviceList = new ArrayList<DataDevice>();
         //新页面接收数据
         Bundle bundle = this.getIntent().getExtras();
@@ -109,7 +114,7 @@ public class DiaryActivity extends AppCompatActivity {
             dataDeviceList = DataSupport.where("deviceMac = ? and subMac = ? and year = ? and month = ? and day = ?", gwMac, zigbeeMac, data[0] + "", new DecimalFormat("00").format(data[1]) + "", new DecimalFormat("00").format(data[2]) + "").find(DataDevice.class);
             tvTitle.setText(subDevice.getDeviceName());
         } else if (isgw == 2) {
-            dataDeviceList = DataSupport.where("alertName = ? and year = ? and month = ? and day = ?","gcm notification" ,data[0] + "", new DecimalFormat("00").format(data[1]) + "", new DecimalFormat("00").format(data[2]) + "").find(DataDevice.class);
+            dataDeviceList = DataSupport.where("alertName = ? and year = ? and month = ? and day = ?", "gcm notification", data[0] + "", new DecimalFormat("00").format(data[1]) + "", new DecimalFormat("00").format(data[2]) + "").find(DataDevice.class);
             tvTitle.setText(getResources().getString(R.string.message));
         } else {
             XlinkDevice xlinkDevice = DeviceManage.getInstance().getDevice(gwMac);
@@ -148,11 +153,12 @@ public class DiaryActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View view, int postion, CalendarBean bean) {
                 MyApplication.getLogger().i("时间是：" + bean.year + "/" + getDisPlayNumber(bean.moth) + "/" + getDisPlayNumber(bean.day));
+                tvDate.setText(bean.year + "/" + getDisPlayNumber(bean.moth) + "/" + getDisPlayNumber(bean.day));
                 dataDeviceList.clear();
                 if (isgw == 1) {
                     dataDeviceList = DataSupport.where("deviceMac = ? and subMac = ? and year = ? and month = ? and day = ?", gwMac, zigbeeMac, bean.year + "", getDisPlayNumber(bean.moth), getDisPlayNumber(bean.day)).find(DataDevice.class);
                 } else if (isgw == 2) {
-                    dataDeviceList = DataSupport.where("alertName = ? and year = ? and month = ? and day = ?","gcm notification" , bean.year + "", getDisPlayNumber(bean.moth), getDisPlayNumber(bean.day)).find(DataDevice.class);
+                    dataDeviceList = DataSupport.where("alertName = ? and year = ? and month = ? and day = ?", "gcm notification", bean.year + "", getDisPlayNumber(bean.moth), getDisPlayNumber(bean.day)).find(DataDevice.class);
                 }
                 mDiary2Adapter = new Diary2Adapter(DiaryActivity.this, dataDeviceList);
                 mlist.setAdapter(mDiary2Adapter);

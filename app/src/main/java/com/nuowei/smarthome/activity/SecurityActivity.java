@@ -99,7 +99,9 @@ public class SecurityActivity extends BaseActivity {//implements MyItemTouchCall
             MyApplication.getLogger().w("List列表:" + subDeviceList.get(i).getZigbeeMac() + "\t" + subDeviceList.get(i).getDeviceMac());
             if (isChiose) {
                 if (MainActivity.getChoiceGwDevice().getDeviceMac().equals(subDeviceList.get(i).getDeviceMac())) {
-                    dataSourceList.add(new ListMain(subDeviceList.get(i).getZigbeeMac(), subDeviceList.get(i).getDeviceMac(), true, subDeviceList.get(i).getDeviceType()));
+                    if (subDeviceList.get(i).getDeviceType() != Constants.DEVICE_TYPE.DEVICE_ZIGBEE_THP) {
+                        dataSourceList.add(new ListMain(subDeviceList.get(i).getZigbeeMac(), subDeviceList.get(i).getDeviceMac(), true, subDeviceList.get(i).getDeviceType()));
+                    }
                 }
             }
         }

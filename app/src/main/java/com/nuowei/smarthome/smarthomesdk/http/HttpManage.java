@@ -570,7 +570,6 @@ public class HttpManage {
         String url = getsubDevicesUrl.replace("{user_id}", MyApplication.getMyApplication().getAppid() + "");
         Map<String, String> headers = new HashMap<String, String>();
         headers.put("Access-Token", MyApplication.getMyApplication().getAccessToken());
-        MyApplication.getLogger().v(url + "\n" + MyApplication.getMyApplication().getAccessToken());
         get(context, url, headers, callback);
     }
 

@@ -255,6 +255,10 @@ public class DeviceListActivity extends BaseActivity {
             MyApplication.getLogger().w("List列表:" + subDeviceList.get(i).getZigbeeMac() + "\t" + subDeviceList.get(i).getDeviceMac());
             dataSourceList.add(new ListMain(subDeviceList.get(i).getZigbeeMac(), subDeviceList.get(i).getDeviceMac(), true, subDeviceList.get(i).getDeviceType()));
         }
+//        List<Contact> contact = FList.getInstance().list();
+//        for (int i = 0; i < contact.size(); i++) {
+//            dataSourceList.add(new ListMain(contact.get(i).contactId, contact.get(i).contactId, false, Constants.DEVICE_TYPE.DEVICE_WIFI_IPC));
+//        }
     }
 
 }

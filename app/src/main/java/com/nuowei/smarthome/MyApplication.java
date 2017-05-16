@@ -8,11 +8,11 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 
 import com.avos.avoscloud.AVOSCloud;
 import com.jiongbull.jlog.Logger;
-
 import com.jiongbull.jlog.constant.LogLevel;
 import com.jiongbull.jlog.constant.LogSegment;
 import com.jiongbull.jlog.util.TimeUtils;
@@ -28,7 +28,6 @@ import com.nuowei.smarthome.util.Cockroach;
 import com.nuowei.smarthome.util.MyUtil;
 import com.nuowei.smarthome.util.SharePreferenceUtil;
 import com.orhanobut.hawk.Hawk;
-import com.orhanobut.hawk.LogInterceptor;
 import com.orhanobut.hawk.NoEncryption;
 import com.squareup.leakcanary.LeakCanary;
 import com.taobao.hotfix.HotFixManager;
@@ -88,6 +87,7 @@ public class MyApplication extends LitePalApplication implements XlinkNetListene
 
     }
 
+
     private void initXlinkSDK() {
         // 初始化sdk
         XlinkAgent.init(this);
@@ -139,6 +139,7 @@ public class MyApplication extends LitePalApplication implements XlinkNetListene
 
     @Override
     protected void attachBaseContext(Context base) {
+        MultiDex.install(base);
         super.attachBaseContext(base);
     }
 

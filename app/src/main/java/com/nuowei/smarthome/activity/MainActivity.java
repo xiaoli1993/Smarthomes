@@ -42,8 +42,6 @@ import com.nuowei.smarthome.util.GlideCircleTransform;
 import com.nuowei.smarthome.util.MyUtil;
 import com.nuowei.smarthome.util.Time;
 import com.orhanobut.hawk.Hawk;
-import com.p2p.core.network.LoginResult;
-import com.p2p.core.network.NetManager;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -121,9 +119,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        P2PHandler.getInstance().p2pInit(this, new P2PListener(),new SettingListener());
         setContentView(R.layout.activity_main);
-        LoginResult loginResult = NetManager.getInstance(this).createLoginResult(NetManager.getInstance(this).login("554674787@qq.com", "8888"));
-        MyApplication.getLogger().i(loginResult.contactId + "\n" + loginResult.error_code);
         instance = this;
         initXlink();
         initData();
@@ -134,6 +131,14 @@ public class MainActivity extends AppCompatActivity {
         startCustomService();
         MyApplication.getMyApplication().setCurrentActivity(this);
         initFeedBack();
+        initIPC();
+//        FList.getInstance().searchLocalDevice();
+    }
+
+
+
+    private void initIPC() {
+//        P2PHandler.getInstance().p2pInit(this, new P2PListener(), new SettingListener());
     }
 
     @OnClick(R.id.iv_Avatar)
@@ -198,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
         userName = Hawk.get("MY_ACCOUNT");
         boolean isLists = Hawk.contains(Constants.ISLIST);
         if (isLists) {
-            isList = Hawk.get(Constants.ISLIST);
+            isList = Hawk.get(Constants.ISLIST, false);
             initFragments(isList);
 //            setSelect(0);
         } else {
@@ -273,6 +278,7 @@ public class MainActivity extends AppCompatActivity {
                         feedbackeAgent.startDefaultThreadActivity();
                         break;
                     case 3:
+                        startActivity(new Intent(MainActivity.this, AboutActivity.class));
                         break;
                     case 4:
                         startActivity(new Intent(MainActivity.this, SettingsActivity.class));
@@ -527,7 +533,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onError(Header[] headers, HttpManage.Error error) {
                         MyApplication.getLogger().e("获取消息失败:" + error.getMsg() + "\t" + error.getCode());
-                        DataSupport.saveAll(datalist);
+                        try {
+                            DataSupport.saveAll(datalist);
+                        } catch (Exception e) {
+
+                        }
+
                         isRefreshMessage = true;
                     }
 
@@ -710,6 +721,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
 
     public static XlinkDevice getChoiceGwDevice() {
         return choiceGwDevice;

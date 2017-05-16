@@ -47,6 +47,8 @@ import com.nuowei.smarthome.view.textview.AvenirTextView;
 import com.nuowei.smarthome.view.textview.DinProTextView;
 import com.orhanobut.hawk.Hawk;
 import com.umeng.analytics.MobclickAgent;
+import com.wevey.selector.dialog.DialogInterface;
+import com.wevey.selector.dialog.NormalAlertDialog;
 
 import org.apache.http.Header;
 import org.json.JSONException;
@@ -100,7 +102,6 @@ public class PersonalActivity extends BaseActivity implements PullScrollView.OnT
     @BindView(R.id.tb_toolbar)
     RelativeLayout tbToolbar;
 
-
     private List<Personal> personalList = new ArrayList<Personal>();
     private PersonalAdapter mAdapter;
 
@@ -119,6 +120,7 @@ public class PersonalActivity extends BaseActivity implements PullScrollView.OnT
     }
 
     private void initEven() {
+        btnBack.setBackgroundResource(R.drawable.avoscloud_feedback_thread_actionbar_back);
         tbToolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
         tvRight.setVisibility(View.GONE);
         btnRight.setVisibility(View.GONE);
@@ -237,13 +239,7 @@ public class PersonalActivity extends BaseActivity implements PullScrollView.OnT
         if (!MyUtil.isEmptyString(MyApplication.getMyApplication().getUserInfo().getNickname())) {
             tvUserName.setText(MyApplication.getMyApplication().getUserInfo().getNickname());
         }
-        tvAge.setText(MyApplication.getMyApplication().
-
-                getUserInfo().
-
-                getAge() + "  " +
-
-                getString(R.string.Age));
+        tvAge.setText(MyApplication.getMyApplication().getUserInfo().getAge() + "  " + getString(R.string.Age));
         if (!MyUtil.isEmptyString(MyApplication.getMyApplication().getUserInfo().getAddress())) {
             tvAddress.setText(MyApplication.getMyApplication().getUserInfo().getAddress());
         }
@@ -257,13 +253,35 @@ public class PersonalActivity extends BaseActivity implements PullScrollView.OnT
 
     @OnClick(R.id.btn_logout)
     void onLogout() {
-        XlinkAgent.getInstance().stop();
-        MobclickAgent.onProfileSignOff();
-        Hawk.delete("MY_PASSWORD");
-        Intent intent = new Intent(PersonalActivity.this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        MainActivity.instance.finish();
+        new NormalAlertDialog.Builder(PersonalActivity.this).setTitleVisible(false)
+                .setTitleText(getResources().getString(R.string.Tips))
+                .setTitleTextColor(R.color.black_light)
+                .setContentText(getString(R.string.is_logout))
+                .setContentTextColor(R.color.black_light)
+                .setLeftButtonText(getResources().getString(R.string.cancel))
+                .setLeftButtonTextColor(R.color.error_stroke_color)
+                .setRightButtonText(getResources().getString(R.string.dialog_ok))
+                .setRightButtonTextColor(R.color.color_schedule_start)
+                .setOnclickListener(new DialogInterface.OnLeftAndRightClickListener<NormalAlertDialog>() {
+                    @Override
+                    public void clickLeftButton(NormalAlertDialog dialog, View view) {
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void clickRightButton(NormalAlertDialog dialog, View view) {
+                        XlinkAgent.getInstance().stop();
+                        MobclickAgent.onProfileSignOff();
+                        Hawk.delete("MY_PASSWORD");
+                        Intent intent = new Intent(PersonalActivity.this, LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        MainActivity.instance.finish();
+                        dialog.dismiss();
+                    }
+                })
+                .build()
+                .show();
     }
 
 
@@ -390,55 +408,6 @@ public class PersonalActivity extends BaseActivity implements PullScrollView.OnT
         startActivityForResult(intent, 3);
     }
 
-    /**
-     * 保存裁剪的头像
-     *
-     * @param data
-     */
-    private void saveCropAvator(Intent data) {
-//        Bundle extras = data.getExtras();
-//        if (extras != null) {
-//            Bitmap bitmap = extras.getParcelable("data");
-//            Log.i("life", "avatar - bitmap = " + bitmap);
-//            if (bitmap != null) {
-//                bitmap = PhotoUtil.toRoundCorner(bitmap, 10);
-//                if (isFromCamera && degree != 0) {
-//                    bitmap = PhotoUtil.rotaingImageView(degree, bitmap);
-//                }
-//                HttpManage.getInstance().uploadHeadportrait(MyApplication.getMyApplication(), bitmap, new HttpManage.ResultCallback<String>() {
-//
-//                    @Override
-//                    public void onError(Header[] headers, HttpManage.Error error) {
-//                        Toasty.error(MyApplication.getMyApplication(), error.getMsg() + error.getCode(), Toast.LENGTH_SHORT, true).show();
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(int code, String response) {
-//                        try {
-//                            JSONObject jsonObject = new JSONObject(response);
-//                            String Url = jsonObject.getString("url");
-//                            MyApplication.getMyApplication().getUserInfo().setAvatar(Url);
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
-//
-//                // 保存图片
-//                String filename = new SimpleDateFormat("yyMMddHHmmss")
-//                        .format(new Date()) + ".png";
-//                String path = Constants.MyAvatarDir + filename;
-//                PhotoUtil.saveBitmap(Constants.MyAvatarDir, filename,
-//                        bitmap, true);
-//                // 上传头像
-//                if (bitmap != null && bitmap.isRecycled()) {
-//                    bitmap.recycle();
-//
-//                }
-//            }
-//        }
-
-    }
 
     @OnClick(R.id.image_btn_backs)
     void onImageBtnBacksClick() {

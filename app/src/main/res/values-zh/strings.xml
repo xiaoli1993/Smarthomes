@@ -268,5 +268,14 @@
     <string name="WifiSSID">WifiSSID:</string>
     <string name="Sharesuccess">Share success</string>
     <string name="device_ipc">IPC</string>
+    <string name="now_temp">当前温度：</string>
+    <string name="new_hum">当前湿度：</string>
+    <string name="hump">%</string>
+    <string name="tempp">℃</string>
+    <string name="Temp">温度：</string>
+    <string name="Hum">湿度：</string>
+    <string name="is_logout">是否退出当前账号？</string>
+    <string name="Logout">退出登录</string>
+    <string name="NoGongNeng">该功能正在开发</string>
 
 </resources>

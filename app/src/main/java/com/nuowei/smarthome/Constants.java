@@ -80,6 +80,8 @@ public class Constants {
     public static final String Air_Data = "air-data";
     public static final String GATEWAY_MAC = "gateway-mac";
     public static final String ZIGBEE_MAC = "zigbee-mac";
+    public static final String DEVICE_HUM = "device-hum";
+    public static final String DEVICE_TEMP = "device-temp";
     public static final String DEVICE_NAME = "device-name";
     public static final String DEVICE_Switch = "device-switch";
     public static final String DEVICE_UsbSwitch = "device-usbswitch";
@@ -1128,8 +1130,8 @@ public class Constants {
     }
 
     public static final int USER_HEADER_WIDTH_HEIGHT = 500;
-    public static final String HEIMANEmail = "@bm.com";
-    public static final String HEIMANPASS = "123456";
+    public static final String BEIMAEmail = "@bm.com";
+    public static final String BEIMAPASS = "bm8888";
 
     public static String HawkPass = "52113149";                                  //Hawk保存中的密码.
 

@@ -10,6 +10,17 @@
 
     <include layout="@layout/activity_title" />
 
+    <com.nuowei.smarthome.view.textview.DinProTextView
+        android:id="@+id/tv_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:padding="12dp"
+        android:text="2016-16-16"
+        android:textColor="@color/text_title"
+        android:textSize="@dimen/space_16dp" />
+
     <com.nuowei.smarthome.view.calendar.WeekBarView
         android:layout_width="match_parent"
         android:layout_height="@dimen/week_bar_height"

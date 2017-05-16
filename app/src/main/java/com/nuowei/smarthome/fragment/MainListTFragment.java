@@ -3,7 +3,6 @@ package com.nuowei.smarthome.fragment;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -27,10 +26,14 @@ import com.google.gson.Gson;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.activity.AddDeviceActivity;
+import com.nuowei.smarthome.activity.AirActivity;
+import com.nuowei.smarthome.activity.DeviceListActivity;
 import com.nuowei.smarthome.activity.DiaryActivity;
+import com.nuowei.smarthome.activity.ElectricityActivity;
 import com.nuowei.smarthome.activity.MainActivity;
 import com.nuowei.smarthome.activity.SceneActivity;
 import com.nuowei.smarthome.activity.SecurityActivity;
+import com.nuowei.smarthome.activity.SettingsActivity;
 import com.nuowei.smarthome.adapter.MainListTAdapter;
 import com.nuowei.smarthome.helper.MyItemTouchCallback;
 import com.nuowei.smarthome.helper.OnRecyclerItemClickListener;
@@ -48,7 +51,6 @@ import com.nuowei.smarthome.yahoo.YahooWeather;
 import com.nuowei.smarthome.yahoo.YahooWeatherExceptionListener;
 import com.nuowei.smarthome.yahoo.YahooWeatherInfoListener;
 import com.orhanobut.hawk.Hawk;
-import com.wooplr.spotlight.SpotlightView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -260,27 +262,27 @@ public class MainListTFragment extends Fragment implements MyItemTouchCallback.O
     }
 
     private void initEven() {
-        new SpotlightView.Builder(getActivity())
-                .introAnimationDuration(400)
-//                .enableRevealAnimation(true)
-                .performClick(true)
-                .fadeinTextDuration(400)
-                //.setTypeface(FontUtil.get(this, "RemachineScript_Personal_Use"))
-                .headingTvColor(Color.parseColor("#eb273f"))
-                .headingTvSize(32)
-                .headingTvText(getString(R.string.adddevice))
-                .subHeadingTvColor(Color.parseColor("#ffffff"))
-                .subHeadingTvSize(16)
-                .subHeadingTvText(getString(R.string.Clickheretoadddevice))
-                .maskColor(Color.parseColor("#dc000000"))
-                .target(imageAdd)
-                .lineAnimDuration(400)
-                .lineAndArcColor(Color.parseColor("#eb273f"))
-                .dismissOnTouch(true)
-//                .dismissOnBackPress(true)
-//                .enableDismissAfterShown(true)
-                .usageId("") //UNIQUE ID
-                .show();
+//        new SpotlightView.Builder(getActivity())
+//                .introAnimationDuration(400)
+////                .enableRevealAnimation(true)
+//                .performClick(true)
+//                .fadeinTextDuration(400)
+//                //.setTypeface(FontUtil.get(this, "RemachineScript_Personal_Use"))
+//                .headingTvColor(Color.parseColor("#eb273f"))
+//                .headingTvSize(32)
+//                .headingTvText(getString(R.string.adddevice))
+//                .subHeadingTvColor(Color.parseColor("#ffffff"))
+//                .subHeadingTvSize(16)
+//                .subHeadingTvText(getString(R.string.Clickheretoadddevice))
+//                .maskColor(Color.parseColor("#dc000000"))
+//                .target(imageAdd)
+//                .lineAnimDuration(400)
+//                .lineAndArcColor(Color.parseColor("#eb273f"))
+//                .dismissOnTouch(true)
+////                .dismissOnBackPress(true)
+////                .enableDismissAfterShown(true)
+//                .usageId("") //UNIQUE ID
+//                .show();
 //        shimmerRecyclerView.setLayoutManager(new MyLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, true));
         mAdapter = new MainListTAdapter(R.layout.item_list, dataSourceList);
         shimmerRecyclerView.setHasFixedSize(true);
@@ -295,7 +297,6 @@ public class MainListTFragment extends Fragment implements MyItemTouchCallback.O
             }
         }, 2000);
 
-        shimmerRecyclerView.showShimmerAdapter();
         final ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new MyItemTouchCallback(mAdapter));
         itemTouchHelper.attachToRecyclerView(shimmerRecyclerView);
 
@@ -316,17 +317,19 @@ public class MainListTFragment extends Fragment implements MyItemTouchCallback.O
                         startActivity(new Intent(getActivity(), SecurityActivity.class));
                         break;
                     case 1:
-//                        startActivity(new Intent(getActivity(), ScrollingActivity.class));
+                        startActivity(new Intent(getActivity(), AirActivity.class));
                         break;
                     case 2:
-//                        startActivity(new Intent(getActivity(), DiaryActivity.class));
+                        MyUtil.showNoDialog(getActivity());
                         break;
                     case 3:
-//                        startActivity(new Intent(getActivity(), Diary2Activity.class));
+                        startActivity(new Intent(getActivity(), ElectricityActivity.class));
                         break;
                     case 4:
+                        MyUtil.showNoDialog(getActivity());
                         break;
                     case 5:
+                        MyUtil.showNoDialog(getActivity());
                         break;
                     case 6:
                         try {
@@ -365,8 +368,10 @@ public class MainListTFragment extends Fragment implements MyItemTouchCallback.O
                         }
                         break;
                     case 7:
+                        startActivity(new Intent(getActivity(), DeviceListActivity.class));
                         break;
                     case 8:
+                        startActivity(new Intent(getActivity(), SettingsActivity.class));
                         break;
                     default:
                         break;

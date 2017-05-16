@@ -157,14 +157,20 @@
                 android:gravity="bottom"
                 android:orientation="vertical">
 
-                <Button
+
+                <com.nuowei.smarthome.view.button.StateButton
                     android:id="@+id/btn_logout"
-                    android:layout_width="wrap_content"
+                    android:layout_width="260dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="12dp"
-                    android:background="@color/text_red"
-                    android:text="退出登录" />
+                    android:text="@string/Logout"
+                    android:textColor="@color/white"
+                    app:normalBackgroundColor="@color/colorRed"
+                    app:pressedBackgroundColor="@color/text_red"
+                    app:radius="2dp"
+                    app:round="true"
+                    app:unableBackgroundColor="@android:color/holo_red_light" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

@@ -37,7 +37,10 @@ import com.nuowei.smarthome.modle.EventIsOnline;
 import com.nuowei.smarthome.modle.EventNotifyData;
 import com.nuowei.smarthome.modle.Notifications;
 import com.nuowei.smarthome.modle.XlinkDevice;
+import com.nuowei.smarthome.smarthomesdk.utils.Utils;
 import com.tapadoo.alerter.Alerter;
+import com.wevey.selector.dialog.DialogInterface;
+import com.wevey.selector.dialog.NormalAlertDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -1034,5 +1037,79 @@ public class MyUtil {
         }
         //返回圆形bitmap
         return bitmap;
+    }
+
+    public static String clientNameToEmail(String ClientName) {
+        if (Utils.isEmial(ClientName)) {
+            String[] b = ClientName.split("@");
+            return b[0] + Constants.BEIMAEmail;
+        } else {
+            return ClientName + Constants.BEIMAEmail;
+        }
+    }
+
+    public static void sleepThread(long time) {
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public static void showNoDialog(Context context) {
+        new NormalAlertDialog.Builder(context).setHeight(0.23f)  //屏幕高度*0.23
+                .setWidth(0.65f)  //屏幕宽度*0.65
+                .setTitleVisible(true).setTitleText(context.getResources().getString(R.string.Tips))
+                .setTitleTextColor(R.color.text_title)
+                .setContentText(context.getString(R.string.NoGongNeng))
+                .setContentTextColor(R.color.text_color)
+                .setSingleMode(true).setSingleButtonText(context.getResources().getString(R.string.Close))
+                .setSingleButtonTextColor(R.color.colorRed)
+                .setCanceledOnTouchOutside(true)
+                .setSingleListener(new DialogInterface.OnSingleClickListener<NormalAlertDialog>() {
+                    @Override
+                    public void clickSingleButton(NormalAlertDialog dialog, View view) {
+                        dialog.dismiss();
+                    }
+                })
+                .build()
+                .show();
+    }
+
+    /**
+     * 添加IPC列表
+     */
+    public void addIPC() {
+//        List<Contact> contact = FList.getInstance().list();
+//        for (int i = 0; i < contact.size(); i++) {
+//            JSONObject obj = new JSONObject();
+//            try {
+//                obj.put("protocol", 1);
+//                JSONObject deviceJson = new JSONObject();
+//                String macc = "ACCF2" + contact.get(i).contactId;
+//                deviceJson.put("macAddress", macc);
+//                deviceJson.put("deviceName", contact.get(i).contactName);
+//                deviceJson.put("deviceID", contact.get(i).contactId);
+//                deviceJson.put("version", 99);
+//                deviceJson.put("mcuHardVersion", 0);
+//                deviceJson.put("mucSoftVersion", 0);
+//                deviceJson.put("productID", "9fc2c50412264ce29dae547ff08b941e");
+//                deviceJson.put("accesskey", contact.get(i).contactPassword);
+//                deviceJson.put("deviceIP", contact.get(i).ipadressAddress);
+//                obj.put("device", deviceJson);
+//                MyApplication.getLogger().json(obj.toString());
+////                XDevice xdevice = XlinkAgent.JsonToDevice(obj);
+//                XlinkDevice xlinkDevice = new XlinkDevice();
+//                xlinkDevice.setxDevice(obj.toString());
+//                xlinkDevice.setAccessKey(contact.get(i).contactPassword);
+//                xlinkDevice.setDeviceType(Constants.DEVICE_TYPE.DEVICE_WIFI_IPC + contact.get(i).contactType);
+//                xlinkDevice.setDeviceName(contact.get(i).contactName);
+//                xlinkDevice.setDeviceState(contact.get(i).onLineState);
+//                DeviceManage.getInstance().addDevice(xlinkDevice);
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 }

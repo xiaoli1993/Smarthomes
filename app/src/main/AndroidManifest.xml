@@ -132,6 +132,19 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activity.THPActivity"
+            android:label="@string/title_activity_thp"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.AboutActivity"
+            android:label="@string/title_activity_about"
+            android:parentActivityName=".activity.MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nuowei.smarthome.activity.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

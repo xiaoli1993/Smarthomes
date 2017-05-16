@@ -1,5 +1,6 @@
 package com.nuowei.smarthome.activity;
 
+import android.annotation.SuppressLint;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -109,7 +110,7 @@ public class SmartLinkActivity extends BaseActivity {
     };
 
     private String getSSid() {
-        WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
+        @SuppressLint("WifiManagerLeak") WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
         if (wm != null) {
             WifiInfo wi = wm.getConnectionInfo();
             if (wi != null) {
