@@ -9,7 +9,6 @@ package com.nuowei.smarthome.activity;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
-import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +22,7 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v4.util.LruCache;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateUtils;
@@ -39,8 +39,10 @@ import android.view.animation.TranslateAnimation;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.avos.avoscloud.AVException;
@@ -55,6 +57,8 @@ import com.avos.avoscloud.feedback.FeedbackAgent;
 import com.avos.avoscloud.feedback.FeedbackThread;
 import com.avos.avoscloud.feedback.FeedbackThread.SyncCallback;
 import com.avos.avoscloud.feedback.Resources;
+import com.nuowei.smarthome.R;
+import com.nuowei.smarthome.view.textview.AvenirTextView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -65,7 +69,11 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class ThreadActivity extends Activity {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+public class ThreadActivity extends AppCompatActivity {
 
     FeedbackAgent agent;
     ListView feedbackListView;
@@ -80,12 +88,20 @@ public class ThreadActivity extends Activity {
     private static final int IMAGE_REQUEST = 657843;
 
     public static final ImageCache cache = new ImageCache(AVOSCloud.applicationContext);
+    @BindView(R.id.tv_title)
+    AvenirTextView tvTitle;
+    @BindView(R.id.btn_right)
+    ImageButton btnRight;
+    @BindView(R.id.tv_right)
+    AvenirTextView tvRight;
+    @BindView(R.id.tb_toolbar)
+    RelativeLayout tbToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(Resources.layout.avoscloud_feedback_activity_conversation(this));
-
+        ButterKnife.bind(this);
         setupActionBar();
 
         agent = new FeedbackAgent(this);
@@ -198,7 +214,7 @@ public class ThreadActivity extends Activity {
                     sendButton.startAnimation(set);
 
 
-                    imageButton.setVisibility(View.VISIBLE);
+                    imageButton.setVisibility(View.GONE);
                     Animation a3 = new TranslateAnimation(0, 0, -50, 0);
                     Animation a4 = new AlphaAnimation(0.2f, 1);
                     AnimationSet set2 = new AnimationSet(true);
@@ -222,7 +238,7 @@ public class ThreadActivity extends Activity {
 
                         @Override
                         public void onAnimationEnd(Animation animation) {
-                            imageButton.setVisibility(View.VISIBLE);
+                            imageButton.setVisibility(View.GONE);
                         }
                     });
                     imageButton.startAnimation(set2);
@@ -253,7 +269,7 @@ public class ThreadActivity extends Activity {
 
                         @Override
                         public void onAnimationEnd(Animation animation) {
-                            imageButton.setVisibility(View.INVISIBLE);
+                            imageButton.setVisibility(View.GONE);
                             animating.set(false);
                         }
                     });
@@ -333,6 +349,26 @@ public class ThreadActivity extends Activity {
         }
 
         thread.sync(syncCallback);
+        initEven();
+    }
+
+    private void initEven() {
+        tvTitle.setText(getResources().getString(R.string.Feedback));
+        btnRight.setVisibility(View.GONE);
+        tvRight.setVisibility(View.GONE);
+    }
+
+    @OnClick({R.id.image_btn_backs, R.id.btn_right})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.image_btn_backs:
+                overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
+                this.finish();
+                break;
+            case R.id.btn_right:
+
+                break;
+        }
     }
 
     /**

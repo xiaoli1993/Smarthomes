@@ -136,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     private void initIPC() {
 //        P2PHandler.getInstance().p2pInit(this, new P2PListener(), new SettingListener());
     }
@@ -272,10 +271,18 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(MainActivity.this, DeviceListActivity.class));
                         break;
                     case 1:
-                        startActivity(new Intent(MainActivity.this, ShareDeviceActivity.class));
+                        Intent intent = new Intent(MainActivity.this, ShareDeviceActivity.class);
+                        //用Bundle携带数据
+                        Bundle bundle = new Bundle();
+                        //传递name参数为tinyphp
+                        bundle.putString(Constants.GATEWAY_MAC, getChoiceGwDevice().getDeviceMac());
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+//                        startActivity(new Intent(MainActivity.this, ShareDeviceActivity.class));
                         break;
                     case 2:
-                        feedbackeAgent.startDefaultThreadActivity();
+//                        feedbackeAgent.startDefaultThreadActivity();
+                        startActivity(new Intent(MainActivity.this, ThreadActivity.class));
                         break;
                     case 3:
                         startActivity(new Intent(MainActivity.this, AboutActivity.class));
@@ -739,7 +746,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static void setDefence(int defence) {
         MainActivity.defence = defence;
-        XlinkDevice xlinkDevice=getChoiceGwDevice();
+        XlinkDevice xlinkDevice = getChoiceGwDevice();
         xlinkDevice.setDefence(defence);
         DeviceManage.getInstance().addDevice(xlinkDevice);
     }

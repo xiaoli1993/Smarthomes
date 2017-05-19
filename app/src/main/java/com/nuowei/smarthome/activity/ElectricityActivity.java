@@ -13,9 +13,11 @@ import com.nuowei.smarthome.Constants;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.adapter.MainListAdapter;
+import com.nuowei.smarthome.manage.DeviceManage;
 import com.nuowei.smarthome.manage.SubDeviceManage;
 import com.nuowei.smarthome.modle.ListMain;
 import com.nuowei.smarthome.modle.SubDevice;
+import com.nuowei.smarthome.modle.XlinkDevice;
 import com.nuowei.smarthome.smarthomesdk.Json.ZigbeeGW;
 import com.nuowei.smarthome.util.MyUtil;
 import com.nuowei.smarthome.view.textview.AvenirTextView;
@@ -98,6 +100,13 @@ public class ElectricityActivity extends BaseActivity {
             }
         }
 
+        List<XlinkDevice> xlinkDeviceList = DeviceManage.getInstance().getDevices();
+        for (int x = 0; x < xlinkDeviceList.size(); x++) {
+            if (xlinkDeviceList.get(x).getDeviceType() == Constants.DEVICE_TYPE.DEVICE_WIFI_METRTING_PLUGIN || xlinkDeviceList.get(x).getDeviceType() == Constants.DEVICE_TYPE.DEVICE_WIFI_PLUGIN) {
+                MyApplication.getLogger().w("List列表:" + xlinkDeviceList.get(x).getDeviceMac() + "\t" + xlinkDeviceList.get(x).getDeviceName());
+                dataSourceList.add(new ListMain("", xlinkDeviceList.get(x).getDeviceMac(), false, xlinkDeviceList.get(x).getDeviceType()));
+            }
+        }
     }
 
     private void initEven() {

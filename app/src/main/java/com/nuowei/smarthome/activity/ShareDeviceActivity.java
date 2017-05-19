@@ -8,9 +8,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nuowei.smarthome.Constants;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.common.util.ToastUtils;
+import com.nuowei.smarthome.manage.DeviceManage;
+import com.nuowei.smarthome.modle.XlinkDevice;
 import com.nuowei.smarthome.smarthomesdk.http.HttpManage;
 import com.nuowei.smarthome.view.button.StateButton;
 import com.nuowei.smarthome.view.textview.AvenirTextView;
@@ -49,7 +52,7 @@ public class ShareDeviceActivity extends BaseActivity {
     EditText etShare;
     @BindView(R.id.btn_share)
     StateButton btnShare;
-//    XlinkDevice xlinkDevice;
+    XlinkDevice xlinkDevice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +69,8 @@ public class ShareDeviceActivity extends BaseActivity {
 
     private void initData() {
         Bundle b = this.getIntent().getExtras();
-//        String mac = b.getString(Constants.DEVICE_MAC);
-//        xlinkDevice = DeviceManage.getInstance().getDevice(MainActivity.getChoiceGwDevice().getDeviceMac());
+        String mac = b.getString(Constants.GATEWAY_MAC);
+        xlinkDevice = DeviceManage.getInstance().getDevice(mac);
     }
 
     private void setsharedevice(final String User, int deviceID) {
@@ -95,7 +98,7 @@ public class ShareDeviceActivity extends BaseActivity {
                 this.finish();
                 break;
             case R.id.btn_share:
-                setsharedevice(etShare.getText().toString(), MainActivity.getChoiceGwDevice().getxDevice().getDeviceId());
+                setsharedevice(etShare.getText().toString(), xlinkDevice.getxDevice().getDeviceId());
                 break;
         }
     }

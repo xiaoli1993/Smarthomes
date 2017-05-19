@@ -1,2 +1,1 @@
-include ':app'
-include ':p2PCore'
+include ':app', ':p2p-core', ':ipclibrary'

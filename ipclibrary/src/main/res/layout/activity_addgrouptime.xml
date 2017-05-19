@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fish_back"
+    android:orientation="vertical">
+
+    <include layout="@layout/actionbar_custom" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:orientation="vertical">
+
+        <View style="@style/view_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/ctl_datepick_item_height"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/text_color_black"
+                android:text="时" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/ctl_datepick_item_height"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/text_color_black"
+                android:text="分" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical">
+
+            <com.jwkj.wheel.widget.WheelView
+                android:id="@+id/date_hour"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <com.jwkj.wheel.widget.WheelView
+                android:id="@+id/date_minute"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="1px"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <View style="@style/view_line" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <View style="@style/view_line" />
+
+        <RelativeLayout
+            android:id="@+id/device_mode"
+            style="@style/relativelayout_modify_nostoke">
+
+            <TextView
+                android:id="@+id/device_mode_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/ll_text_margin"
+                android:text="@string/fish_mode"
+                android:textColor="@color/text_color_black"
+                android:textSize="@dimen/text_size_normal" />
+
+            <ImageView
+                style="@style/imagview_right_raw" />
+
+            <TextView
+                android:id="@+id/tx_addtime_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="40dp"
+                android:text="@string/unbound"
+                android:textColor="@color/text_color_gray"
+                android:textSize="@dimen/text_size_small" />
+        </RelativeLayout>
+
+        <View style="@style/view_line" />
+
+        <RelativeLayout
+            android:id="@+id/fish_repete"
+            style="@style/relativelayout_modify_nostoke">
+
+            <TextView
+                android:id="@+id/email_left_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/ll_text_margin"
+                android:text="@string/fish_repete"
+                android:textColor="@color/text_color_black"
+                android:textSize="@dimen/text_size_normal" />
+
+            <ImageView
+                android:id="@+id/email_arrow"
+                style="@style/imagview_right_raw" />
+
+            <TextView
+                android:id="@+id/tx_repete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="40dp"
+                android:text="@string/unbound"
+                android:textColor="@color/text_color_gray"
+                android:textSize="@dimen/text_size_small" />
+        </RelativeLayout>
+
+        <View
+            android:background="#CCCCCC"
+            style="@style/view_line" />
+
+        <RelativeLayout
+            android:id="@+id/fish_tage"
+            android:visibility="gone"
+            style="@style/relativelayout_modify_nostoke">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/inner_margin_left"
+                android:text="@string/fish_tage"
+                android:textColor="@color/text_color_black"
+                android:textSize="@dimen/text_size_normal"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/phone_arrow"
+                style="@style/imagview_right_raw"
+                android:padding="5dp" />
+
+            <TextView
+                android:id="@+id/tx_fishtage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="40dp"
+                android:text="@string/unbound"
+                android:textColor="@color/text_color_gray"
+                android:textSize="@dimen/text_size_small" />
+        </RelativeLayout>
+
+        <View style="@style/view_line" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_deletetime"
+        android:layout_width="300dp"
+        android:layout_height="44dp"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/delete_time"
+        style="@style/button_style"/>
+
+</LinearLayout>

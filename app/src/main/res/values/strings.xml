@@ -169,12 +169,16 @@
     <string name="RELAY_OFF_67">  %1$s   Relay Close</string>
     <string name="RELAY_ON_67">  %1$s   Relay Open</string>
     <string name="TAMPER_ALARM_17">  %1$s    Open (Tamper)</string>
+    <string name="TAMPER_ALARM_18">  %1$s    Dlooded with water (Tamper)</string>
     <string name="TAMPER_ALARM_19">  %1$s    Someone passby (Tamper)</string>
     <string name="TAMPER_DEVALARM_17">  %1$s   Open (Tamper)</string>
+    <string name="TAMPER_DEVALARM_18">  %1$s   Dlooded with water (Tamper)</string>
     <string name="TAMPER_DEVALARM_19">  %1$s    Someone passby (Tamper)</string>
     <string name="TAMPER_DEVRESUME_17">  %1$s    Close (Tamper)</string>
+    <string name="TAMPER_DEVRESUME_18">  %1$s    Sensor dry (Tamper)</string>
     <string name="TAMPER_DEVRESUME_19">  %1$s    Nobody passby (Tamper)</string>
     <string name="TAMPER_RESUME_17">  %1$s    Close (Tamper)</string>
+    <string name="TAMPER_RESUME_18">  %1$s    Sensor dry (Tamper)</string>
     <string name="TAMPER_RESUME_19">  %1$s    Nobody passby (Tamper)</string>
     <string name="TEMP_ALARM_21">  %1$s    Temp. alarm</string>
     <string name="TEMP_HUM_ALARM_21">  %1$s    Temp. and HUM alarm</string>
@@ -1141,4 +1145,10 @@
     <string name="refresh_done">刷新完成</string>
     <string name="loading_done">加载完成</string>
     <string name="listview_header_last_time">上次更新时间：</string>
+    <string name="Change_Name">修改名称</string>
+    <string name="Delete_Device">删除设备</string>
+    <string name="Device_TOP">设备置顶</string>
+    <string name="no_device_name">请输入设备名称</string>
+    <string name="is_delete_device">您确定删除该设备吗？</string>
+    <string name="no_user_name">请输入用户昵称</string>
 </resources>

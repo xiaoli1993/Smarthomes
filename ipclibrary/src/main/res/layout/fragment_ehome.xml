@@ -1,0 +1,63 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_bg"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tx_result"
+        android:layout_width="match_parent"
+        android:textColor="#000000"
+        android:text="text for result"
+        android:layout_height="150dp" />
+
+    <Button
+        android:id="@+id/btn_get"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="get GPIO" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:visibility="visible" >
+
+        <EditText
+            android:id="@+id/et_gpio"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:hint="GPIO"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/et_lorh"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:hint="LORH"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/et_time"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:hint="TIME"
+            android:inputType="number" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_vsetgpiostatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="set GPIO" />
+
+    <Button
+        android:id="@+id/btn_usermessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="user Message" />
+
+</LinearLayout>

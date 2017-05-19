@@ -1,7 +1,5 @@
 package com.nuowei.smarthome.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +9,12 @@ import android.widget.ImageView;
 
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
+import com.nuowei.smarthome.activity.DiaryActivity;
 import com.nuowei.smarthome.modle.DataDevice;
 import com.nuowei.smarthome.util.MyUtil;
 import com.nuowei.smarthome.view.textview.DinProTextView;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,12 +60,18 @@ public class Diary2Adapter extends BaseAdapter {
     private void initializeViews(DataDevice dataDevice, ViewHolder holder) {
         //TODO implement
         String sAgeFormatString = MyApplication.getMyApplication().getResources().getString(MyUtil.getBodyString(dataDevice.getBodyLocKey()));
-        holder.imageIcon.setImageResource(MyUtil.getImageDiary(context, sAgeFormatString));
+        holder.imageIcon.setImageResource(MyUtil.getImageDiary(context, dataDevice.getSubType(), sAgeFormatString));
         String Content = String.format(sAgeFormatString, "");
-        MyApplication.getLogger().i("Content:" + Content + "原来:" + dataDevice.getBodyLocKey());
-        holder.tvTxt.setText(Content);
+        MyApplication.getLogger().i("Content:" + Content + "原来:" + dataDevice.getBodyLocKey() + dataDevice.getActionName());
         holder.tvTimer.setText(dataDevice.getHH() + ":" + dataDevice.getMm());
-        holder.tvState.setText("Here is the message content");
+        if (DiaryActivity.diaryActivity.isgw == 2) {
+            holder.tvTxt.setText(dataDevice.getActionName());
+            holder.tvState.setText(Content);
+        } else {
+            holder.tvTxt.setText(Content);
+            holder.tvState.setText("Here is the message content");
+        }
+
     }
 
     static class ViewHolder {

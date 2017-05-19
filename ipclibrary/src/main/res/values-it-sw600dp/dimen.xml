@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="ctl_modify_info_btn_width">120dp</dimen>
+    <dimen name="ctl_top_info_bar_height">120dp</dimen>
+    <!-- 增加语言 -->
+   <dimen name="title_text_size_to_long">23sp</dimen>
+   
+    <dimen name="time_zone_text_size">18sp</dimen>
+    <dimen name="time_zone_button_text_size">18sp</dimen>
+    <dimen name="alarm_account_title_text_size">23sp</dimen>
+    <dimen name="modify_password_title_text_size">23sp</dimen>
+    <dimen name="modify_visitor_password_title_text_size">23sp</dimen>
+    <dimen name="manual_add_title_text_size">23sp</dimen>
+    <dimen name="add_text_size">18sp</dimen>
+    <dimen name="notification_bar_icon_text_size">18sp</dimen>
+    <dimen name="no_cue_tone_title_text_size">17sp</dimen>
+</resources>

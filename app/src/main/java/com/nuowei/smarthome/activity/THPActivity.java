@@ -248,6 +248,7 @@ public class THPActivity extends BaseActivity {
         nowHum = bundle.getString(Constants.DEVICE_HUM);
 
         SubDevice subDevice = SubDeviceManage.getInstance().getDevice(gwMac, zigbeeMac);
+
         dataDeviceList = DataSupport.where("deviceMac = ? and subMac = ? ", gwMac, zigbeeMac).order("date desc").limit(limit).offset(offset).find(DataDevice.class);
 
         for (int i = 0; i < dataDeviceList.size(); i++) {

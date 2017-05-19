@@ -81,7 +81,8 @@ public class DiaryActivity extends AppCompatActivity {
     private Diary2Adapter mDiary2Adapter;
     private String gwMac;
     private String zigbeeMac;
-    private int isgw;
+    public int isgw;
+    public static DiaryActivity diaryActivity;
 
     //    private FamiliarRecyclerView mFamiliarRecyclerView;
     @Override
@@ -91,6 +92,7 @@ public class DiaryActivity extends AppCompatActivity {
         CloseActivityClass.activityList.add(this);
         StatusBarCompat.translucentStatusBar(this, false);
         ButterKnife.bind(this);
+        diaryActivity = this;
         initData();
         initList();
         initEven();

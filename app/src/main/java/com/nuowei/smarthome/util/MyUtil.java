@@ -860,99 +860,210 @@ public class MyUtil {
         return WkString;
     }
 
-    public static int getImageDiary(Context mContext, String Alarm) {
-        MyApplication.getLogger().i("输出字符:"+Alarm);
+    public static int getImageDiary(Context mContext, String deviceType, String Alarm) {
+        MyApplication.getLogger().i("输出字符:" + Alarm + "Alarm:" + mContext.getString(R.string.HOME_ARM_0));
         int image = 0;
-        if (Alarm.equals(mContext.getString(R.string.ALRM_RESUME_17))) {
-            image = R.drawable.device_state_close;
-        } else if (Alarm.equals(mContext.getString(R.string.ALRMING_17))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.ALRM_RESUME_18))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.ALRMING_18))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.ALRM_RESUME_19))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.ALRMING_19))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.ALRM_RESUME_20))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.ALRMING_20))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.ALRM_RESUME_22))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.ALRMING_22))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.ALRM_RESUME_24))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.ALRMING_24))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.ALRM_RESUME_67))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.ALRMING_67))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.ALRMING_49))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.ALRMING_50))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.ARM_50))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.DISARM_50))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.HOMEARM_50))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.HUM_ALARM_21))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.TEMP_ALARM_21))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.TEMP_HUM_ALARM_21))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.Power_1042))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.Power_Current_1042))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.Current_1042))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.Power_Currentvoltage_1042))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.Power_Voltage_1042))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.Current_Voltage_1042))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.LIGHT_OFF_1))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.LIGHT_ON_1))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.RELAY_OFF_67))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.RELAY_ON_67))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.TAMPER_ALARM_17))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.TAMPER_ALARM_19))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.TAMPER_DEVALARM_17))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.TAMPER_DEVALARM_19))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.TAMPER_DEVRESUME_17))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.TAMPER_DEVRESUME_19))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.TAMPER_RESUME_17))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.TAMPER_RESUME_19))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.USB_OFF_67))) {
-            image = R.drawable.device_state_open;
-        } else if (Alarm.equals(mContext.getString(R.string.USB_ON_67))) {
-            image = R.drawable.device_state_open;
-        }else if (Alarm.equals(mContext.getString(R.string.ARM_0))) {
-            image = R.drawable.gw_away_pressed;
-        } else if (Alarm.equals(mContext.getString(R.string.DISARM_0))) {
-            image = R.drawable.gw_disarm_pressed;
-        } else if (Alarm.equals(mContext.getString(R.string.HOME_ARM_0))) {
-            image = R.drawable.gw_home_pressed;
+        switch (deviceType) {
+            case "0":
+                if (Alarm.equals(mContext.getString(R.string.ARM_0))) {
+                    image = R.drawable.gw_away_pressed;
+                    MyApplication.getLogger().i("输出字符:外出布防");
+                } else if (Alarm.equals(mContext.getString(R.string.DISARM_0))) {
+                    image = R.drawable.gw_disarm_pressed;
+                    MyApplication.getLogger().i("输出字符:撤防");
+                } else if (Alarm.equals(mContext.getString(R.string.HOME_ARM_0))) {
+                    image = R.drawable.gw_home_pressed;
+                    MyApplication.getLogger().i("输出字符:在家布防");
+                }
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_RGB + "":
+                if (Alarm.equals(mContext.getString(R.string.LIGHT_OFF_1))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:27");
+                } else if (Alarm.equals(mContext.getString(R.string.LIGHT_ON_1))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:28");
+                }
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_DOORS + "":
+                if (Alarm.equals(mContext.getString(R.string.ALRM_RESUME_17))) {
+                    image = R.drawable.device_state_close;
+                    MyApplication.getLogger().i("输出字符:关");
+                } else if (Alarm.equals(mContext.getString(R.string.ALRMING_17))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:开");
+                } else if (Alarm.equals(mContext.getString(R.string.TAMPER_ALARM_17))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:31");
+                } else if (Alarm.equals(mContext.getString(R.string.TAMPER_DEVALARM_17))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:33");
+                } else if (Alarm.equals(mContext.getString(R.string.TAMPER_DEVRESUME_17))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:35");
+                } else if (Alarm.equals(mContext.getString(R.string.TAMPER_RESUME_17))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:37");
+                }
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_WATER + "":
+                if (Alarm.equals(mContext.getString(R.string.ALRM_RESUME_18))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:1");
+                } else if (Alarm.equals(mContext.getString(R.string.ALRMING_18))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:2");
+                }else if (Alarm.equals(mContext.getString(R.string.TAMPER_DEVALARM_18))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:88");
+                } else if (Alarm.equals(mContext.getString(R.string.TAMPER_DEVRESUME_18))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:89");
+                } else if (Alarm.equals(mContext.getString(R.string.TAMPER_ALARM_18))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:90");
+                } else if (Alarm.equals(mContext.getString(R.string.TAMPER_RESUME_18))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:91");
+                }
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_PIR + "":
+                if (Alarm.equals(mContext.getString(R.string.ALRM_RESUME_19))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:3");
+                } else if (Alarm.equals(mContext.getString(R.string.ALRMING_19))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:4");
+                } else if (Alarm.equals(mContext.getString(R.string.TAMPER_DEVALARM_19))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:34");
+                } else if (Alarm.equals(mContext.getString(R.string.TAMPER_DEVRESUME_19))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:36");
+                } else if (Alarm.equals(mContext.getString(R.string.TAMPER_ALARM_19))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:32");
+                } else if (Alarm.equals(mContext.getString(R.string.TAMPER_RESUME_19))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:38");
+                }
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_SMOKE + "":
+                if (Alarm.equals(mContext.getString(R.string.ALRM_RESUME_20))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:5");
+                } else if (Alarm.equals(mContext.getString(R.string.ALRMING_20))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:6");
+                }
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_THP + "":
+                if (Alarm.equals(mContext.getString(R.string.HUM_ALARM_21))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:18");
+                } else if (Alarm.equals(mContext.getString(R.string.TEMP_ALARM_21))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:19");
+                } else if (Alarm.equals(mContext.getString(R.string.TEMP_HUM_ALARM_21))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:20");
+                }
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_GAS + "":
+                if (Alarm.equals(mContext.getString(R.string.ALRM_RESUME_22))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:7");
+                } else if (Alarm.equals(mContext.getString(R.string.ALRMING_22))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:8");
+                }
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_CO + "":
+                if (Alarm.equals(mContext.getString(R.string.ALRM_RESUME_24))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:9");
+                } else if (Alarm.equals(mContext.getString(R.string.ALRMING_24))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:10");
+                }
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_SOS + "":
+                if (Alarm.equals(mContext.getString(R.string.ALRMING_49))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:13");
+                }
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_SW + "":
+                if (Alarm.equals(mContext.getString(R.string.ALRMING_50))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:14");
+                } else if (Alarm.equals(mContext.getString(R.string.ARM_50))) {
+                    image = R.drawable.gw_away_pressed;
+                    MyApplication.getLogger().i("输出字符:15");
+                } else if (Alarm.equals(mContext.getString(R.string.DISARM_50))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:16");
+                } else if (Alarm.equals(mContext.getString(R.string.HOMEARM_50))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:17");
+                }
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_PLUGIN + "":
+                if (Alarm.equals(mContext.getString(R.string.ALRM_RESUME_67))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:11");
+                } else if (Alarm.equals(mContext.getString(R.string.ALRMING_67))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:12");
+                } else if (Alarm.equals(mContext.getString(R.string.RELAY_OFF_67))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:29");
+                } else if (Alarm.equals(mContext.getString(R.string.RELAY_ON_67))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:30");
+                } else if (Alarm.equals(mContext.getString(R.string.USB_OFF_67))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:39");
+                } else if (Alarm.equals(mContext.getString(R.string.USB_ON_67))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:40");
+                }
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_METRTING_PLUGIN + "":
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_WIFI_GATEWAY + "":
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_WIFI_PLUGIN + "":
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_WIFI_METRTING_PLUGIN + "":
+                if (Alarm.equals(mContext.getString(R.string.Power_1042))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:21");
+                } else if (Alarm.equals(mContext.getString(R.string.Power_Current_1042))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:22");
+                } else if (Alarm.equals(mContext.getString(R.string.Current_1042))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:23");
+                } else if (Alarm.equals(mContext.getString(R.string.Power_Currentvoltage_1042))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:24");
+                } else if (Alarm.equals(mContext.getString(R.string.Power_Voltage_1042))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:25");
+                } else if (Alarm.equals(mContext.getString(R.string.Current_Voltage_1042))) {
+                    image = R.drawable.device_state_open;
+                    MyApplication.getLogger().i("输出字符:26");
+                }
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_WIFI_AIR + "":
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_WIFI_IPC + "":
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_WIFI_RC + "":
+                break;
+            case Constants.DEVICE_TYPE.DEVICE_WIFI_GAS + "":
+                break;
         }
         return image;
     }

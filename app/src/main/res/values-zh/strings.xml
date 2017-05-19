@@ -72,12 +72,16 @@
     <string name="RELAY_OFF_67">  %1$s    电源关闭</string>
     <string name="RELAY_ON_67">  %1$s    电源打开</string>
     <string name="TAMPER_ALARM_17">  %1$s    打开 (已拆下)</string>
+    <string name="TAMPER_ALARM_18">  %1$s    水泄漏报警 (已拆下)</string>
     <string name="TAMPER_ALARM_19">  %1$s    有人经过(已拆下)</string>
     <string name="TAMPER_DEVALARM_17">  %1$s   打开 (已拆下)</string>
+    <string name="TAMPER_DEVALARM_18">  %1$s   水泄漏报警 (已拆下)</string>
     <string name="TAMPER_DEVALARM_19">  %1$s    有人经过(已拆下)</string>
     <string name="TAMPER_DEVRESUME_17">  %1$s    关闭 (已拆下)</string>
+    <string name="TAMPER_DEVRESUME_18">  %1$s    无水泄漏 (已拆下)</string>
     <string name="TAMPER_DEVRESUME_19">  %1$s    无人经过(已拆下)</string>
     <string name="TAMPER_RESUME_17">  %1$s    关闭 (已拆下)</string>
+    <string name="TAMPER_RESUME_18">  %1$s    无水泄漏 (已拆下)</string>
     <string name="TAMPER_RESUME_19">  %1$s    无人经过(已拆下)</string>
     <string name="TEMP_ALARM_21">  %1$s    温度报警</string>
     <string name="TEMP_HUM_ALARM_21">  %1$s    温湿度报警</string>
@@ -290,4 +294,10 @@
     <string name="refresh_done">刷新完成</string>
     <string name="loading_done">加载完成</string>
     <string name="listview_header_last_time">上次更新时间：</string>
+    <string name="Change_Name">修改名称</string>
+    <string name="Delete_Device">删除设备</string>
+    <string name="Device_TOP">设备置顶</string>
+    <string name="no_device_name">请输入设备名称</string>
+    <string name="is_delete_device">您确定删除该设备吗？</string>
+    <string name="no_user_name">请输入用户昵称</string>
 </resources>

@@ -14,6 +14,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -48,6 +49,7 @@ import com.nuowei.smarthome.view.textview.DinProTextView;
 import com.orhanobut.hawk.Hawk;
 import com.umeng.analytics.MobclickAgent;
 import com.wevey.selector.dialog.DialogInterface;
+import com.wevey.selector.dialog.MDEditDialog;
 import com.wevey.selector.dialog.NormalAlertDialog;
 
 import org.apache.http.Header;
@@ -123,7 +125,8 @@ public class PersonalActivity extends BaseActivity implements PullScrollView.OnT
         btnBack.setBackgroundResource(R.drawable.avoscloud_feedback_thread_actionbar_back);
         tbToolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
         tvRight.setVisibility(View.GONE);
-        btnRight.setVisibility(View.GONE);
+        btnRight.setVisibility(View.VISIBLE);
+        btnRight.setBackgroundResource(R.drawable.pen);
         tvTitle.setText(R.string.Personal);
         tvTitle.setTextColor(getResources().getColor(R.color.white));
 //        btnBack.setImageResource();
@@ -249,6 +252,62 @@ public class PersonalActivity extends BaseActivity implements PullScrollView.OnT
     @Override
     public void onTurn() {
 
+    }
+
+    @OnClick(R.id.btn_right)
+    void onBtnRight() {
+        showChangeName(PersonalActivity.this);
+    }
+
+    private void showChangeName(Context context) {
+        new MDEditDialog.Builder(context).setTitleVisible(true)
+                .setTitleText(getString(R.string.Change_Name))
+                .setTitleTextSize(20)
+                .setTitleTextColor(R.color.black_light)
+                .setContentText(MyApplication.getMyApplication().getUserInfo().getNickname())
+                .setContentTextSize(18)
+                .setMaxLength(20)
+                .setHintText(getString(R.string.no_user_name))
+                .setMaxLines(1)
+                .setContentTextColor(R.color.colorPrimary)
+                .setButtonTextSize(14)
+                .setLeftButtonTextColor(R.color.colorPrimary)
+                .setLeftButtonText(getString(R.string.cancel))
+                .setRightButtonTextColor(R.color.colorPrimary)
+                .setRightButtonText(getString(R.string.dialog_ok))
+                .setLineColor(R.color.colorPrimary)
+                .setInputTpye(InputType.TYPE_CLASS_TEXT)
+                .setOnclickListener(new DialogInterface.OnLeftAndRightClickListener<MDEditDialog>() {
+
+                    @Override
+                    public void clickLeftButton(MDEditDialog dialog, View view) {
+
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void clickRightButton(MDEditDialog dialog, View view) {
+                        final String rename = dialog.getEditTextContent();
+                        HttpManage.getInstance().modifyUser(PersonalActivity.this,
+                                rename, new HttpManage.ResultCallback<String>() {
+                                    @Override
+                                    public void onError(Header[] headers, HttpManage.Error error) {
+
+                                    }
+
+                                    @Override
+                                    public void onSuccess(int code, String response) {
+                                        MyApplication.getMyApplication().getUserInfo().setNickname(rename);
+                                        MyApplication.getLogger().json(response);
+                                        tvUserName.setText(rename);
+                                    }
+                                });
+                        dialog.dismiss();
+                    }
+                }).setMinHeight(0.3f)
+                .setWidth(0.8f)
+                .build()
+                .show();
     }
 
     @OnClick(R.id.btn_logout)
