@@ -222,7 +222,7 @@
     <string name="device_water_sensor">Water</string>
     <string name="device_pir_sensor">Pir</string>
     <string name="device_smoke_sensor">Smoke</string>
-    <string name="device_thp_sensor"><![CDATA[Temp. &amp; Humidity]]></string>
+    <string name="device_thp_sensor">Thp</string>
     <string name="device_gas_sensor">Gas</string>
     <string name="device_co_sensor">Co</string>
     <string name="device_sos_sensor">Sos</string>
