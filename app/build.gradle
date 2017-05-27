@@ -93,5 +93,7 @@ dependencies {
     compile 'com.kaopiz:kprogresshud:1.0.5'
     compile 'com.github.badoualy:stepper-indicator:1.0.6'
     compile 'com.android.support:multidex:1.0.0'
-
+    compile 'com.android.support:support-compat:25.1.1'
+    compile 'com.daimajia.easing:library:2.0@aar'
+    compile 'com.daimajia.androidanimations:library:2.2@aar'
 }

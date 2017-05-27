@@ -9,10 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.nuowei.smarthome.Constants;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.helper.MyItemTouchCallback;
@@ -104,6 +107,8 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_PIR:
                     holder.imageView.setImageResource(R.drawable.device_pir);
+                    YoYo.with(Techniques.Swing).duration(1200).repeat(5)
+                            .playOn(holder.imageView);
                     switch (subDevice.getDeviceOnoff()) {
                         case 5:
                             holder.textState.setText(context.getResources().getString(R.string.Alarm));
@@ -138,10 +143,17 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_THP:
                     holder.imageView.setImageResource(R.drawable.device_thp);
+                    YoYo.with(Techniques.FlipOutY).duration(1200)
+                            .playOn(holder.imageView);
+                    holder.imageView.setImageResource(R.drawable.device_temp);
+                    YoYo.with(Techniques.FlipInY).duration(1200)
+                            .playOn(holder.imageView);
                     holder.textState.setText(subDevice.getTemp() + "° " + subDevice.getHumidity() + "%");
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_GAS:
                     holder.imageView.setImageResource(R.drawable.device_gas);
+
+
                     switch (subDevice.getDeviceOnoff()) {
                         case 5:
                             holder.textState.setText(context.getResources().getString(R.string.Alarm));
@@ -184,6 +196,8 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
                     break;
                 case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_SW:
                     holder.imageView.setImageResource(R.drawable.device_sw);
+                    Animation mAnimation = AnimationUtils.loadAnimation(context, R.anim.zoom_in);
+                    holder.imageView.setAnimation(mAnimation);
                     switch (subDevice.getDeviceOnoff()) {
                         case 3:
                             holder.textState.setText(context.getResources().getString(R.string.Alarm));
