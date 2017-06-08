@@ -200,4 +200,31 @@ public class AddDeviceActivity extends BaseActivity {
                 break;
         }
     }
+
+    /**
+     * 通过包名跳转
+     *
+     * @param activityName
+     */
+    public void startActivityForName(String activityName, Bundle paramBundle) {
+        try {
+            Class clazz = Class.forName(activityName);
+            Intent intent = new Intent(this, clazz);
+            if (paramBundle != null)
+                intent.putExtras(paramBundle);
+            startActivity(intent);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void startActivityForName(String activityName) {
+        try {
+            Class clazz = Class.forName(activityName);
+            Intent intent = new Intent(this, clazz);
+            startActivity(intent);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

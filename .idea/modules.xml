@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Smarthomes.iml" filepath="$PROJECT_DIR$/Smarthomes.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ipclibrary/ipclibrary.iml" filepath="$PROJECT_DIR$/ipclibrary/ipclibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/p2p-core/p2p-core.iml" filepath="$PROJECT_DIR$/p2p-core/p2p-core.iml" />
     </modules>
   </component>

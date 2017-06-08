@@ -280,7 +280,7 @@ public abstract class BaseP2PView extends SurfaceView {
 	float getDistance(MotionEvent event) {
 		float x = event.getX(0) - event.getX(1);
 		float y = event.getY(0) - event.getY(1);
-		return FloatMath.sqrt(x * x + y * y);
+		return (float) Math.sqrt(x * x + y * y);
 	}
 
 	int getCenterX(MotionEvent event) {
