@@ -1,0 +1,77 @@
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_bg"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/notfcard"
+        android:layout_marginTop="82dp"
+        android:id="@+id/imageView2"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16.5dp"
+        android:text="@string/no_tfcard_str"
+        android:layout_below="@+id/imageView2"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:textSize="@dimen/text_size_edit"
+        android:textColor="@color/radar_blue"
+        />
+
+    <!--<TextView-->
+    <!--android:id="@+id/textView2"-->
+    <!--android:gravity="center"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="10dp"-->
+    <!--android:text="@string/no_tfcard_str1"-->
+    <!--android:layout_below="@+id/textView1"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:textSize="@dimen/size_12"-->
+    <!--android:textColor="@color/bg_tv_input"-->
+    <!--/>-->
+    <!--<TextView-->
+        <!--android:id="@+id/textView3"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:text="@string/no_tfcard_str2"-->
+        <!--android:layout_below="@+id/textView2"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:textSize="@dimen/size_12"-->
+        <!--android:gravity="center"-->
+        <!--android:textColor="@color/bg_tv_input"-->
+        <!--/>-->
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="@string/no_tfcard_str3"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:textSize="@dimen/size_12"
+        android:textColor="@color/playback_gray_text"
+        />
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2.5dp"
+        android:gravity="center"
+        android:text="@string/no_tfcard_str4"
+        android:layout_below="@+id/textView4"
+        android:layout_centerHorizontal="true"
+        android:textSize="@dimen/size_12"
+        android:textColor="@color/playback_gray_text"
+        />
+</RelativeLayout>

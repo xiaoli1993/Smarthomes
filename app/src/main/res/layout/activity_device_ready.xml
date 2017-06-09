@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fragment_bacground">
+    <RelativeLayout
+        android:id="@+id/layout_title"
+        style="@style/bg_title_black">
+        <ImageView
+            android:id="@+id/back_btn"
+            style="@style/button_back_title_white"
+            android:layout_alignParentLeft="true"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/device_ready"
+            android:textColor="@color/text_color_white"
+            android:textSize="@dimen/title_text_size"
+            />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_no_listen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bt_listen"
+        android:text="@string/not_listen_connect_voice"
+        android:textColor="@color/radar_blue"
+        android:textSize="14sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="28dp"/>
+
+    <Button
+       android:id="@+id/bt_listen"
+        style="@style/button_blue_style"
+        android:layout_marginBottom="56dp"
+        android:text="@string/listen_connect_voice"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/layout_title"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="33dp"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/device_ready_connect_sound1"
+            android:textSize="21sp"
+            android:textColor="@color/text_color_black"
+
+         />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/device_ready_connect_sound2"
+            android:textSize="21sp"
+            android:textColor="@color/radar_blue"
+            />
+        <ImageView
+            android:id="@+id/iv_device"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="44dp"
+            android:background="@drawable/device_sound"/>
+    </LinearLayout>
+</RelativeLayout>

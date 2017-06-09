@@ -1,5 +1,6 @@
 package com.nuowei.smarthome.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,11 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 
+import com.jwkj.activity.AddContactActivity;
+import com.jwkj.activity.NetworkModeActivity;
+import com.jwkj.data.Contact;
+import com.jwkj.widget.NormalDialog;
+import com.libzxing.activity.CaptureActivity;
 import com.nuowei.smarthome.Constants;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.adapter.ChoiceAddDeviceAdapter;
@@ -18,6 +24,8 @@ import com.nuowei.smarthome.modle.ChoiceAddDevice;
 import com.nuowei.smarthome.util.MyUtil;
 import com.nuowei.smarthome.view.textview.AvenirTextView;
 import com.orhanobut.hawk.Hawk;
+import com.wevey.selector.dialog.DialogInterface;
+import com.wevey.selector.dialog.MDSelectionDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,11 +61,14 @@ public class AddDeviceActivity extends BaseActivity {
     private ArrayList<ChoiceAddDevice> chioseAddDevices;
     private SimpleAdapter sim_adapter;
     private List<Map<String, Object>> data_list;
+    private Context mContext;
+    private static final int QRcodeRequestCode = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_device);
+        mContext = this;
         initEven();
     }
 
@@ -82,21 +93,34 @@ public class AddDeviceActivity extends BaseActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     ChoiceAddDevice choiceAddDevice = chioseAddDevices.get(position);
                     if (choiceAddDevice.iswifi()) {
-                        Intent intent = new Intent(AddDeviceActivity.this, SmartLinkActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putInt(Constants.DEVICE_TYPES, choiceAddDevice.getDeviceid());
-                        intent.putExtras(bundle);
-                        startActivity(intent);
+                        if (choiceAddDevice.getDeviceid() == Constants.DEVICE_TYPE.DEVICE_WIFI_IPC) {
+//                            NormalDialog dialog = new NormalDialog(mContext);
+//                            dialog.setOnDialogItemClick(onChooseAddDialogItemClick);
+//                            dialog.setmContact(null);
+//                            dialog.showChooseAddDialog(1);
+
+                            showMDSelectionDialog();
+                        } else {
+                            Intent intent = new Intent(AddDeviceActivity.this, SmartLinkActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putInt(Constants.DEVICE_TYPES, choiceAddDevice.getDeviceid());
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                            finish();
+                        }
                     } else {
                         Intent intent = new Intent(AddDeviceActivity.this, AddSubDeviceActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putInt(Constants.DEVICE_TYPES, choiceAddDevice.getDeviceid());
                         intent.putExtras(bundle);
                         startActivity(intent);
+                        finish();
                     }
                 }
             });
-        } else {
+        } else
+
+        {
 //            data_list = new ArrayList<Map<String, Object>>();
 //            String[] from = {"image", "text", "iswifi"};
 //            int[] to = {R.id.image_icon, R.id.tv_txt};
@@ -133,6 +157,43 @@ public class AddDeviceActivity extends BaseActivity {
 
     }
 
+    private void showMDSelectionDialog() {
+        List<String> datas = new ArrayList<>();
+        datas.add(getResources().getString(R.string.intelligent_online));
+        datas.add(getResources().getString(R.string.manually_add));
+        datas.add(getResources().getString(R.string.moni_shuju3));
+
+        new MDSelectionDialog.Builder(AddDeviceActivity.this)
+                .setCanceledOnTouchOutside(true)
+                .setItemTextColor(R.color.black_light)
+                .setItemHeight(50)
+                .setItemWidth(0.8f)  //屏幕宽度*0.8
+                .setItemTextSize(15)
+                .setCanceledOnTouchOutside(true)
+                .setOnItemListener(new DialogInterface.OnItemClickListener<MDSelectionDialog>() {
+                    @Override
+                    public void onItemClick(MDSelectionDialog dialog, View button, int position) {
+                        if (position == 0) {
+                            Intent radar_add = new Intent(mContext, NetworkModeActivity.class);
+                            mContext.startActivity(radar_add);
+                        } else if (position == 1) {
+                            Intent add_contact = new Intent(mContext, AddContactActivity.class);
+                            mContext.startActivity(add_contact);
+                        } else {
+                            Intent scan_qr_code = new Intent(mContext, CaptureActivity.class);
+                            scan_qr_code.putExtra("type", 1);
+                            startActivityForResult(scan_qr_code, QRcodeRequestCode);
+                        }
+                        finish();
+                        dialog.dismiss();
+                    }
+                })
+                .build()
+                .setDatas(datas)
+                .show();
+
+    }
+
     public List<Map<String, Object>> getData() {
         //cion和iconName的长度是相同的，这里任选其一都可以
         for (int i = 0; i < chioseAddDevices.size(); i++) {
@@ -145,6 +206,25 @@ public class AddDeviceActivity extends BaseActivity {
 
         return data_list;
     }
+
+    //添加设备方式选择框
+    private NormalDialog.onDialogItemClick onChooseAddDialogItemClick = new NormalDialog.onDialogItemClick() {
+
+        @Override
+        public void onItemClick(View view, Contact mContact, int position, int contactPosition) {
+            if (position == 1) {
+                Intent radar_add = new Intent(mContext, NetworkModeActivity.class);
+                mContext.startActivity(radar_add);
+            } else if (position == 2) {
+                Intent add_contact = new Intent(mContext, AddContactActivity.class);
+                mContext.startActivity(add_contact);
+            } else {
+                Intent scan_qr_code = new Intent(mContext, CaptureActivity.class);
+                scan_qr_code.putExtra("type", 1);
+                startActivityForResult(scan_qr_code, QRcodeRequestCode);
+            }
+        }
+    };
 
     /**
      * 获取ZIGBEE设备列表

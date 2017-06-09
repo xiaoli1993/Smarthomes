@@ -1,0 +1,67 @@
+package com.lib.showtipview;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.support.annotation.NonNull;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
+import android.util.AttributeSet;
+import android.widget.TextView;
+
+public class StrokeTextView extends TextView {
+	private static final String TAG = "StrokeTextView";
+	private TextPaint mStrokePaint = new TextPaint();
+	private TextPaint mWordsPaint = new TextPaint();
+
+	public StrokeTextView(Context context) {
+		this(context, null);
+	}
+
+	public StrokeTextView(Context context, AttributeSet attrs) {
+		this(context, attrs, android.R.attr.textViewStyle);
+	}
+
+	public StrokeTextView(Context context, AttributeSet attrs, int defStyle) {
+		super(context, attrs, defStyle);
+		final int strokeWidth = Math.min((int) (getTextSize() / 5), 7);
+
+		mStrokePaint.setARGB(255, 255, 255, 255);
+		mStrokePaint.setStyle(Paint.Style.STROKE);
+		mStrokePaint.setStrokeWidth(strokeWidth);
+		mStrokePaint.setAntiAlias(true);
+		mStrokePaint.setTextScaleX(getTextScaleX());
+
+		mWordsPaint.setARGB(255, 1, 182, 186);
+		mWordsPaint.setAntiAlias(true);
+		mWordsPaint.setTextScaleX(getTextScaleX());
+
+	}
+
+	@Override
+	@SuppressLint("DrawAllocation")
+	protected void onDraw(@NonNull Canvas canvas) {
+
+		canvas.save();
+
+		mStrokePaint.setTextSize(getTextSize());
+		mWordsPaint.setTextSize(getTextSize());
+		mStrokePaint.setTypeface(getTypeface());
+		mWordsPaint.setTypeface(getTypeface());
+
+		StaticLayout strokeLayout = new StaticLayout(getText(), mStrokePaint, canvas.getWidth(), Layout.Alignment.ALIGN_NORMAL, 1, 0, true);
+		StaticLayout wordsLayout = new StaticLayout(getText(), mWordsPaint, canvas.getWidth(), Layout.Alignment.ALIGN_NORMAL, 1, 0, true);
+
+		strokeLayout.draw(canvas);
+		wordsLayout.draw(canvas);
+
+		canvas.restore();
+	}
+
+	@Override
+	public void setTextSize(float size) {
+		super.setTextSize(size);
+	}
+}

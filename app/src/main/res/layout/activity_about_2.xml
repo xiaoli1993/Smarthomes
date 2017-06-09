@@ -15,12 +15,12 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <TextView
+        <com.nuowei.smarthome.view.textview.DinProTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="XXXXX 版权所有" />
 
-        <TextView
+        <com.nuowei.smarthome.view.textview.DinProTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="©️2016 XXXX.COM XXXXX有限公司" />
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_launcher" />
 
-        <TextView
+        <com.nuowei.smarthome.view.textview.DinProTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"

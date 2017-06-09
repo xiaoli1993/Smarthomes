@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fish_back"
+    android:orientation="vertical" >
+
+    <View
+        android:id="@+id/v_line"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/gray_more" >
+    </View>
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dialog_info_title_height"
+        android:layout_below="@+id/v_line"
+        android:background="@color/fish_back" >
+
+        <TextView
+            style="@style/title_pop_style"
+            android:text="" />
+
+        <ImageButton
+            android:id="@+id/btn_point_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@color/alpha"
+            android:padding="20dp"
+            android:src="@drawable/bg_button_remember_point_back" />
+    </RelativeLayout>
+
+    <com.jwkj.widget.PrePointLayout
+        android:id="@+id/rl_remenberpoint"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/rl_title"
+        android:background="@color/fish_back" >
+    </com.jwkj.widget.PrePointLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_prepoint_function"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom"
+        android:background="@drawable/bg_shader"
+        android:visibility="gone" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/btn_popdelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:drawableTop="@drawable/btn_remember_del"
+                android:gravity="center"
+                android:drawablePadding="7dp"
+                android:text="@string/delete"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/btn_popmodify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:drawableTop="@drawable/btn_rember_edt"
+                android:gravity="center"
+                android:text="@string/edit"
+                android:drawablePadding="7dp"
+                android:visibility="visible" />
+            <TextView
+                android:id="@+id/btn_popcancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/btn_remember_cancel"
+                android:gravity="center"
+                android:padding="10dp"
+                android:drawablePadding="7dp"
+                android:text="@string/prepoint_abandon"
+                android:visibility="visible" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

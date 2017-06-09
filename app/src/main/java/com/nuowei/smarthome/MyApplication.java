@@ -10,8 +10,10 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
+import android.widget.RemoteViews;
 
 import com.avos.avoscloud.AVOSCloud;
+import com.baidu.mobstat.StatService;
 import com.jiongbull.jlog.Logger;
 import com.jiongbull.jlog.constant.LogLevel;
 import com.jiongbull.jlog.constant.LogSegment;
@@ -78,13 +80,28 @@ public class MyApplication extends LitePalApplication implements XlinkNetListene
     public String accessToken;
     public String refresh_token;
     public UserInfo userInfo;
+    public static final String MAIN_SERVICE_START = com.jwkj.global.Constants.PACKAGE_NAME
+            + "service.MAINSERVICE";
+    public static final int NOTIFICATION_DOWN_ID = 0x53256562;
+//    public static final String LOGCAT = com.jwkj.global.Constants.PACKAGE_NAME
+//            + "service.LOGCAT";
+    public static boolean isActive;
+    private RemoteViews cur_down_view;
+    public static int SCREENWIGHT;
+    public static int SCREENHIGHT;
+    public static MyApplication app;
 
     @Override
     public void onCreate() {
         super.onCreate();
         myApplication = this;
+        app = this;
         initSDK();
+        isActive = true;
 
+//        if (Utils.isYooseePackge()) {
+            StatService.setAppKey("2511ebf759");
+//        }
     }
 
 

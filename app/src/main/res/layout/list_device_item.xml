@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/item_device_height"
+    android:background="#e2e1e1" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_device_top_height"
+            android:layout_above="@+id/r_device_control" >
+
+            <com.jwkj.widget.HeaderView
+                android:id="@+id/user_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:scaleType="centerCrop"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/item_top_background" />
+            <LinearLayout
+                android:id="@+id/l_editor_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <ImageView
+                    android:id="@+id/iv_editor_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/selector_editor"/>
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1092066"
+                    android:textColor="@color/white"
+                    android:textSize="36px" />
+            </LinearLayout>
+            <ImageView
+                android:id="@+id/iv_update"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/new_update"
+                android:visibility="gone" />
+            <RelativeLayout
+                android:id="@+id/r_online_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="5dp"
+                android:background="@drawable/item_state_background"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/tv_online_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="离线"
+                    android:textColor="@color/white" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/l_ap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+                android:visibility="gone" >
+
+                <ImageView
+                    android:id="@+id/iv_ap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/item_ap" />
+
+                <ImageView
+                    android:id="@+id/iv_ap_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/item_ap_link" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/r_device_control"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_device_control"
+            android:background="@color/white" >
+
+            <ImageView
+                android:id="@+id/iv_defence_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_visitor"
+                android:visibility="visible" />
+            <ProgressBar
+                android:id="@+id/progress_defence"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="@dimen/inner_item_progress_width_height"
+                android:layout_height="@dimen/inner_item_progress_width_height"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:indeterminateDrawable="@anim/progress_arrow"
+                android:indeterminateDuration="560000"
+                android:visibility="gone" />
+            <ImageView
+                android:id="@+id/iv_set"
+                android:layout_alignParentRight="true"
+                style="@style/item_device_icon_style"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/selector_ic_set" />
+            <ImageView
+                android:id="@+id/iv_key_housekeep"
+                style="@style/item_device_icon_style"
+                android:layout_toLeftOf="@+id/iv_playback"
+                android:src="@drawable/selector_key_housekeep_on" />
+
+            <ImageView
+                android:id="@+id/iv_playback"
+                style="@style/item_device_icon_style"
+                android:layout_toLeftOf="@+id/iv_set"
+                android:src="@drawable/selector_playback" />
+
+            <ImageView
+                android:id="@+id/iv_call"
+                style="@style/item_device_icon_style"
+                android:layout_toLeftOf="@+id/iv_key_housekeep"
+                android:src="@drawable/selector_call" />
+
+            <ImageView
+                android:id="@+id/iv_weakpassword"
+                style="@style/item_device_icon_style"
+                android:layout_toLeftOf="@+id/iv_call"
+                android:src="@drawable/selector_weak_password" />
+
+            <ImageView
+                android:id="@+id/iv_editor"
+               android:layout_width="@dimen/item_device_img_width"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/item_editor"
+                android:visibility="gone"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#3f000000"
+            android:visibility="visible" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="10dp" >
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/r_mode"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true" >
+
+        <com.jwkj.widget.FishEyeModeView
+            android:id="@+id/fmv_main"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:visibility="gone"
+            app:draw_up_id="@drawable/mode_home"
+            app:text_mode_id="@string/mode_home"
+            app:text_name_id="@string/mode_home" />
+    </RelativeLayout>
+
+</RelativeLayout>

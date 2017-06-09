@@ -161,5 +161,107 @@
     <color name="sub_btn_tick">#eff0f2</color>
     <color name="gray">#627676</color>
     <color name="yellow">#eef26c</color>
+    <color name="alpha">#00000000</color>
+    <color name="half_alpha">#88000000</color>
 
+    <color name="listview_foucs">#E4E4E4</color>
+    <color name="home_bg_color">#f7f7f7</color>
+    <color name="playback_btn">#90000000</color>
+    <color name="playback_btn_p">#e0f7f7f7</color>
+    <color name="menu_checked_color">#4cb9eb</color>
+    <color name="menu_unchecked_color">#e0e0e0</color>
+    <color name="tar_bar">#449DDB</color>
+    <color name="btn_bottom">#3390CF</color>
+    <color name="btn_cen">#4EAEEC</color>
+    <color name="btn_top">#63C1FF</color>
+    <color name="merchant_name_color">#3e3e3e</color>
+    <color name="add_more_background">#40B5B5B5</color>
+    <color name="font_color">#7a7979</color>
+    <color name="exitcolor">#3b3b3b</color>
+    <color name="profile_button_color">#CDC7BD</color>
+
+    <color name="color_gray">#cccccc</color>
+    <color name="reseda">#ff9acd32</color><!-- 嫩绿色 -->
+    <color name="bg_color">#EDECEC</color>
+    <color name="activity_color">#EEEEEE</color>
+    <color name="keyboard_user_name">#3E91CB</color>
+    <color name="blue">#ff61a9e1</color>
+    <color name="light_blue">#219cc0</color>
+    <color name="alpha_blue">#a0171717</color>
+    <color name="match_user">#4196d0</color>
+    <color name="btn_highlight">#48708C</color>
+    <color name="profile_bg">#EDECEC</color>
+    <color name="dialog_title">#52a0e0</color>
+
+    <color name="bg_infrared">#80000000</color>
+    <color name="bg_infrared_p">#219cc0</color>
+    <!--new  -->
+    <color name="dialog_back_color">#90000000</color>
+    <color name="text_color_white">#ffffff</color><!-- 白色-->
+    <color name="text_color_half_tran_white">#7fffffff</color><!-- 白色-->
+    <color name="text_color_black">#444242</color><!-- 黑色-->
+    <color name="text_color_blue">#52a0e0</color><!-- 蓝色-->
+    <color name="text_color_green">#7bdc70</color><!-- 绿色-->
+    <color name="text_color_gray">#818181</color><!-- 灰色-->
+    <color name="text_color_red">#c5101a</color><!-- 红色-->
+    <color name="color_local_device_bar">#5ab8ff</color><!-- 红色-->
+    <color name="dialog_title_color">#a4979b</color>
+    <color name="radar_blue">#5586f6</color>
+    <color name="edit_mask">#80000000</color>
+    <color name="pass_yellow">#FC9900</color>
+    <color name="pass_red">#c5101a</color>
+    <color name="pass_green">#2BF927</color>
+    <color name="pass_gray">#B2B2B2</color>
+    <color name="text_press">#4c4c4c</color><!-- 文字按下 -->
+
+    <color name="line_gray">#d1d1d1</color>
+    <color name="text_gray_p">#cc000000</color>
+    <color name="unpress_gray">#66696969</color>
+    <!--new  -->
+    <color name="gray_more">#e2e2e2</color><!-- 外边框颜色-->
+    <color name="device_blue_p">#399dff</color>
+
+    <color name="result_view">#b0000000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="possible_result_points">#c0ffff00</color>
+
+    <color name="fish_back">#f4f4f4</color>
+    <color name="titlebar">#F9F9F9</color>
+    <color name="main_titlebar">#35C5E7</color>
+    <color name="main_titlebar_press">#bb35C5E7</color>
+    <color name="eight_back">#cc000000</color><!-- 80%黑 -->
+    <color name="mode_text_normal">#727171</color>
+    <color name="mode_home">#FF5e38</color>
+    <color name="mode_office">#3bca84</color>
+    <color name="mode_sleep">#9752fa</color>
+    <color name="device_name_txcolor">#9fa0a0</color>
+    <color name="fragment_bacground">#f0f0f0</color>
+    <color name="text_newgray">#8d8d8d</color>
+    <color name="halhal_eight">#40000000</color><!-- 25%黑 -->
+    <color name="black_night">#E6000000</color><!-- 90%黑 -->
+    <color name="seek_bar_default">#767676</color><!-- seekbar default -->
+    <color name="monitor_number_bac">#303030</color><!--monitor_number -->
+    <color name="black_80">#cc000000</color>
+    <color name="black_60">#99000000</color>
+    <color name="black_40">#66000000</color><!-- 40%黑 -->
+    <color name="bg_title_black">#202021</color><!-- 登录标题-->
+    <color name="bg_title_white">#f2f2f2</color><!-- 登录标题-->
+    <color name="bg_activity">#f2f2f2</color><!-- 登录背景-->
+    <color name="bg_btn_enable">#7f3e9cfe</color><!-- 登录背景-->
+    <color name="bg_btn_blue">#3e9cfe</color><!-- 登陆注册按钮-->
+    <color name="bg_tv_input">#a9a9a9</color><!-- -->
+    <color name="bg_line">#f6f6f6</color><!-- -->
+    <color name="gray_input_pwd_dialog">#d3d3d4</color><!--密码输入框灰线-->
+    <color name="red_circle">#ec1717</color><!--录像状态圆的颜色-->
+    <color name="tab_text_gray">#1e1e1e</color><!--主页底部四个按钮未选中文字颜色-->
+    <color name="black_50">#80000000</color><!--50%黑-->
+    <color name="fast_layout_text_blue">#66b9ff</color> <!--回放快进框时间颜色-->
+    <color name="text_item_gray">#aaaaaa</color><!--新设备列表ip地址文字颜色-->
+    <color name="text_gray_color">#8e8e8e</color><!--添加设备页面初始密码提示文字颜色-->
+    <color name="bg_btn_blue_p">#0262c6</color><!--蓝色文本按钮按下文本颜色-->
+    <color name="bg_tv_input_p">#686767</color><!--灰色文本按钮按下文本颜色-->
+    <color name="btn_blue_not_p">#aac2fa</color><!--蓝色按钮不能按颜色-->
+    <color name="btn_blue_p">#2e66e7</color><!--蓝色按钮按下颜色-->
+    <color name="tx_gray">#a0a0a0</color><!--添加设备页面设备号文本灰色-->
+    <color name="playback_gray_text">#979797</color><!--回放列表无TF卡提示灰色文本-->
 </resources>

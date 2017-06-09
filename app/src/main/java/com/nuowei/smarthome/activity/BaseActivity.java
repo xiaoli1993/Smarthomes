@@ -2,20 +2,17 @@ package com.nuowei.smarthome.activity;
 
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
-import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.TextView;
 
+import com.jwkj.global.Constants;
+import com.jwkj.widget.NormalDialog;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.util.CloseActivityClass;
 import com.nuowei.smarthome.view.swipbackhelper.SwipeBackHelper;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import qiu.niorgai.StatusBarCompat;
 
 /**
@@ -25,7 +22,8 @@ import qiu.niorgai.StatusBarCompat;
  * @Modify record :
  */
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends BaseCoreActivity {
+    public NormalDialog dialog;
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
@@ -60,6 +58,27 @@ public class BaseActivity extends AppCompatActivity {
 //        ButterKnife.bind(this);
     }
 
+    @Override
+    public int getActivityInfo() {
+        // TODO Auto-generated method stub
+        return Constants.ActivityInfo.ACTIVITY_MAINACTIVITY;
+    }
+
+    @Override
+    protected void onGoBack() {
+
+    }
+
+    @Override
+    protected void onGoFront() {
+
+    }
+
+    @Override
+    protected void onExit() {
+
+    }
+
     /**
      * 处理后退键的情况
      */
@@ -78,5 +97,20 @@ public class BaseActivity extends AppCompatActivity {
         super.onBackPressed();
         overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
     }
+
+
+    /**
+     * 弹出等待框
+     *
+     * @param listener 消失监听
+     * @param mark     等待框标记
+     */
+    public void showLoadingDialog(NormalDialog.OnCustomCancelListner listener, int mark) {
+        dialog = new NormalDialog(this);
+        dialog.setOnCustomCancelListner(listener);
+        dialog.setLoadingMark(mark);
+        dialog.showLoadingDialog();
+    }
+
 }
 

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:orientation="vertical"
+    android:background="@drawable/main_bg">
+    <RelativeLayout
+        android:id="@+id/layout_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="@drawable/tab_bar"
+        android:orientation="vertical" >
+		<ImageView 
+            android:id="@+id/back_btn"
+            style="@style/button_back_title_white"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/recommend_product"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="@dimen/title_text_size"
+            />  
+    </RelativeLayout>
+     <RelativeLayout
+        android:id="@+id/loading" 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >    
+        <ProgressBar
+          android:id="@+id/progressBar"
+          android:layout_width="@dimen/progress_width_height"
+          android:layout_height="@dimen/progress_width_height"
+          android:layout_centerInParent="true"
+          android:indeterminateDrawable="@anim/progress_white"
+          style="?android:attr/progressBarStyleLarge" 
+          android:indeterminateDuration="560000"
+          /> 
+    </RelativeLayout>
+    <WebView 
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

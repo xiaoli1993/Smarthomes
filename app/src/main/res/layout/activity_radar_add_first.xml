@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_bg" >
+
+    <RelativeLayout
+        android:id="@+id/layout_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="@drawable/tab_bar"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/back_btn"
+            style="@style/button_back_title_white"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/intelligent_online"
+            android:textColor="@color/white"
+            android:textSize="@dimen/title_text_size"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_wait_di"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_title"
+        android:layout_marginTop="@dimen/item_group_margin_top"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/connect_power"
+            android:textColor="@color/text_color_black"
+            android:textSize="@dimen/text_size_large" />
+
+        <ImageView
+            android:layout_width="@dimen/connect_power_width"
+            android:layout_height="@dimen/connect_power_height"
+            android:layout_marginTop="@dimen/connect_power_margin_top"
+            android:background="@drawable/connect_power" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/connect_power_text_margin_top"
+            android:text="@string/connect_power_wait"
+            android:textColor="@color/text_color_black"
+            android:textSize="@dimen/connect_power_text_size" />
+
+    </LinearLayout>
+    <TextView 
+        android:id="@+id/tv_no_listen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/next"
+        android:layout_centerHorizontal="true"
+        android:text="@string/not_listen_connect_voice"
+        android:textSize="13dp"
+        android:textColor="#1387ec"
+        />
+    <Button
+        android:id="@+id/next"
+        style="@style/button_bottom_style"
+        android:text="@string/listen_connect_voice" />
+
+</RelativeLayout>
