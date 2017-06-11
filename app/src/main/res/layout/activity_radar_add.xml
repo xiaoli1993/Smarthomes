@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/main_bg" >
+    android:background="@color/activity_bg" >
     <RelativeLayout
         android:id="@+id/layout_title"
         style="@style/bg_title_black">
@@ -12,12 +12,12 @@
             style="@style/button_back_title_white"
             android:layout_alignParentLeft="true"
             />
-        <TextView
+        <com.nuowei.smarthome.view.textview.DinProTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/connect_wifi"
-            android:textColor="@color/white"
+            android:textColor="@color/text_title"
             android:textSize="@dimen/title_text_size"
             />
     </RelativeLayout>
@@ -28,7 +28,7 @@
           android:orientation="vertical"
           >
 
-        <TextView
+        <com.nuowei.smarthome.view.textview.DinProTextView
             android:id="@+id/tx_connect_wifi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
             android:textSize="21sp"
             android:textStyle="bold"/>
 
-        <TextView
+        <com.nuowei.smarthome.view.textview.DinProTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -47,7 +47,7 @@
             android:text="@string/not_support_5g_network"
             android:textSize="12sp"
             android:textColor="@color/black"/>
-        <TextView
+        <com.nuowei.smarthome.view.textview.DinProTextView
             android:id="@+id/tx_wifi_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/button_margin_bottom"
             android:text="@string/next" />
-        <TextView
+        <com.nuowei.smarthome.view.textview.DinProTextView
             android:id="@+id/tx_wifi_require"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

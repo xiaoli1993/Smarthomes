@@ -11,13 +11,18 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.jwkj.activity.ApMonitorActivity;
+import com.jwkj.data.Contact;
+import com.jwkj.global.FList;
 import com.nuowei.smarthome.Constants;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.adapter.MainListAdapter;
+import com.nuowei.smarthome.manage.DeviceManage;
 import com.nuowei.smarthome.manage.SubDeviceManage;
 import com.nuowei.smarthome.modle.ListMain;
 import com.nuowei.smarthome.modle.SubDevice;
+import com.nuowei.smarthome.modle.XlinkDevice;
 import com.nuowei.smarthome.smarthomesdk.Json.ZigbeeGW;
 import com.nuowei.smarthome.util.MyUtil;
 import com.nuowei.smarthome.view.cbdialog.CBDialogBuilder;
@@ -82,18 +87,22 @@ public class SecurityActivity extends BaseActivity {//implements MyItemTouchCall
     }
 
     private void initData() {
+
+
+
         try {
             MyUtil.isEmptyString(MainActivity.getChoiceGwDevice().getDeviceMac());
             isChiose = true;
         } catch (Exception e) {
             isChiose = false;
         }
-//        List<XlinkDevice> xlinkDeviceList = DeviceManage.getInstance().getDevices();
-//        for (int x = 0; x < xlinkDeviceList.size(); x++) {
-//
-//            MyApplication.getLogger().w("List列表:" + xlinkDeviceList.get(x).getDeviceMac());
-//            dataSourceList.add(new ListMain("", xlinkDeviceList.get(x).getDeviceMac(), false));
-//        }
+        List<XlinkDevice> xlinkDeviceList = DeviceManage.getInstance().getDevices();
+        for (int x = 0; x < xlinkDeviceList.size(); x++) {
+
+            MyApplication.getLogger().w("List列表:" + xlinkDeviceList.get(x).getDeviceMac());
+            if (xlinkDeviceList.get(x).getDeviceType()==Constants.DEVICE_TYPE.DEVICE_WIFI_IPC) {
+                dataSourceList.add(new ListMain("", xlinkDeviceList.get(x).getDeviceMac(), false, xlinkDeviceList.get(x).getDeviceType()));
+            }}
         List<SubDevice> subDeviceList = SubDeviceManage.getInstance().getDevices();
         for (int i = 0; i < subDeviceList.size(); i++) {
             MyApplication.getLogger().w("List列表:" + subDeviceList.get(i).getZigbeeMac() + "\t" + subDeviceList.get(i).getDeviceMac());
@@ -250,11 +259,23 @@ public class SecurityActivity extends BaseActivity {//implements MyItemTouchCall
                             break;
                         case Constants.DEVICE_TYPE.DEVICE_ZIGBEE_METRTING_PLUGIN:
                             break;
+
                         default:
                             break;
                     }
                 } else {
+                    switch (item.getDeviceType()) {
+                        case Constants.DEVICE_TYPE.DEVICE_WIFI_IPC:
 
+                            Intent monitor = new Intent();
+                            monitor.setClass(SecurityActivity.this, ApMonitorActivity.class);
+                            monitor.putExtra("contact", FList.getInstance().get(0));
+                            monitor.putExtra("connectType", Constants.ConnectType.P2PCONNECT);
+                            monitor.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(monitor);
+
+                            break;
+                    }
                 }
             }
         });

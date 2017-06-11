@@ -28,6 +28,7 @@ import com.lsemtmf.genersdk.tools.emtmf.EMTMFSDK;
 import com.lsemtmf.genersdk.tools.emtmf.EMTMFSDKListener;
 import com.mediatek.elian.ElianNative;
 import com.nuowei.smarthome.R;
+import com.nuowei.smarthome.view.textview.DinProTextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -39,7 +40,7 @@ import static com.nuowei.smarthome.R.string.give_up_add_device;
 public class AddWaitActicity extends BaseActivity implements OnClickListener {
 	private ImageView ivBacke;
 	private Context mContext;
-	private TextView tv_title,tv_time;
+	private DinProTextView tv_title,tv_time;
 	ImageView iv_sound_wave,iv_sound_wave_out;
 	public Handler myhandler = new Handler();
 	boolean isReceive = false;
@@ -247,8 +248,8 @@ public class AddWaitActicity extends BaseActivity implements OnClickListener {
 
 	private void initUI() {
 		ivBacke = (ImageView) findViewById(R.id.img_back);
-		tv_title = (TextView) findViewById(R.id.title);
-		tv_time=(TextView)findViewById(R.id.tv_time);
+		tv_title = (DinProTextView) findViewById(R.id.title);
+		tv_time=(DinProTextView)findViewById(R.id.tv_time);
 		iv_sound_wave=(ImageView)findViewById(R.id.iv_sound_wave);
 		iv_sound_wave_out=(ImageView)findViewById(R.id.iv_sound_wave_out);
 	    animation=AnimationUtils.loadAnimation(mContext, R.anim.sound_wave_translate);

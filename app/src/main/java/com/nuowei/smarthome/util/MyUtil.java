@@ -28,6 +28,8 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.google.gson.Gson;
+import com.jwkj.data.Contact;
+import com.jwkj.global.FList;
 import com.nuowei.smarthome.Constants;
 import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
@@ -1198,36 +1200,38 @@ public class MyUtil {
     /**
      * 添加IPC列表
      */
-    public void addIPC() {
-//        List<Contact> contact = FList.getInstance().list();
-//        for (int i = 0; i < contact.size(); i++) {
-//            JSONObject obj = new JSONObject();
-//            try {
-//                obj.put("protocol", 1);
-//                JSONObject deviceJson = new JSONObject();
-//                String macc = "ACCF2" + contact.get(i).contactId;
-//                deviceJson.put("macAddress", macc);
-//                deviceJson.put("deviceName", contact.get(i).contactName);
-//                deviceJson.put("deviceID", contact.get(i).contactId);
-//                deviceJson.put("version", 99);
-//                deviceJson.put("mcuHardVersion", 0);
-//                deviceJson.put("mucSoftVersion", 0);
-//                deviceJson.put("productID", "9fc2c50412264ce29dae547ff08b941e");
-//                deviceJson.put("accesskey", contact.get(i).contactPassword);
-//                deviceJson.put("deviceIP", contact.get(i).ipadressAddress);
-//                obj.put("device", deviceJson);
-//                MyApplication.getLogger().json(obj.toString());
-////                XDevice xdevice = XlinkAgent.JsonToDevice(obj);
-//                XlinkDevice xlinkDevice = new XlinkDevice();
-//                xlinkDevice.setxDevice(obj.toString());
-//                xlinkDevice.setAccessKey(contact.get(i).contactPassword);
-//                xlinkDevice.setDeviceType(Constants.DEVICE_TYPE.DEVICE_WIFI_IPC + contact.get(i).contactType);
-//                xlinkDevice.setDeviceName(contact.get(i).contactName);
-//                xlinkDevice.setDeviceState(contact.get(i).onLineState);
-//                DeviceManage.getInstance().addDevice(xlinkDevice);
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//        }
+    public static void addIPC() {
+        List<Contact> contact = FList.getInstance().list();
+        for (int i = 0; i < contact.size(); i++) {
+            JSONObject obj = new JSONObject();
+            try {
+                obj.put("protocol", 1);
+                JSONObject deviceJson = new JSONObject();
+                String macc = "ACCF2" + contact.get(i).contactId;
+                deviceJson.put("macAddress", macc);
+                deviceJson.put("deviceName", contact.get(i).contactName);
+                deviceJson.put("deviceID", contact.get(i).contactId);
+                deviceJson.put("version", 99);
+                deviceJson.put("mcuHardVersion", 0);
+                deviceJson.put("mucSoftVersion", 0);
+                deviceJson.put("productID", "9fc2c50412264ce29dae547ff08b941e");
+                deviceJson.put("accesskey", contact.get(i).contactPassword);
+                deviceJson.put("deviceIP", contact.get(i).ipadressAddress);
+                obj.put("device", deviceJson);
+                MyApplication.getLogger().json(obj.toString());
+//                XDevice xdevice = XlinkAgent.JsonToDevice(obj);
+                XlinkDevice xlinkDevice = new XlinkDevice();
+                xlinkDevice.setxDevice(obj.toString());
+                xlinkDevice.setAccessKey(contact.get(i).contactPassword);
+                xlinkDevice.setDeviceType(Constants.DEVICE_TYPE.DEVICE_WIFI_IPC );
+                xlinkDevice.setDeviceName(contact.get(i).contactName);
+                xlinkDevice.setDeviceMac(macc);
+                xlinkDevice.setDeviceState(contact.get(i).onLineState);
+                xlinkDevice.setDefence(contact.get(i).contactType);
+                DeviceManage.getInstance().addDevice(xlinkDevice);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -2,11 +2,51 @@ package com.jwkj.activity;
 
 
 
+import android.os.Bundle;
+import android.view.KeyEvent;
+
 import com.jwkj.widget.NormalDialog;
+import com.nuowei.smarthome.R;
+import com.nuowei.smarthome.util.CloseActivityClass;
+import com.nuowei.smarthome.view.swipbackhelper.SwipeBackHelper;
 import com.p2p.core.BaseCoreActivity;
+
+import qiu.niorgai.StatusBarCompat;
 
 public abstract class BaseActivity extends BaseCoreActivity {
 	public NormalDialog dialog;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		CloseActivityClass.activityList.add(this);
+//		SwipeBackHelper.onCreate(this);
+//		SwipeBackHelper.getCurrentPage(this)
+//				.setSwipeBackEnable(true)
+//				.setSwipeSensitivity(0.5f)
+//				.setSwipeRelateEnable(true)
+//				.setSwipeRelateOffset(300);
+//		//ViewServer.get(this).addWindow(this);
+//		StatusBarCompat.translucentStatusBar(this, false);
+//        ButterKnife.bind(this);
+	}
+//	 /**
+//     * 处理后退键的情况
+//     */
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            this.finish(); // finish当前activity
+//            overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
+//            return true;
+//        }
+//        return true;
+//    }
+//
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
+//    }
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.jwkj.global.Constants;
 import com.jwkj.widget.PromptDialog;
 import com.nuowei.smarthome.R;
+import com.nuowei.smarthome.view.textview.DinProTextView;
 
 /**
  * Created by Administrator on 2016/10/13.
@@ -24,7 +25,7 @@ import com.nuowei.smarthome.R;
 
 public class DeviceReadyActivity extends BaseActivity implements View.OnClickListener {
     private Context context;
-    private TextView tv_no_listen;
+    private DinProTextView tv_no_listen;
     private Button bt_listen;
     private ImageView iv_device;
     private ImageView back_btn;
@@ -47,7 +48,7 @@ public class DeviceReadyActivity extends BaseActivity implements View.OnClickLis
         regFilter();
     }
     public void initUI(){
-        tv_no_listen=(TextView)findViewById(R.id.tv_no_listen);
+        tv_no_listen=(DinProTextView)findViewById(R.id.tv_no_listen);
         bt_listen=(Button)findViewById(R.id.bt_listen);
         iv_device=(ImageView)findViewById(R.id.iv_device);
         back_btn=(ImageView)findViewById(R.id.back_btn);

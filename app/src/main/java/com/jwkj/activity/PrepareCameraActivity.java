@@ -16,7 +16,7 @@ import com.jwkj.global.Constants;
 import com.jwkj.utils.WifiUtils;
 import com.jwkj.widget.ConfirmDialog;
 import com.nuowei.smarthome.R;
-
+import com.nuowei.smarthome.view.textview.DinProTextView;
 
 
 /**
@@ -27,7 +27,7 @@ public class PrepareCameraActivity extends BaseActivity implements View.OnClickL
     private Context context;
     private ImageView back_btn;
     private ImageView iv_connect_power;
-    private TextView tv_connect_power;
+    private DinProTextView tv_connect_power;
     private  Button bt_next;
     int connect_mode;
     public boolean isInitEMTMFSDK=false;
@@ -45,7 +45,7 @@ public class PrepareCameraActivity extends BaseActivity implements View.OnClickL
     public void initUI(){
         back_btn=(ImageView)findViewById(R.id.back_btn);
         iv_connect_power=(ImageView)findViewById(R.id.iv_connect_power);
-        tv_connect_power=(TextView)findViewById(R.id.tv_connect_power);
+        tv_connect_power=(DinProTextView)findViewById(R.id.tv_connect_power);
         bt_next=(Button)findViewById(R.id.bt_next);
         back_btn.setOnClickListener(this);
         bt_next.setOnClickListener(this);

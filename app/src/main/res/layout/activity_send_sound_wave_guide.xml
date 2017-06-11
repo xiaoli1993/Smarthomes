@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fragment_bacground">
+    android:background="@color/activity_bg">
     <RelativeLayout
         android:id="@+id/layout_title"
         style="@style/bg_title_black">
@@ -11,16 +11,16 @@
             style="@style/button_back_title_white"
             android:layout_alignParentLeft="true"
             />
-        <TextView
+        <com.nuowei.smarthome.view.textview.DinProTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/wait_connect"
-            android:textColor="@color/white"
+            android:textColor="@color/text_title"
             android:textSize="@dimen/title_text_size"
             />
     </RelativeLayout>
-    <TextView 
+    <com.nuowei.smarthome.view.textview.DinProTextView
         android:id="@+id/tv_ajust_voice1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
         android:textSize="@dimen/text_size_large"
         android:layout_marginTop="33dp"
        />
-    <TextView
+    <com.nuowei.smarthome.view.textview.DinProTextView
         android:id="@+id/tv_ajust_voice2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
          android:layout_marginTop="40dp"
          android:layout_centerHorizontal="true"
          android:src="@drawable/send_sound_wave"/>
-     <TextView
+     <com.nuowei.smarthome.view.textview.DinProTextView
          android:id="@+id/tv_sound_wave_prompt"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"

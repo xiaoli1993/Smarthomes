@@ -14,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -102,7 +103,7 @@ import qiu.niorgai.StatusBarCompat;
  * @Time :  2017/2/24 08:29
  * @Description :
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.left_listview)
     ListView listView;
@@ -168,6 +169,7 @@ public class MainActivity extends BaseActivity {
             MyApplication.getMyApplication().setCurrentActivity(this);
             initFeedBack();
             initIPC();
+            MyUtil.addIPC();
         }
 //        FList.getInstance().searchLocalDevice();
     }

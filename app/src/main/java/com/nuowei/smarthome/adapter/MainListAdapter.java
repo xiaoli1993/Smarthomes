@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.nuowei.smarthome.Constants;
+import com.nuowei.smarthome.MyApplication;
 import com.nuowei.smarthome.R;
 import com.nuowei.smarthome.helper.MyItemTouchCallback;
 import com.nuowei.smarthome.manage.DeviceManage;
@@ -248,6 +249,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.MyView
                     break;
             }
         } else {
+            MyApplication.getLogger().d("results:deviceMac"+results.get(position).getDeviceMac());
             XlinkDevice xlinkDevice = DeviceManage.getInstance().getDevice(results.get(position).getDeviceMac());
             holder.textView.setText(xlinkDevice.getDeviceName());
             switch (xlinkDevice.getDeviceType()) {

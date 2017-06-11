@@ -32,6 +32,7 @@ import com.jwkj.widget.PwdTextView;
 import com.lsemtmf.genersdk.tools.SettingManager;
 import com.lsemtmf.genersdk.tools.commen.PreventViolence;
 import com.nuowei.smarthome.R;
+import com.nuowei.smarthome.view.textview.DinProTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,11 +61,11 @@ public class RadarAddActivity extends BaseActivity implements OnClickListener {
 	private RelativeLayout rlPwd;
 	private boolean isWifiOpen = false;
 	SettingManager settingManager;
-	private TextView tx_wifi_require;
-	private TextView tx_wifi_name;
+	private DinProTextView tx_wifi_require;
+	private DinProTextView tx_wifi_name;
     private PromptDialog promptDialog;
 	private ConfirmOrCancelDialog confirmDialog;
-	private TextView tx_connect_wifi;
+	private DinProTextView tx_connect_wifi;
 	String wifiPwd;
 	ConfirmDialog dialog;
 	@Override
@@ -88,9 +89,9 @@ public class RadarAddActivity extends BaseActivity implements OnClickListener {
 		back_btn = (ImageView) findViewById(R.id.back_btn);
 		bt_next = (Button) findViewById(R.id.next);
 		rlPwd = (RelativeLayout) findViewById(R.id.layout_pwd);
-		tx_wifi_require=(TextView)findViewById(R.id.tx_wifi_require);
-		tx_wifi_name=(TextView)findViewById(R.id.tx_wifi_name);
-		tx_connect_wifi=(TextView)findViewById(R.id.tx_connect_wifi);
+		tx_wifi_require=(DinProTextView)findViewById(R.id.tx_wifi_require);
+		tx_wifi_name=(DinProTextView)findViewById(R.id.tx_wifi_name);
+		tx_connect_wifi=(DinProTextView)findViewById(R.id.tx_connect_wifi);
 		bt_next.setOnClickListener(this);
 		back_btn.setOnClickListener(this);
 		tx_wifi_require.setOnClickListener(this);

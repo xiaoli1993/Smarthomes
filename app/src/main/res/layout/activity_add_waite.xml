@@ -2,14 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_bg"
+    android:background="@color/activity_bg"
     android:orientation="vertical" >
 
     <RelativeLayout
         android:id="@+id/layout_title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height"
-        android:background="@drawable/tab_bar"
+        android:background="@color/white"
         android:orientation="vertical" >
 
         <ImageView
@@ -18,14 +18,14 @@
             android:layout_alignParentLeft="true"
            />
 
-        <TextView
+        <com.nuowei.smarthome.view.textview.DinProTextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
             android:text="@string/connecting_wifi"
-            android:textColor="@color/text_color_white"
+            android:textColor="@color/text_title"
             android:textSize="@dimen/title_text_size"
             android:textStyle="bold" />
     </RelativeLayout>
@@ -41,7 +41,7 @@
             android:layout_weight="1.5"
             android:gravity="center" >
 
-            <TextView
+            <com.nuowei.smarthome.view.textview.DinProTextView
                 android:id="@+id/tv_waite_connect"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
             android:layout_weight="2"
             android:gravity="center" >
 
-            <TextView 
+            <com.nuowei.smarthome.view.textview.DinProTextView
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
             android:paddingLeft="@dimen/waiting_connect_padding"
             >
 
-            <TextView
+            <com.nuowei.smarthome.view.textview.DinProTextView
                 android:id="@+id/tx_shang"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
